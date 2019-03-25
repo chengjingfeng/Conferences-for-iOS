@@ -7,7 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7078C7769ED9E2EEBCBB30DE /* Pods_Conferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A42E9D3EBECB2E8682FFD6F0 /* Pods_Conferences.framework */; };
+		119C9FBB45ED84E8DAF963EC /* Pods_Conferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AB873A8F492095562F9056 /* Pods_Conferences.framework */; };
+		5C940C5EF6C5DE392CCB1EBA /* Pods_ConferencesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B886F8F5AE9EB165C358990 /* Pods_ConferencesTests.framework */; };
+		A4C052B822482DD7000A069D /* YoutubeFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0529E22482DD7000A069D /* YoutubeFetcher.swift */; };
+		A4C052B922482DD7000A069D /* VimeoFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0529F22482DD7000A069D /* VimeoFetcher.swift */; };
+		A4C052BA22482DD7000A069D /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052A122482DD7000A069D /* Storage.swift */; };
+		A4C052BB22482DD7000A069D /* CurrentlyWatchingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052A222482DD7000A069D /* CurrentlyWatchingModel.swift */; };
+		A4C052BC22482DD7000A069D /* PathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052A322482DD7000A069D /* PathUtil.swift */; };
+		A4C052BD22482DD7000A069D /* ProgressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052A422482DD7000A069D /* ProgressModel.swift */; };
+		A4C052BE22482DD7000A069D /* FavoriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052A522482DD7000A069D /* FavoriteModel.swift */; };
+		A4C052BF22482DD7000A069D /* ImageDownloadCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052A622482DD7000A069D /* ImageDownloadCenter.swift */; };
+		A4C052C022482DD7000A069D /* LoggingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052A722482DD7000A069D /* LoggingHelper.swift */; };
+		A4C052C122482DD7000A069D /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052A922482DD7000A069D /* Error.swift */; };
+		A4C052C222482DD7000A069D /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052AA22482DD7000A069D /* APIClient.swift */; };
+		A4C052C322482DD7000A069D /* OrganisatorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052AC22482DD7000A069D /* OrganisatorModel.swift */; };
+		A4C052C422482DD7000A069D /* VideoSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052AD22482DD7000A069D /* VideoSourceModel.swift */; };
+		A4C052C522482DD7000A069D /* TalkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052AE22482DD7000A069D /* TalkModel.swift */; };
+		A4C052C622482DD7000A069D /* ConferenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052AF22482DD7000A069D /* ConferenceModel.swift */; };
+		A4C052C722482DD7000A069D /* SpeakerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052B022482DD7000A069D /* SpeakerModel.swift */; };
+		A4C052C822482DD7000A069D /* APIClient+Conference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052B122482DD7000A069D /* APIClient+Conference.swift */; };
+		A4C052C922482DD7000A069D /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052B322482DD7000A069D /* TagModel.swift */; };
+		A4C052CA22482DD7000A069D /* TagSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052B422482DD7000A069D /* TagSyncService.swift */; };
+		A4C052CB22482DD7000A069D /* SearchableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052B522482DD7000A069D /* SearchableProtocol.swift */; };
+		A4C052CD22482DD7000A069D /* TalkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C052B722482DD7000A069D /* TalkService.swift */; };
+		A4E70CCB224971BA0065908E /* ConferencesCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E70CC9224967B60065908E /* ConferencesCore.framework */; };
+		A4E70CCC224971BA0065908E /* ConferencesCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A4E70CC9224967B60065908E /* ConferencesCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9AE241A22469743009A263D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE241922469743009A263D /* AppDelegate.swift */; };
 		B9AE241C22469743009A263D /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE241B22469743009A263D /* MasterViewController.swift */; };
 		B9AE241E22469743009A263D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE241D22469743009A263D /* DetailViewController.swift */; };
@@ -16,7 +40,6 @@
 		B9AE242622469746009A263D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9AE242422469746009A263D /* LaunchScreen.storyboard */; };
 		B9AE243122469746009A263D /* ConferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE243022469746009A263D /* ConferencesTests.swift */; };
 		B9AE243C22469A8A009A263D /* Styleguide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE243B22469A8A009A263D /* Styleguide.swift */; };
-		E09E92F844E7BF9D5C3324E6 /* Pods_ConferencesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCBE2774FFAA6DF90A4A473 /* Pods_ConferencesTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,11 +52,47 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A4C052D322482F6D000A069D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A4E70CCC224971BA0065908E /* ConferencesCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		145CF78FD62D51D13E7E637D /* Pods-Conferences.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conferences.debug.xcconfig"; path = "Target Support Files/Pods-Conferences/Pods-Conferences.debug.xcconfig"; sourceTree = "<group>"; };
-		2D2A091A67E992C3CA71CD09 /* Pods-Conferences.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conferences.release.xcconfig"; path = "Target Support Files/Pods-Conferences/Pods-Conferences.release.xcconfig"; sourceTree = "<group>"; };
-		89F90FD3169909081EE23B69 /* Pods-ConferencesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConferencesTests.debug.xcconfig"; path = "Target Support Files/Pods-ConferencesTests/Pods-ConferencesTests.debug.xcconfig"; sourceTree = "<group>"; };
-		A42E9D3EBECB2E8682FFD6F0 /* Pods_Conferences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Conferences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B886F8F5AE9EB165C358990 /* Pods_ConferencesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ConferencesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E03FBF0215F727EEAE89189 /* Pods-ConferencesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConferencesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ConferencesTests/Pods-ConferencesTests.release.xcconfig"; sourceTree = "<group>"; };
+		84AB873A8F492095562F9056 /* Pods_Conferences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Conferences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		868D2C02779B218982E45B05 /* Pods-Conferences.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conferences.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Conferences/Pods-Conferences.debug.xcconfig"; sourceTree = "<group>"; };
+		A4C0529E22482DD7000A069D /* YoutubeFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeFetcher.swift; sourceTree = "<group>"; };
+		A4C0529F22482DD7000A069D /* VimeoFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VimeoFetcher.swift; sourceTree = "<group>"; };
+		A4C052A122482DD7000A069D /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		A4C052A222482DD7000A069D /* CurrentlyWatchingModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentlyWatchingModel.swift; sourceTree = "<group>"; };
+		A4C052A322482DD7000A069D /* PathUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathUtil.swift; sourceTree = "<group>"; };
+		A4C052A422482DD7000A069D /* ProgressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressModel.swift; sourceTree = "<group>"; };
+		A4C052A522482DD7000A069D /* FavoriteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteModel.swift; sourceTree = "<group>"; };
+		A4C052A622482DD7000A069D /* ImageDownloadCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadCenter.swift; sourceTree = "<group>"; };
+		A4C052A722482DD7000A069D /* LoggingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggingHelper.swift; sourceTree = "<group>"; };
+		A4C052A922482DD7000A069D /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		A4C052AA22482DD7000A069D /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		A4C052AC22482DD7000A069D /* OrganisatorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganisatorModel.swift; sourceTree = "<group>"; };
+		A4C052AD22482DD7000A069D /* VideoSourceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoSourceModel.swift; sourceTree = "<group>"; };
+		A4C052AE22482DD7000A069D /* TalkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkModel.swift; sourceTree = "<group>"; };
+		A4C052AF22482DD7000A069D /* ConferenceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConferenceModel.swift; sourceTree = "<group>"; };
+		A4C052B022482DD7000A069D /* SpeakerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeakerModel.swift; sourceTree = "<group>"; };
+		A4C052B122482DD7000A069D /* APIClient+Conference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APIClient+Conference.swift"; sourceTree = "<group>"; };
+		A4C052B322482DD7000A069D /* TagModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
+		A4C052B422482DD7000A069D /* TagSyncService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagSyncService.swift; sourceTree = "<group>"; };
+		A4C052B522482DD7000A069D /* SearchableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchableProtocol.swift; sourceTree = "<group>"; };
+		A4C052B722482DD7000A069D /* TalkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkService.swift; sourceTree = "<group>"; };
+		A4E70CC9224967B60065908E /* ConferencesCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ConferencesCore.framework; sourceTree = "<group>"; };
 		B9AE241622469743009A263D /* Conferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9AE241922469743009A263D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9AE241B22469743009A263D /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -46,8 +105,8 @@
 		B9AE243022469746009A263D /* ConferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferencesTests.swift; sourceTree = "<group>"; };
 		B9AE243222469746009A263D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9AE243B22469A8A009A263D /* Styleguide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styleguide.swift; sourceTree = "<group>"; };
-		C349D49CE2A5E53939BD1703 /* Pods-ConferencesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConferencesTests.release.xcconfig"; path = "Target Support Files/Pods-ConferencesTests/Pods-ConferencesTests.release.xcconfig"; sourceTree = "<group>"; };
-		FFCBE2774FFAA6DF90A4A473 /* Pods_ConferencesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ConferencesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5DECBFE49653B8525CD601F /* Pods-Conferences.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conferences.release.xcconfig"; path = "Pods/Target Support Files/Pods-Conferences/Pods-Conferences.release.xcconfig"; sourceTree = "<group>"; };
+		D7BE1B9BC975C0F64EE3C240 /* Pods-ConferencesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConferencesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConferencesTests/Pods-ConferencesTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +114,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7078C7769ED9E2EEBCBB30DE /* Pods_Conferences.framework in Frameworks */,
+				119C9FBB45ED84E8DAF963EC /* Pods_Conferences.framework in Frameworks */,
+				A4E70CCB224971BA0065908E /* ConferencesCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,21 +123,99 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E09E92F844E7BF9D5C3324E6 /* Pods_ConferencesTests.framework in Frameworks */,
+				5C940C5EF6C5DE392CCB1EBA /* Pods_ConferencesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B3F6E1E5CAD1E684BC5C7B5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84AB873A8F492095562F9056 /* Pods_Conferences.framework */,
+				2B886F8F5AE9EB165C358990 /* Pods_ConferencesTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A4C0529C22482DD7000A069D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A4C0529D22482DD7000A069D /* VideoFetcher */,
+				A4C052A022482DD7000A069D /* Storage */,
+				A4C052A722482DD7000A069D /* LoggingHelper.swift */,
+				A4C052A822482DD7000A069D /* API */,
+				A4C052B222482DD7000A069D /* Tag */,
+				A4C052B722482DD7000A069D /* TalkService.swift */,
+			);
+			name = Core;
+			path = ../../Conferences.digital/Conferences/Core;
+			sourceTree = "<group>";
+		};
+		A4C0529D22482DD7000A069D /* VideoFetcher */ = {
+			isa = PBXGroup;
+			children = (
+				A4C0529E22482DD7000A069D /* YoutubeFetcher.swift */,
+				A4C0529F22482DD7000A069D /* VimeoFetcher.swift */,
+			);
+			path = VideoFetcher;
+			sourceTree = "<group>";
+		};
+		A4C052A022482DD7000A069D /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				A4C052A122482DD7000A069D /* Storage.swift */,
+				A4C052A222482DD7000A069D /* CurrentlyWatchingModel.swift */,
+				A4C052A322482DD7000A069D /* PathUtil.swift */,
+				A4C052A422482DD7000A069D /* ProgressModel.swift */,
+				A4C052A522482DD7000A069D /* FavoriteModel.swift */,
+				A4C052A622482DD7000A069D /* ImageDownloadCenter.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		A4C052A822482DD7000A069D /* API */ = {
+			isa = PBXGroup;
+			children = (
+				A4C052A922482DD7000A069D /* Error.swift */,
+				A4C052AA22482DD7000A069D /* APIClient.swift */,
+				A4C052AB22482DD7000A069D /* Models */,
+				A4C052B122482DD7000A069D /* APIClient+Conference.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		A4C052AB22482DD7000A069D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A4C052AC22482DD7000A069D /* OrganisatorModel.swift */,
+				A4C052AD22482DD7000A069D /* VideoSourceModel.swift */,
+				A4C052AE22482DD7000A069D /* TalkModel.swift */,
+				A4C052AF22482DD7000A069D /* ConferenceModel.swift */,
+				A4C052B022482DD7000A069D /* SpeakerModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A4C052B222482DD7000A069D /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				A4C052B322482DD7000A069D /* TagModel.swift */,
+				A4C052B422482DD7000A069D /* TagSyncService.swift */,
+				A4C052B522482DD7000A069D /* SearchableProtocol.swift */,
+			);
+			path = Tag;
+			sourceTree = "<group>";
+		};
 		B9AE240D22469743009A263D = {
 			isa = PBXGroup;
 			children = (
 				B9AE241822469743009A263D /* Conferences */,
 				B9AE242F22469746009A263D /* ConferencesTests */,
 				B9AE241722469743009A263D /* Products */,
-				D5F3E0D78525C146D041DD29 /* Pods */,
-				F87CF27628491FDB69FB99FA /* Frameworks */,
+				CCFCFA8A2E7F49B392E047A8 /* Pods */,
+				6B3F6E1E5CAD1E684BC5C7B5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -93,6 +231,8 @@
 		B9AE241822469743009A263D /* Conferences */ = {
 			isa = PBXGroup;
 			children = (
+				A4E70CC9224967B60065908E /* ConferencesCore.framework */,
+				A4C0529C22482DD7000A069D /* Core */,
 				B9AE241922469743009A263D /* AppDelegate.swift */,
 				B9AE241B22469743009A263D /* MasterViewController.swift */,
 				B9AE241D22469743009A263D /* DetailViewController.swift */,
@@ -114,25 +254,15 @@
 			path = ConferencesTests;
 			sourceTree = "<group>";
 		};
-		D5F3E0D78525C146D041DD29 /* Pods */ = {
+		CCFCFA8A2E7F49B392E047A8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				145CF78FD62D51D13E7E637D /* Pods-Conferences.debug.xcconfig */,
-				2D2A091A67E992C3CA71CD09 /* Pods-Conferences.release.xcconfig */,
-				89F90FD3169909081EE23B69 /* Pods-ConferencesTests.debug.xcconfig */,
-				C349D49CE2A5E53939BD1703 /* Pods-ConferencesTests.release.xcconfig */,
+				868D2C02779B218982E45B05 /* Pods-Conferences.debug.xcconfig */,
+				D5DECBFE49653B8525CD601F /* Pods-Conferences.release.xcconfig */,
+				D7BE1B9BC975C0F64EE3C240 /* Pods-ConferencesTests.debug.xcconfig */,
+				7E03FBF0215F727EEAE89189 /* Pods-ConferencesTests.release.xcconfig */,
 			);
 			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		F87CF27628491FDB69FB99FA /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				A42E9D3EBECB2E8682FFD6F0 /* Pods_Conferences.framework */,
-				FFCBE2774FFAA6DF90A4A473 /* Pods_ConferencesTests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,11 +272,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9AE243522469746009A263D /* Build configuration list for PBXNativeTarget "Conferences" */;
 			buildPhases = (
-				D34CF0C1450C6563AB73E961 /* [CP] Check Pods Manifest.lock */,
+				C6C8F25AC60A42E0425B81DD /* [CP] Check Pods Manifest.lock */,
 				B9AE241222469743009A263D /* Sources */,
 				B9AE241322469743009A263D /* Frameworks */,
 				B9AE241422469743009A263D /* Resources */,
-				8E33B831913450C01A4D4FD5 /* [CP] Embed Pods Frameworks */,
+				4E198122C51C309A6A876469 /* [CP] Embed Pods Frameworks */,
+				A4C052D322482F6D000A069D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -161,7 +292,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9AE243822469746009A263D /* Build configuration list for PBXNativeTarget "ConferencesTests" */;
 			buildPhases = (
-				C0F044E5F2742868B567433B /* [CP] Check Pods Manifest.lock */,
+				59DC5DFFC57BF6571729BB9F /* [CP] Check Pods Manifest.lock */,
 				B9AE242822469746009A263D /* Sources */,
 				B9AE242922469746009A263D /* Frameworks */,
 				B9AE242A22469746009A263D /* Resources */,
@@ -235,7 +366,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8E33B831913450C01A4D4FD5 /* [CP] Embed Pods Frameworks */ = {
+		4E198122C51C309A6A876469 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -243,21 +374,25 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Conferences/Pods-Conferences-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-Conferences/Pods-Conferences-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/TinyConstraints/TinyConstraints.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TinyConstraints.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Conferences/Pods-Conferences-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Conferences/Pods-Conferences-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C0F044E5F2742868B567433B /* [CP] Check Pods Manifest.lock */ = {
+		59DC5DFFC57BF6571729BB9F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -279,7 +414,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D34CF0C1450C6563AB73E961 /* [CP] Check Pods Manifest.lock */ = {
+		C6C8F25AC60A42E0425B81DD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -308,10 +443,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4C052B922482DD7000A069D /* VimeoFetcher.swift in Sources */,
+				A4C052BA22482DD7000A069D /* Storage.swift in Sources */,
+				A4C052CA22482DD7000A069D /* TagSyncService.swift in Sources */,
 				B9AE241E22469743009A263D /* DetailViewController.swift in Sources */,
+				A4C052B822482DD7000A069D /* YoutubeFetcher.swift in Sources */,
+				A4C052BD22482DD7000A069D /* ProgressModel.swift in Sources */,
+				A4C052BC22482DD7000A069D /* PathUtil.swift in Sources */,
 				B9AE241C22469743009A263D /* MasterViewController.swift in Sources */,
+				A4C052C022482DD7000A069D /* LoggingHelper.swift in Sources */,
+				A4C052C222482DD7000A069D /* APIClient.swift in Sources */,
+				A4C052BB22482DD7000A069D /* CurrentlyWatchingModel.swift in Sources */,
+				A4C052C622482DD7000A069D /* ConferenceModel.swift in Sources */,
+				A4C052CD22482DD7000A069D /* TalkService.swift in Sources */,
+				A4C052BF22482DD7000A069D /* ImageDownloadCenter.swift in Sources */,
+				A4C052C922482DD7000A069D /* TagModel.swift in Sources */,
+				A4C052C522482DD7000A069D /* TalkModel.swift in Sources */,
+				A4C052C422482DD7000A069D /* VideoSourceModel.swift in Sources */,
+				A4C052C822482DD7000A069D /* APIClient+Conference.swift in Sources */,
+				A4C052C322482DD7000A069D /* OrganisatorModel.swift in Sources */,
 				B9AE243C22469A8A009A263D /* Styleguide.swift in Sources */,
+				A4C052BE22482DD7000A069D /* FavoriteModel.swift in Sources */,
+				A4C052C722482DD7000A069D /* SpeakerModel.swift in Sources */,
+				A4C052C122482DD7000A069D /* Error.swift in Sources */,
 				B9AE241A22469743009A263D /* AppDelegate.swift in Sources */,
+				A4C052CB22482DD7000A069D /* SearchableProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,7 +560,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -459,7 +615,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -471,11 +627,21 @@
 		};
 		B9AE243622469746009A263D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 145CF78FD62D51D13E7E637D /* Pods-Conferences.debug.xcconfig */;
+			baseConfigurationReference = 868D2C02779B218982E45B05 /* Pods-Conferences.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MVQE7PHKXD;
+				DEVELOPMENT_TEAM = VFD5255ZKB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Realm\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RealmSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/TinyConstraints\"",
+					"\"${PODS_ROOT}/Crashlytics/iOS\"",
+					"\"${PODS_ROOT}/Fabric/iOS\"",
+					"\"$(SRCROOT)\"/**",
+					"$(PROJECT_DIR)/Conferences",
+				);
 				INFOPLIST_FILE = Conferences/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -491,11 +657,15 @@
 		};
 		B9AE243722469746009A263D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D2A091A67E992C3CA71CD09 /* Pods-Conferences.release.xcconfig */;
+			baseConfigurationReference = D5DECBFE49653B8525CD601F /* Pods-Conferences.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MVQE7PHKXD;
+				DEVELOPMENT_TEAM = VFD5255ZKB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Conferences",
+				);
 				INFOPLIST_FILE = Conferences/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -511,7 +681,7 @@
 		};
 		B9AE243922469746009A263D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89F90FD3169909081EE23B69 /* Pods-ConferencesTests.debug.xcconfig */;
+			baseConfigurationReference = D7BE1B9BC975C0F64EE3C240 /* Pods-ConferencesTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -533,7 +703,7 @@
 		};
 		B9AE243A22469746009A263D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C349D49CE2A5E53939BD1703 /* Pods-ConferencesTests.release.xcconfig */;
+			baseConfigurationReference = 7E03FBF0215F727EEAE89189 /* Pods-ConferencesTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
