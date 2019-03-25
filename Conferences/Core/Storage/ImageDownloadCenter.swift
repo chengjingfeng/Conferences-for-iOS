@@ -6,12 +6,11 @@
 //  Copyright © 2017 Guilherme Rambo. All rights reserved.
 //
 
-import Cocoa
+import UIKit
 import RealmSwift
-import os.log
 import ConferencesCore
 
-typealias ImageDownloadCompletionBlock = (_ sourceURL: URL, _ original: NSImage?, _ thumbnail: NSImage?) -> Void
+typealias ImageDownloadCompletionBlock = (_ sourceURL: URL, _ original: UIImage?, _ thumbnail: UIImage?) -> Void
 
 final class ImageDownloadCenter {
 
@@ -19,20 +18,19 @@ final class ImageDownloadCenter {
 
     private let cacheProvider = ImageCacheProvider()
     private let queue = OperationQueue()
-    private let log = OSLog(subsystem: "Conferences", category: "ImageDownloadCenter")
 
     func downloadImage(from url: URL, thumbnailHeight: CGFloat, thumbnailOnly: Bool = false, completion: @escaping ImageDownloadCompletionBlock) -> Operation? {
         if let cache = cacheProvider.cacheEntity(for: url) {
-            var original: NSImage?
+            var original: UIImage?
 
             if !thumbnailOnly {
-                original = NSImage(data: cache.original)
+                original = UIImage(data: cache.original)
             }
 
-            let thumb = NSImage(data: cache.thumbnail)
+            let thumb = UIImage(data: cache.thumbnail)
 
-            original?.cacheMode = .never
-            thumb?.cacheMode = .never
+//            original?.cacheMode = .never
+//            thumb?.cacheMode = .never
 
             completion(url, original, thumb)
 
@@ -44,16 +42,16 @@ final class ImageDownloadCenter {
             activeOp.completionBlock = { [] in
                 DispatchQueue.main.async {
                     if let cache = self.cacheProvider.cacheEntity(for: url) {
-                        var original: NSImage?
+                        var original: UIImage?
 
                         if !thumbnailOnly {
-                            original = NSImage(data: cache.original)
+                            original = UIImage(data: cache.original)
                         }
 
-                        let thumb = NSImage(data: cache.thumbnail)
+                        let thumb = UIImage(data: cache.thumbnail)
 
-                        original?.cacheMode = .never
-                        thumb?.cacheMode = .never
+//                        original?.cacheMode = .never
+//                        thumb?.cacheMode = .never
                         completion(url, original, thumb)
                     }
                 }
@@ -113,7 +111,6 @@ private final class ImageCacheProvider {
     private var thumbCaches: [URL: URL] = [:]
 
     private let upperLimit = 16 * 1024 * 1024
-    private let log = OSLog(subsystem: "Conferences", category: "ImageCacheProvider")
 
     private func makeRealm() -> Realm? {
         let filePath = PathUtil.appSupportPathAssumingExisting + "/ImageCache.realm"
@@ -156,10 +153,10 @@ private final class ImageCacheProvider {
 
                     bgRealm.invalidate()
                 } catch {
-                    os_log("Failed to save cached image to disk: %{public}@",
-                           log: self.log,
-                           type: .error,
-                           String(describing: error))
+//                    os_log("Failed to save cached image to disk: %{public}@",
+//                           log: self.log,
+//                           type: .error,
+//                           String(describing: error))
                 }
             }
         }
@@ -247,7 +244,7 @@ private final class ImageDownloadOperation: Operation {
                 return
             }
 
-            guard let originalImage = NSImage(data: data) else {
+            guard let originalImage = UIImage(data: data) else {
                 DispatchQueue.main.async { welf.imageCompletionHandler?(welf.url, nil, nil) }
                 welf._executing = false
                 welf._finished = true
@@ -262,14 +259,14 @@ private final class ImageDownloadOperation: Operation {
 
             let thumbnailImage = originalImage.resized(to: welf.thumbnailHeight)
 
-            originalImage.cacheMode = .never
-            thumbnailImage.cacheMode = .never
+//            originalImage.cacheMode = .never
+//            thumbnailImage.cacheMode = .never
 
             DispatchQueue.main.async {
                 welf.imageCompletionHandler?(welf.url, originalImage, thumbnailImage)
             }
 
-            welf.cacheProvider.cacheImage(for: welf.url, original: data, thumbnail: thumbnailImage.tiffRepresentation)
+            welf.cacheProvider.cacheImage(for: welf.url, original: data, thumbnail: thumbnailImage.pngData())
 
             welf._executing = false
             welf._finished = true
@@ -278,20 +275,16 @@ private final class ImageDownloadOperation: Operation {
 
 }
 
-extension NSImage {
+extension UIImage {
 
-    func resized(to maxHeight: CGFloat) -> NSImage {
+    func resized(to maxHeight: CGFloat) -> UIImage {
         let scaleFactor = maxHeight / size.height
         let newWidth = size.width * scaleFactor
         let newHeight = size.height * scaleFactor
 
-        let resizedImage = NSImage(size: NSSize(width: newWidth, height: newHeight))
+        let image = self.resized(to: newWidth)
 
-        resizedImage.lockFocus()
-        draw(in: NSRect(x: 0, y: 0, width: newWidth, height: newHeight))
-        resizedImage.unlockFocus()
-
-        return resizedImage
+        return image
     }
 
 }

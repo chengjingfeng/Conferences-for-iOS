@@ -23,7 +23,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Cocoa
+import Foundation
 
 public class HCVimeoVideoExtractor: NSObject {
     fileprivate let domain = "ph.hercsoft.HCVimeoVideoExtractor"

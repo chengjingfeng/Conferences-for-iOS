@@ -6,7 +6,6 @@
 //  Copyright © 2019 Timon Blask. All rights reserved.
 //
 
-import Cocoa
 import Fabric
 import Crashlytics
 

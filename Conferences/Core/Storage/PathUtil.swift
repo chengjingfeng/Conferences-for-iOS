@@ -6,7 +6,7 @@
 //  Copyright © 2017 Guilherme Rambo. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 final class PathUtil {
 
