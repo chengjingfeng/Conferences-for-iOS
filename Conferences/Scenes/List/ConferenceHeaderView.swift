@@ -11,13 +11,16 @@ import UIKit
 class ConferenceHeaderView: UIView {
 
     private weak var imageDownloadOperation: Operation?
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
+    private var leftSafeAreaInset: CGFloat = 0
+    
+    init(safeAreaInsets: UIEdgeInsets) {
+        leftSafeAreaInset = safeAreaInsets.left
+        
+        super.init(frame: .zero)
+        
         configureView()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -160,13 +163,13 @@ class ConferenceHeaderView: UIView {
     }()
 
     private func configureView() {
+        
         let containerView = UIView()
         backgroundColor = UIColor.panelBackground
         containerView.layer.cornerRadius = 10
         containerView.backgroundColor = UIColor.elementBackground
         addSubview(containerView)
-        containerView.edgesToSuperview(insets: .init(top: 15, left: 15, bottom: 15, right: 15))
-
+        containerView.edgesToSuperview(insets: .init(top: 15, left: 15 + leftSafeAreaInset, bottom: 15, right: 15))
         containerView.addSubview(stackView)
         stackView.edgesToSuperview(insets: .init(top: 15, left: 15, bottom: 15, right: 15))
     }
