@@ -87,12 +87,13 @@ class ListViewController: UITableViewController {
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.elementBackground
         cell.selectedBackgroundView = bgColorView
+        cell.backgroundColor = UIColor.elementBackground
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let conferenceView = ConferenceHeaderView()
+        let conferenceView = ConferenceHeaderView(safeAreaInsets: tableView.safeAreaInsets)
         let conference = conferences[section]
 
         conferenceView.configureView(with: conference)
