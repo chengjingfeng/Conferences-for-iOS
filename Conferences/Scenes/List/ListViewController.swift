@@ -17,7 +17,9 @@ class ListViewController: UITableViewController {
     var conferences: [ConferenceModel] = [] {
         didSet {
             DispatchQueue.main.async {
-                if let talk = self.conferences.first?.talks.first, UIDevice.current.userInterfaceIdiom == .pad {
+                if let talk = self.conferences.first?.talks.first,
+                    let window = UIApplication.shared.keyWindow,
+                    window.traitCollection.horizontalSizeClass == .regular {
                     self.splitDelegate?.didSelectTalk(talk: talk)
                 }
 
