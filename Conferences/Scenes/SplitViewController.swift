@@ -51,6 +51,7 @@ final class SplitViewController: UISplitViewController {
         self.minimumPrimaryColumnWidth = 380
         self.maximumPrimaryColumnWidth = 400
         self.view.backgroundColor = .elementBackground
+        self.preferredDisplayMode = .allVisible
         self.viewControllers = [listViewController, detailViewController]
     }
 }
