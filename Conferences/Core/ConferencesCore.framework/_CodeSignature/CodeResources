@@ -4,9 +4,13 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>.DS_Store</key>
+		<data>
+		3y++sUAKzaCQmjLBz2v0kvESHgc=
+		</data>
 		<key>Headers/ConferencesCore-Swift.h</key>
 		<data>
-		UebA1XXa5hO/WpW/kVB+XrzLOMo=
+		G4drFGb7hAlkrygXy1b27znLKV4=
 		</data>
 		<key>Headers/ConferencesCore.h</key>
 		<data>
@@ -14,15 +18,15 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		gsGT4feGrQpIZIu7fY5v0UwEUII=
+		sOGdK93hEbH/bUlQzPce/3m7zAI=
 		</data>
 		<key>Modules/ConferencesCore.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		NP7tB9GaaPbIMSm6mrFtL76YwWA=
+		rDQ49yi+BLLROqF/3+96g0t+8Qk=
 		</data>
 		<key>Modules/ConferencesCore.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		PfjeHCAlrhfttlp7Wj+9WsCCTow=
+		leJpsQ/1Mf8Nm+dKT26Uv4u8MGA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -35,7 +39,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			DQTOmBPZ822ljKn1tcQ17OLDLfP2uM6bIFaLnr4BhfE=
+			rApgPqcaLXASE39Fk2Z3YveXvvHn0H9QayB25EYOv0c=
 			</data>
 		</dict>
 		<key>Headers/ConferencesCore.h</key>
@@ -49,14 +53,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xQ1xnKB+vJpG8YmGMKl+J6B5TIuech4fHeqKXZ7i9KU=
+			nxCJt7CsXhu5SCk376HpiHaYfBzsaKsePQ6GlR+CqXo=
 			</data>
 		</dict>
 		<key>Modules/ConferencesCore.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CtY+tOhIsadAtGt8CVQM3STk0MDVgG2dFHaGl5K5ags=
+			ZGs911EmVgK84mtNl7ff0l6NaVKorkWvXVLmYvRAnjg=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

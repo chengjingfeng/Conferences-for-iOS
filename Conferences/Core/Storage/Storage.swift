@@ -11,17 +11,8 @@ import RealmSwift
 final class Storage {
     static let shared = Storage()
 
-    private func makeRealm() -> Realm? {
-        let filePath = PathUtil.appSupportPathAssumingExisting + "/default.realm"
-
-        var realmConfig = Realm.Configuration(fileURL: URL(fileURLWithPath: filePath))
-        realmConfig.objectTypes = [ProgressModel.self, WatchlistModel.self, CurrentlyWatchingModel.self ]
-
-        return try? Realm(configuration: realmConfig)
-    }
-
     private lazy var realm: Realm? = {
-        return self.makeRealm()
+        return try? Realm()
     }()
 
     func getProgress(for id: Int) ->  ProgressModel? {

@@ -9,11 +9,21 @@
 /* Begin PBXBuildFile section */
 		119C9FBB45ED84E8DAF963EC /* Pods_Conferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AB873A8F492095562F9056 /* Pods_Conferences.framework */; };
 		5C940C5EF6C5DE392CCB1EBA /* Pods_ConferencesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B886F8F5AE9EB165C358990 /* Pods_ConferencesTests.framework */; };
+		B950466E224A1B0300382DB5 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950466D224A1B0300382DB5 /* AppCoordinator.swift */; };
+		B9504670224A1BA500382DB5 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950466F224A1BA500382DB5 /* SplitViewController.swift */; };
+		B9504672224A1BDF00382DB5 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504671224A1BDF00382DB5 /* MainCoordinator.swift */; };
+		B9504674224A257900382DB5 /* ConferenceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504673224A257900382DB5 /* ConferenceViewCell.swift */; };
+		B9504676224A307F00382DB5 /* TalkViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504675224A307F00382DB5 /* TalkViewCell.swift */; };
+		B950467C224A459A00382DB5 /* DetailSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950467B224A459A00382DB5 /* DetailSummaryViewController.swift */; };
+		B950467E224A469A00382DB5 /* aSpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950467D224A469A00382DB5 /* aSpeakerView.swift */; };
+		B9504680224A46A400382DB5 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950467F224A46A400382DB5 /* SpeakerView.swift */; };
+		B95046A2224A7E8800382DB5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B95046A1224A7E8800382DB5 /* Main.storyboard */; };
+		B9925031224E880400AA85EE /* ConferencesCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B992502F224E87F500AA85EE /* ConferencesCore.framework */; };
+		B9925032224E880400AA85EE /* ConferencesCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B992502F224E87F500AA85EE /* ConferencesCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B99A5B252249769F00EE5033 /* YoutubeFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B0B2249769F00EE5033 /* YoutubeFetcher.swift */; };
 		B99A5B262249769F00EE5033 /* VimeoFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B0C2249769F00EE5033 /* VimeoFetcher.swift */; };
 		B99A5B272249769F00EE5033 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B0E2249769F00EE5033 /* Storage.swift */; };
 		B99A5B282249769F00EE5033 /* CurrentlyWatchingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B0F2249769F00EE5033 /* CurrentlyWatchingModel.swift */; };
-		B99A5B292249769F00EE5033 /* PathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B102249769F00EE5033 /* PathUtil.swift */; };
 		B99A5B2A2249769F00EE5033 /* ProgressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B112249769F00EE5033 /* ProgressModel.swift */; };
 		B99A5B2B2249769F00EE5033 /* FavoriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B122249769F00EE5033 /* FavoriteModel.swift */; };
 		B99A5B2C2249769F00EE5033 /* ImageDownloadCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B132249769F00EE5033 /* ImageDownloadCenter.swift */; };
@@ -30,12 +40,9 @@
 		B99A5B372249769F00EE5033 /* TagSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B212249769F00EE5033 /* TagSyncService.swift */; };
 		B99A5B382249769F00EE5033 /* SearchableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B222249769F00EE5033 /* SearchableProtocol.swift */; };
 		B99A5B3A2249769F00EE5033 /* TalkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B242249769F00EE5033 /* TalkService.swift */; };
-		B99A5B3F22497D2E00EE5033 /* ConferencesCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B99A5B3D22497D2200EE5033 /* ConferencesCore.framework */; };
-		B99A5B4022497D2E00EE5033 /* ConferencesCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B99A5B3D22497D2200EE5033 /* ConferencesCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B9AE241A22469743009A263D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE241922469743009A263D /* AppDelegate.swift */; };
-		B9AE241C22469743009A263D /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE241B22469743009A263D /* MasterViewController.swift */; };
+		B9AE241C22469743009A263D /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE241B22469743009A263D /* ListViewController.swift */; };
 		B9AE241E22469743009A263D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE241D22469743009A263D /* DetailViewController.swift */; };
-		B9AE242122469743009A263D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9AE241F22469743009A263D /* Main.storyboard */; };
 		B9AE242322469746009A263D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9AE242222469746009A263D /* Assets.xcassets */; };
 		B9AE242622469746009A263D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9AE242422469746009A263D /* LaunchScreen.storyboard */; };
 		B9AE243122469746009A263D /* ConferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE243022469746009A263D /* ConferencesTests.swift */; };
@@ -59,7 +66,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B99A5B4022497D2E00EE5033 /* ConferencesCore.framework in Embed Frameworks */,
+				B9925032224E880400AA85EE /* ConferencesCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,11 +78,20 @@
 		7E03FBF0215F727EEAE89189 /* Pods-ConferencesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConferencesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ConferencesTests/Pods-ConferencesTests.release.xcconfig"; sourceTree = "<group>"; };
 		84AB873A8F492095562F9056 /* Pods_Conferences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Conferences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		868D2C02779B218982E45B05 /* Pods-Conferences.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conferences.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Conferences/Pods-Conferences.debug.xcconfig"; sourceTree = "<group>"; };
+		B950466D224A1B0300382DB5 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		B950466F224A1BA500382DB5 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		B9504671224A1BDF00382DB5 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		B9504673224A257900382DB5 /* ConferenceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceViewCell.swift; sourceTree = "<group>"; };
+		B9504675224A307F00382DB5 /* TalkViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkViewCell.swift; sourceTree = "<group>"; };
+		B950467B224A459A00382DB5 /* DetailSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSummaryViewController.swift; sourceTree = "<group>"; };
+		B950467D224A469A00382DB5 /* aSpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aSpeakerView.swift; sourceTree = "<group>"; };
+		B950467F224A46A400382DB5 /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
+		B95046A1224A7E8800382DB5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		B992502F224E87F500AA85EE /* ConferencesCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ConferencesCore.framework; sourceTree = "<group>"; };
 		B99A5B0B2249769F00EE5033 /* YoutubeFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeFetcher.swift; sourceTree = "<group>"; };
 		B99A5B0C2249769F00EE5033 /* VimeoFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VimeoFetcher.swift; sourceTree = "<group>"; };
 		B99A5B0E2249769F00EE5033 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		B99A5B0F2249769F00EE5033 /* CurrentlyWatchingModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentlyWatchingModel.swift; sourceTree = "<group>"; };
-		B99A5B102249769F00EE5033 /* PathUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathUtil.swift; sourceTree = "<group>"; };
 		B99A5B112249769F00EE5033 /* ProgressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressModel.swift; sourceTree = "<group>"; };
 		B99A5B122249769F00EE5033 /* FavoriteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteModel.swift; sourceTree = "<group>"; };
 		B99A5B132249769F00EE5033 /* ImageDownloadCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadCenter.swift; sourceTree = "<group>"; };
@@ -92,12 +108,10 @@
 		B99A5B212249769F00EE5033 /* TagSyncService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagSyncService.swift; sourceTree = "<group>"; };
 		B99A5B222249769F00EE5033 /* SearchableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchableProtocol.swift; sourceTree = "<group>"; };
 		B99A5B242249769F00EE5033 /* TalkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkService.swift; sourceTree = "<group>"; };
-		B99A5B3D22497D2200EE5033 /* ConferencesCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ConferencesCore.framework; sourceTree = "<group>"; };
 		B9AE241622469743009A263D /* Conferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9AE241922469743009A263D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B9AE241B22469743009A263D /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		B9AE241B22469743009A263D /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		B9AE241D22469743009A263D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		B9AE242022469743009A263D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B9AE242222469746009A263D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9AE242522469746009A263D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B9AE242722469746009A263D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,7 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				119C9FBB45ED84E8DAF963EC /* Pods_Conferences.framework in Frameworks */,
-				B99A5B3F22497D2E00EE5033 /* ConferencesCore.framework in Frameworks */,
+				B9925031224E880400AA85EE /* ConferencesCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,10 +153,41 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B950466A224A18D500382DB5 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				B950466F224A1BA500382DB5 /* SplitViewController.swift */,
+				B950466C224A18F200382DB5 /* Detail */,
+				B950466B224A18E800382DB5 /* List */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		B950466B224A18E800382DB5 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				B9AE241B22469743009A263D /* ListViewController.swift */,
+				B9504673224A257900382DB5 /* ConferenceViewCell.swift */,
+				B9504675224A307F00382DB5 /* TalkViewCell.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		B950466C224A18F200382DB5 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				B9AE241D22469743009A263D /* DetailViewController.swift */,
+				B950467B224A459A00382DB5 /* DetailSummaryViewController.swift */,
+				B950467D224A469A00382DB5 /* aSpeakerView.swift */,
+				B950467F224A46A400382DB5 /* SpeakerView.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
 		B99A5B092249769F00EE5033 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				B99A5B3D22497D2200EE5033 /* ConferencesCore.framework */,
+				B992502F224E87F500AA85EE /* ConferencesCore.framework */,
 				B99A5B0A2249769F00EE5033 /* VideoFetcher */,
 				B99A5B0D2249769F00EE5033 /* Storage */,
 				B99A5B142249769F00EE5033 /* LoggingHelper.swift */,
@@ -167,7 +212,6 @@
 			children = (
 				B99A5B0E2249769F00EE5033 /* Storage.swift */,
 				B99A5B0F2249769F00EE5033 /* CurrentlyWatchingModel.swift */,
-				B99A5B102249769F00EE5033 /* PathUtil.swift */,
 				B99A5B112249769F00EE5033 /* ProgressModel.swift */,
 				B99A5B122249769F00EE5033 /* FavoriteModel.swift */,
 				B99A5B132249769F00EE5033 /* ImageDownloadCenter.swift */,
@@ -231,15 +275,16 @@
 		B9AE241822469743009A263D /* Conferences */ = {
 			isa = PBXGroup;
 			children = (
-				B99A5B092249769F00EE5033 /* Core */,
+				B95046A1224A7E8800382DB5 /* Main.storyboard */,
+				B950466D224A1B0300382DB5 /* AppCoordinator.swift */,
 				B9AE241922469743009A263D /* AppDelegate.swift */,
-				B9AE241B22469743009A263D /* MasterViewController.swift */,
-				B9AE241D22469743009A263D /* DetailViewController.swift */,
-				B9AE241F22469743009A263D /* Main.storyboard */,
+				B99A5B092249769F00EE5033 /* Core */,
+				B950466A224A18D500382DB5 /* Scenes */,
 				B9AE242222469746009A263D /* Assets.xcassets */,
 				B9AE242422469746009A263D /* LaunchScreen.storyboard */,
 				B9AE242722469746009A263D /* Info.plist */,
 				B9AE243B22469A8A009A263D /* Styleguide.swift */,
+				B9504671224A1BDF00382DB5 /* MainCoordinator.swift */,
 			);
 			path = Conferences;
 			sourceTree = "<group>";
@@ -318,9 +363,11 @@
 				TargetAttributes = {
 					B9AE241522469743009A263D = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 					B9AE242B22469746009A263D = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						TestTargetID = B9AE241522469743009A263D;
 					};
 				};
@@ -351,7 +398,7 @@
 			files = (
 				B9AE242622469746009A263D /* LaunchScreen.storyboard in Resources */,
 				B9AE242322469746009A263D /* Assets.xcassets in Resources */,
-				B9AE242122469743009A263D /* Main.storyboard in Resources */,
+				B95046A2224A7E8800382DB5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +424,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/TinyConstraints/TinyConstraints.framework",
+				"${BUILT_PRODUCTS_DIR}/YoutubeKit/YoutubeKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -385,6 +433,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TinyConstraints.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubeKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -443,27 +492,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				B99A5B262249769F00EE5033 /* VimeoFetcher.swift in Sources */,
+				B9504672224A1BDF00382DB5 /* MainCoordinator.swift in Sources */,
 				B99A5B272249769F00EE5033 /* Storage.swift in Sources */,
+				B950466E224A1B0300382DB5 /* AppCoordinator.swift in Sources */,
+				B9504680224A46A400382DB5 /* SpeakerView.swift in Sources */,
 				B99A5B372249769F00EE5033 /* TagSyncService.swift in Sources */,
 				B9AE241E22469743009A263D /* DetailViewController.swift in Sources */,
 				B99A5B252249769F00EE5033 /* YoutubeFetcher.swift in Sources */,
 				B99A5B2A2249769F00EE5033 /* ProgressModel.swift in Sources */,
-				B99A5B292249769F00EE5033 /* PathUtil.swift in Sources */,
-				B9AE241C22469743009A263D /* MasterViewController.swift in Sources */,
+				B9AE241C22469743009A263D /* ListViewController.swift in Sources */,
 				B99A5B2D2249769F00EE5033 /* LoggingHelper.swift in Sources */,
 				B99A5B2F2249769F00EE5033 /* APIClient.swift in Sources */,
 				B99A5B282249769F00EE5033 /* CurrentlyWatchingModel.swift in Sources */,
 				B99A5B332249769F00EE5033 /* ConferenceModel.swift in Sources */,
 				B99A5B3A2249769F00EE5033 /* TalkService.swift in Sources */,
+				B9504670224A1BA500382DB5 /* SplitViewController.swift in Sources */,
 				B99A5B2C2249769F00EE5033 /* ImageDownloadCenter.swift in Sources */,
 				B99A5B362249769F00EE5033 /* TagModel.swift in Sources */,
 				B99A5B322249769F00EE5033 /* TalkModel.swift in Sources */,
 				B99A5B312249769F00EE5033 /* VideoSourceModel.swift in Sources */,
+				B9504676224A307F00382DB5 /* TalkViewCell.swift in Sources */,
 				B99A5B352249769F00EE5033 /* APIClient+Conference.swift in Sources */,
 				B99A5B302249769F00EE5033 /* OrganisatorModel.swift in Sources */,
 				B9AE243C22469A8A009A263D /* Styleguide.swift in Sources */,
 				B99A5B2B2249769F00EE5033 /* FavoriteModel.swift in Sources */,
+				B9504674224A257900382DB5 /* ConferenceViewCell.swift in Sources */,
 				B99A5B342249769F00EE5033 /* SpeakerModel.swift in Sources */,
+				B950467C224A459A00382DB5 /* DetailSummaryViewController.swift in Sources */,
+				B950467E224A469A00382DB5 /* aSpeakerView.swift in Sources */,
 				B99A5B2E2249769F00EE5033 /* Error.swift in Sources */,
 				B9AE241A22469743009A263D /* AppDelegate.swift in Sources */,
 				B99A5B382249769F00EE5033 /* SearchableProtocol.swift in Sources */,
@@ -489,14 +545,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B9AE241F22469743009A263D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B9AE242022469743009A263D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B9AE242422469746009A263D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -650,7 +698,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = digital.conferences.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -675,7 +723,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = digital.conferences.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -696,7 +744,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = digital.conferences.ios.ConferencesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Conferences.app/Conferences";
 			};
@@ -718,7 +766,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = digital.conferences.ios.ConferencesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Conferences.app/Conferences";
 			};

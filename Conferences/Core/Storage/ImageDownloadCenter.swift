@@ -112,19 +112,8 @@ private final class ImageCacheProvider {
 
     private let upperLimit = 16 * 1024 * 1024
 
-    private func makeRealm() -> Realm? {
-        let filePath = PathUtil.appSupportPathAssumingExisting + "/ImageCache.realm"
-
-        var realmConfig = Realm.Configuration(fileURL: URL(fileURLWithPath: filePath))
-        realmConfig.objectTypes = [ImageCacheEntity.self]
-        realmConfig.schemaVersion = 1
-        realmConfig.migrationBlock = { _, _ in }
-
-        return try? Realm(configuration: realmConfig)
-    }
-
     private lazy var realm: Realm? = {
-        return self.makeRealm()
+         return try? Realm()
     }()
 
     func cacheEntity(for url: URL) -> ImageCacheEntity? {
@@ -138,7 +127,7 @@ private final class ImageCacheProvider {
 
         DispatchQueue.global(qos: .utility).async {
             autoreleasepool {
-                guard let bgRealm = self.makeRealm() else { return }
+                guard let bgRealm = try? Realm() else { return }
 
                 let entity = ImageCacheEntity()
 
@@ -281,10 +270,31 @@ extension UIImage {
         let scaleFactor = maxHeight / size.height
         let newWidth = size.width * scaleFactor
         let newHeight = size.height * scaleFactor
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        
+        func isSameSize(_ newSize: CGSize) -> Bool {
+            return size == newSize
+        }
 
-        let image = self.resized(to: newWidth)
+        func scaleImage(_ newSize: CGSize) -> UIImage? {
+            func getScaledRect(_ newSize: CGSize) -> CGRect {
+                let ratio   = max(newSize.width / size.width, newSize.height / size.height)
+                let width   = size.width * ratio
+                let height  = size.height * ratio
+                return CGRect(x: 0, y: 0, width: width, height: height)
+            }
 
-        return image
+            func _scaleImage(_ scaledRect: CGRect) -> UIImage? {
+                UIGraphicsBeginImageContextWithOptions(scaledRect.size, false, 0.0);
+                draw(in: scaledRect)
+                let image = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
+                UIGraphicsEndImageContext()
+                return image
+            }
+            return _scaleImage(getScaledRect(newSize))
+        }
+
+        return isSameSize(newSize) ? self : scaleImage(newSize)!
     }
 
 }

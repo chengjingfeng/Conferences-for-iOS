@@ -11,6 +11,7 @@ target 'Conferences' do
   pod 'TinyConstraints'
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'YoutubeKit'
 
   target 'ConferencesTests' do
     inherit! :search_paths
