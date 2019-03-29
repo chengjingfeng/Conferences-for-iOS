@@ -71,10 +71,10 @@ class ActionView: UIView {
         guard var talk = self.talk else { return }
 
         talk.watched.toggle()
-
-        let watchlistImage = talk.onWatchlist ? UIImage(named: "watchlist_filled") : UIImage(named: "watchlist")
-        watchlistButton.setImage(watchlistImage, for: .normal)
-
+        
+        let watchImage = talk.watched ? UIImage(named: "watch_filled") : UIImage(named: "watch")
+        watchButton.setImage(watchImage, for: .normal)
+        
         NotificationCenter.default.post(Notification(name: .refreshActiveCell))
 
         var tag = TagModel(title: "Confinue watching", query: "realm_continue", isActive: false)
@@ -86,8 +86,11 @@ class ActionView: UIView {
 
         talk.onWatchlist.toggle()
 
-        let watchImage = talk.watched ? UIImage(named: "watch_filled") : UIImage(named: "watch")
-        watchButton.setImage(watchImage, for: .normal)
+        let watchlistImage = talk.onWatchlist ? UIImage(named: "watchlist_filled") : UIImage(named: "watchlist")
+        watchlistButton.setImage(watchlistImage, for: .normal)
+        
+        NotificationCenter.default.post(Notification(name: .refreshActiveCell))
+        
 
         var tag = TagModel(title: "Watchlist", query: "realm_watchlist", isActive: talk.onWatchlist)
         TagSyncService.shared.handleStoredTag(&tag)
