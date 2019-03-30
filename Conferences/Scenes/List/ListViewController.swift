@@ -34,6 +34,10 @@ class ListViewController: UITableViewController {
         configureTableView()
         fetchData()
     }
+    
+    func reloadTableView() {
+        tableView.reloadData()
+    }
 
     private func configureTableView() {
         tableView.separatorStyle = .none
@@ -105,6 +109,5 @@ class ListViewController: UITableViewController {
         let talk = conferences[indexPath.section].talks[indexPath.row]
         splitDelegate?.didSelectTalk(talk: talk)
     }
-
 }
 

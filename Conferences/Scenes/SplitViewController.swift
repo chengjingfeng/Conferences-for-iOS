@@ -20,16 +20,24 @@ final class SplitViewController: UISplitViewController {
         configureView()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+            listViewController.reloadTableView()
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var listViewController: UINavigationController = {
+    private lazy var listViewController: ListViewController = {
         let listViewController = ListViewController()
         listViewController.title = "Conferences"
         listViewController.splitDelegate = self
-
-
+        return listViewController
+    }()
+    
+    private lazy var listViewControllerNavigation: UINavigationController = {
         let navigationController = UINavigationController(rootViewController: listViewController)
         navigationController.navigationBar.barTintColor = UIColor.elementBackground
         navigationController.navigationBar.tintColor = UIColor.white
@@ -52,7 +60,7 @@ final class SplitViewController: UISplitViewController {
         self.maximumPrimaryColumnWidth = 400
         self.view.backgroundColor = .elementBackground
         self.preferredDisplayMode = .allVisible
-        self.viewControllers = [listViewController, detailViewController]
+        self.viewControllers = [listViewControllerNavigation, detailViewController]
     }
 }
 

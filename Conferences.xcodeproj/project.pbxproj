@@ -12,10 +12,10 @@
 		B950466E224A1B0300382DB5 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950466D224A1B0300382DB5 /* AppCoordinator.swift */; };
 		B9504670224A1BA500382DB5 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950466F224A1BA500382DB5 /* SplitViewController.swift */; };
 		B9504672224A1BDF00382DB5 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504671224A1BDF00382DB5 /* MainCoordinator.swift */; };
-		B9504674224A257900382DB5 /* ConferenceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504673224A257900382DB5 /* ConferenceViewCell.swift */; };
+		B9504674224A257900382DB5 /* ConferenceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504673224A257900382DB5 /* ConferenceHeaderView.swift */; };
 		B9504676224A307F00382DB5 /* TalkViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504675224A307F00382DB5 /* TalkViewCell.swift */; };
 		B950467C224A459A00382DB5 /* DetailSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950467B224A459A00382DB5 /* DetailSummaryViewController.swift */; };
-		B950467E224A469A00382DB5 /* aSpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950467D224A469A00382DB5 /* aSpeakerView.swift */; };
+		B950467E224A469A00382DB5 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950467D224A469A00382DB5 /* ActionView.swift */; };
 		B9504680224A46A400382DB5 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950467F224A46A400382DB5 /* SpeakerView.swift */; };
 		B95046A2224A7E8800382DB5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B95046A1224A7E8800382DB5 /* Main.storyboard */; };
 		B9925031224E880400AA85EE /* ConferencesCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B992502F224E87F500AA85EE /* ConferencesCore.framework */; };
@@ -81,10 +81,10 @@
 		B950466D224A1B0300382DB5 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		B950466F224A1BA500382DB5 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		B9504671224A1BDF00382DB5 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
-		B9504673224A257900382DB5 /* ConferenceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceViewCell.swift; sourceTree = "<group>"; };
+		B9504673224A257900382DB5 /* ConferenceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceHeaderView.swift; sourceTree = "<group>"; };
 		B9504675224A307F00382DB5 /* TalkViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkViewCell.swift; sourceTree = "<group>"; };
 		B950467B224A459A00382DB5 /* DetailSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSummaryViewController.swift; sourceTree = "<group>"; };
-		B950467D224A469A00382DB5 /* aSpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aSpeakerView.swift; sourceTree = "<group>"; };
+		B950467D224A469A00382DB5 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		B950467F224A46A400382DB5 /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		B95046A1224A7E8800382DB5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B992502F224E87F500AA85EE /* ConferencesCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ConferencesCore.framework; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				B9AE241B22469743009A263D /* ListViewController.swift */,
-				B9504673224A257900382DB5 /* ConferenceViewCell.swift */,
+				B9504673224A257900382DB5 /* ConferenceHeaderView.swift */,
 				B9504675224A307F00382DB5 /* TalkViewCell.swift */,
 			);
 			path = List;
@@ -178,7 +178,7 @@
 			children = (
 				B9AE241D22469743009A263D /* DetailViewController.swift */,
 				B950467B224A459A00382DB5 /* DetailSummaryViewController.swift */,
-				B950467D224A469A00382DB5 /* aSpeakerView.swift */,
+				B950467D224A469A00382DB5 /* ActionView.swift */,
 				B950467F224A46A400382DB5 /* SpeakerView.swift */,
 			);
 			path = Detail;
@@ -420,7 +420,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Conferences/Pods-Conferences-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-Conferences/Pods-Conferences-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/TinyConstraints/TinyConstraints.framework",
@@ -437,7 +437,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Conferences/Pods-Conferences-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Conferences/Pods-Conferences-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		59DC5DFFC57BF6571729BB9F /* [CP] Check Pods Manifest.lock */ = {
@@ -516,10 +516,10 @@
 				B99A5B302249769F00EE5033 /* OrganisatorModel.swift in Sources */,
 				B9AE243C22469A8A009A263D /* Styleguide.swift in Sources */,
 				B99A5B2B2249769F00EE5033 /* FavoriteModel.swift in Sources */,
-				B9504674224A257900382DB5 /* ConferenceViewCell.swift in Sources */,
+				B9504674224A257900382DB5 /* ConferenceHeaderView.swift in Sources */,
 				B99A5B342249769F00EE5033 /* SpeakerModel.swift in Sources */,
 				B950467C224A459A00382DB5 /* DetailSummaryViewController.swift in Sources */,
-				B950467E224A469A00382DB5 /* aSpeakerView.swift in Sources */,
+				B950467E224A469A00382DB5 /* ActionView.swift in Sources */,
 				B99A5B2E2249769F00EE5033 /* Error.swift in Sources */,
 				B9AE241A22469743009A263D /* AppDelegate.swift in Sources */,
 				B99A5B382249769F00EE5033 /* SearchableProtocol.swift in Sources */,
