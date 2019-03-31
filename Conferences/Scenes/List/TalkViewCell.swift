@@ -54,6 +54,7 @@ class TalkViewCell: UITableViewCell {
         l.font = .systemFont(ofSize: 14, weight: .medium)
         l.textColor = .primaryText
         l.lineBreakMode = .byTruncatingTail
+        l.numberOfLines = 2
         l.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         return l
@@ -88,22 +89,19 @@ class TalkViewCell: UITableViewCell {
         return v
     }()
 
-
-    private lazy var progressView: UIView = {
-        let v = UIView()
-
-        v.isHidden = true
-       // v.color = UIColor.lightGray
-        v.width(4)
-
-        return v
-    }()
+//    private lazy var progressView: UIView = {
+//        let v = UIView()
+//
+//        v.backgroundColor = .lightGray
+//        v.width(4)
+//
+//        return v
+//    }()
 
     private lazy var watchtedIndicator: UIImageView = {
         let v = UIImageView()
 
-        v.isHidden = true
-        //v.image = #imageLiteral(resourceName: "watched-tick")
+        v.image = UIImage(named: "watched-tick")
         v.width(10)
         v.height(10)
 
@@ -111,8 +109,9 @@ class TalkViewCell: UITableViewCell {
     }()
 
     private lazy var progressStackView: UIStackView = {
-        let v = UIStackView(arrangedSubviews: [self.progressView, self.watchtedIndicator])
-
+        let v = UIStackView(arrangedSubviews: [self.watchtedIndicator])
+        
+        v.alignment = .center
         self.watchtedIndicator.centerY(to: v)
 
         return v
@@ -121,7 +120,8 @@ class TalkViewCell: UITableViewCell {
     private lazy var stackView: UIStackView = {
         let v = UIStackView(arrangedSubviews: [self.textStackView, self.progressStackView])
 
-        self.progressView.trailing(to: v)
+        v.spacing = 5
+        self.watchtedIndicator.trailing(to: v)
 
         return v
     }()
@@ -150,7 +150,7 @@ class TalkViewCell: UITableViewCell {
         stackView.top(to: thumbnailImageView)
         stackView.bottom(to: thumbnailImageView)
         stackView.leadingToTrailing(of: thumbnailImageView, offset: 6)
-        stackView.trailing(to: self, offset: -40)
+        stackView.trailing(to: self, offset: -20)
     }
 
     func configureView(with model: TalkModel) {
@@ -161,24 +161,23 @@ class TalkViewCell: UITableViewCell {
 
         colorContainer.backgroundColor = UIColor().hexStringToUIColor(hex: model.highlightColor)
 
-        progressView.isHidden = true
+//        progressView.isHidden = true
         watchtedIndicator.isHidden = true
         nowPlayingImage.isHidden = true
 
-//        if let progress = model.progress {
-//
-//            if model.currentlyPlaying {
-//                nowPlayingImage.isHidden = false
-//            }
-//
-//            if progress.relativePosition == 1 && progress.watched {
-//                watchtedIndicator.isHidden = false
-//            } else if progress.relativePosition > 0 {
+        if let progress = model.progress {
+            if model.currentlyPlaying {
+                nowPlayingImage.isHidden = false
+            }
+
+            if progress.relativePosition == 1 && progress.watched {
+                watchtedIndicator.isHidden = false
+            } else if progress.relativePosition > 0 {
 //                progressView.isHidden = false
-////                progressView.hasValidProgress = true
-////                progressView.progress = progress.relativePosition
-//            }
-//        }
+//                progressView.hasValidProgress = true
+//                progressView.progress = progress.relativePosition
+            }
+        }
 
 
         guard let imageUrl = URL(string: model.previewImage) else { return }

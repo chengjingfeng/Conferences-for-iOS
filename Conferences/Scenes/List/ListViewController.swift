@@ -33,6 +33,13 @@ class ListViewController: UITableViewController {
 
         configureTableView()
         fetchData()
+        listenForRefreshActiveCell()
+    }
+    
+    private func listenForRefreshActiveCell() {
+        NotificationCenter.default.addObserver(forName: .refreshActiveCell, object: nil, queue: nil) { [weak self] (notification) in
+            self?.tableView.reloadData()
+        }
     }
     
     func reloadTableView() {
