@@ -73,6 +73,10 @@ class ListViewController: UITableViewController {
         }
     }
     
+    func activateSearch() {
+        searchController.searchBar.becomeFirstResponder()
+    }
+    
     
     // MARK: - Table View
     

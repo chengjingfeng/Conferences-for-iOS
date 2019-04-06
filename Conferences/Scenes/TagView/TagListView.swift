@@ -39,8 +39,8 @@ class TagListView: UIView {
     func configureTags() {
         let tags = TagSyncService.shared.tags
         
-        let xPadding: CGFloat = 25
-        let yPadding: CGFloat = 10
+        let xPadding: CGFloat = 20
+        let yPadding: CGFloat = 7
         
         var rowView: UIView!
         var rowNumber: Int        = 0
