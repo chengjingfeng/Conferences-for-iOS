@@ -31,6 +31,13 @@ class ListViewController: UITableViewController {
         configureSearchBar()
         talkService.delegate = self
         talkService.fetchData()
+        listenForRefreshActiveCell()
+    }
+    
+    private func listenForRefreshActiveCell() {
+        NotificationCenter.default.addObserver(forName: .refreshActiveCell, object: nil, queue: nil) { [weak self] (notification) in
+            self?.tableView.reloadData()
+        }
     }
     
     func reloadTableView() {

@@ -82,6 +82,9 @@ class DetailViewController: UIViewController {
     func configureView(with talk: TalkModel) {
         self.talk = talk
         detailSummaryViewController.configureView(with: talk)
+        player?.clearVideo()
+        player?.removeFromSuperview()
+        player = nil
         guard let imageUrl = URL(string: talk.previewImage) else { return }
 
         self.imageDownloadOperation?.cancel()
@@ -91,6 +94,10 @@ class DetailViewController: UIViewController {
 
             self?.previewImage.image = original
         }
+    }
+    
+    func scrollToTop() {
+        scrollView.setContentOffset(.zero, animated: false)
     }
 
     @objc func didSelectPlay() {

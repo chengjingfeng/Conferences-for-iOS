@@ -80,6 +80,7 @@ extension SplitViewController: SplitViewDelegate {
         detailViewController.configureView(with: talk)
         detailViewController.navigationItem.leftBarButtonItem = self.displayModeButtonItem
         detailViewController.navigationItem.leftItemsSupplementBackButton = true
+        detailViewController.scrollToTop()
 
         showDetailViewController(detailViewController, sender: nil)
     }
