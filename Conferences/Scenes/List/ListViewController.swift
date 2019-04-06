@@ -8,15 +8,23 @@
 
 import UIKit
 
+protocol ListViewUpdater {
+    func didFilter(conferences: Int, talks: Int)
+}
+
 class ListViewController: UITableViewController {
     
     weak var splitDelegate: SplitViewDelegate?
     var detailViewController: DetailViewController? = nil
     var apiClient = APIClient()
     let searchController = UISearchController(searchResultsController: nil)
+    let tagListView = TagListView()
+    var filteredConferences: [ConferenceModel] = []
     
     var conferences: [ConferenceModel] = [] {
         didSet {
+            filteredConferences = conferences
+            
             DispatchQueue.main.async {
                 if let talk = self.conferences.first?.talks.first,
                     let window = UIApplication.shared.keyWindow,
@@ -28,8 +36,6 @@ class ListViewController: UITableViewController {
             }
         }
     }
-    
-    var filteredConferences: [ConferenceModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +63,9 @@ class ListViewController: UITableViewController {
         searchController.searchBar.placeholder = "search ..."
         searchController.searchBar.autocapitalizationType = .none
         
+        tagListView.delegate = self
+        searchController.searchBar.inputAccessoryView = tagListView
+                
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         
@@ -78,7 +87,7 @@ class ListViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let talk = isFiltering() ? filteredConferences[indexPath.section].talks[indexPath.row]: conferences[indexPath.section].talks[indexPath.row]
+                let talk = filteredConferences[indexPath.section].talks[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.configureView(with: talk)
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
@@ -91,11 +100,11 @@ class ListViewController: UITableViewController {
     // MARK: - Table View
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return isFiltering() ? filteredConferences.count : conferences.count
+        return filteredConferences.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isFiltering() ? filteredConferences[section].talks.count : conferences[section].talks.count
+        return filteredConferences[section].talks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -103,7 +112,7 @@ class ListViewController: UITableViewController {
             return UITableViewCell()
         }
         
-        let talk = isFiltering() ? filteredConferences[indexPath.section].talks[indexPath.row] : conferences[indexPath.section].talks[indexPath.row]
+        let talk = filteredConferences[indexPath.section].talks[indexPath.row]
         cell.configureView(with: talk)
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.elementBackground
@@ -130,7 +139,7 @@ class ListViewController: UITableViewController {
 
 extension ListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text ?? "")
+        filterContent()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -146,15 +155,15 @@ extension ListViewController {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
-    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+    func filterContent() {
         
-        guard (searchText.count > 0) else { return }
+        let searchText = searchController.searchBar.text ?? ""
         
         filteredConferences = conferences.map { conference in
             var newConference   = conference
             let filteredTalks   = conference.talks.filter { talk in
-                return talk.searchString.contains(searchText.lowercased()) &&
-                    (scope == "All" || talk.tags.filter { tag in tag.lowercased().contains(scope.lowercased()) }.count > 0)
+                return (searchText.count == 0 || talk.searchString.contains(searchText.lowercased())) &&
+                       talk.matchesAll(activeTags: tagListView.activeTags())
             }
             newConference.talks = filteredTalks
             
@@ -162,20 +171,37 @@ extension ListViewController {
             }
             .filter { $0.talks.count > 0 }
         
+        let result = getFilterResult()
+        tagListView.didFilter(conferences: result.conferences, talks: result.talks)
+        
         tableView.reloadData()
     }
     
     func isFiltering() -> Bool {
-        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
-        
-        return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
+        return searchController.isActive && (!searchBarIsEmpty() || tagListView.activeTags().count > 0)
     }
 }
 
 // MARK: - UISearchBar Delegate
 extension ListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        filterContentForSearchText(searchBar.text ?? "", scope: searchBar.scopeButtonTitles![selectedScope])
+        filterContent()
+    }
+}
+
+// MARK: - UISearchBar Delegate
+extension ListViewController: TagListViewDelegate {
+    func didTagSelected() {
+        filterContent()
+    }
+    
+    func didTagFilter() {
+        didTagSelected()
+        searchController.isActive = false
+    }
+
+    func getFilterResult() -> (conferences: Int, talks: Int) {
+        return (conferences: filteredConferences.count, talks: filteredConferences.map { $0.talks.count }.reduce(0,+))
     }
 }
 

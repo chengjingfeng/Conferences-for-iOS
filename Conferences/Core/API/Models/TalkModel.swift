@@ -108,6 +108,15 @@ extension TalkModel {
     }
 }
 
+extension TalkModel {
+    func matchesAll(activeTags: [TagModel]) -> Bool {
+        for active in activeTags {
+            if (self.tags.filter { $0.contains(active.title) }.count == 0) { return false }
+        }
+        return true
+    }
+}
+
 extension MutableCollection {
     mutating func mapInPlace(_ x: (inout Element) -> ()) {
         for i in indices {
