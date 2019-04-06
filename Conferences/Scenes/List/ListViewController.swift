@@ -19,30 +19,18 @@ class ListViewController: UITableViewController {
     var apiClient = APIClient()
     let searchController = UISearchController(searchResultsController: nil)
     let tagListView = TagListView()
-    var filteredConferences: [ConferenceModel] = []
-    
-    var conferences: [ConferenceModel] = [] {
-        didSet {
-            filteredConferences = conferences
-            
-            DispatchQueue.main.async {
-                if let talk = self.conferences.first?.talks.first,
-                    let window = UIApplication.shared.keyWindow,
-                    window.traitCollection.horizontalSizeClass == .regular {
-                    self.splitDelegate?.didSelectTalk(talk: talk)
-                }
-                
-                self.tableView.reloadData()
-            }
-        }
-    }
+    let dataSource = ListViewDataSource()
+    private let talkService = TalkService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        dataSource.delegate = self
+
         configureTableView()
         configureSearchBar()
-        fetchData()
+        talkService.delegate = self
+        talkService.fetchData()
     }
     
     func reloadTableView() {
@@ -73,21 +61,10 @@ class ListViewController: UITableViewController {
         self.definesPresentationContext = true
     }
     
-    private func fetchData() {
-        apiClient.send(resource: ConferenceResource.all, completionHandler: { [weak self] (response: Result<[ConferenceModel], APIError>) in
-            switch response {
-            case .success(let models):
-                self?.conferences = models
-            case .failure(let error):
-                print("error")
-            }
-        })
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let talk = filteredConferences[indexPath.section].talks[indexPath.row]
+                let talk = dataSource.conferences[indexPath.section].talks[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.configureView(with: talk)
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
@@ -100,11 +77,11 @@ class ListViewController: UITableViewController {
     // MARK: - Table View
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return filteredConferences.count
+        return dataSource.conferences.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredConferences[section].talks.count
+        return dataSource.conferences[section].talks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -112,7 +89,7 @@ class ListViewController: UITableViewController {
             return UITableViewCell()
         }
         
-        let talk = filteredConferences[indexPath.section].talks[indexPath.row]
+        let talk = dataSource.conferences[indexPath.section].talks[indexPath.row]
         cell.configureView(with: talk)
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.elementBackground
@@ -124,7 +101,7 @@ class ListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let conferenceView = ConferenceHeaderView(safeAreaInsets: tableView.safeAreaInsets)
-        let conference = conferences[section]
+        let conference = dataSource.conferences[section]
         
         conferenceView.configureView(with: conference)
         
@@ -132,19 +109,18 @@ class ListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let talk = conferences[indexPath.section].talks[indexPath.row]
+        let talk = dataSource.conferences[indexPath.section].talks[indexPath.row]
         splitDelegate?.didSelectTalk(talk: talk)
     }
 }
 
 extension ListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        filterContent()
+        talkService.filterTalks(by: searchController.searchBar.text ?? "")
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        filteredConferences = conferences
-        tableView.reloadData()
+        reload()
     }
 }
 
@@ -155,44 +131,22 @@ extension ListViewController {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
-    func filterContent() {
-        
-        let searchText = searchController.searchBar.text ?? ""
-        
-        filteredConferences = conferences.map { conference in
-            var newConference   = conference
-            let filteredTalks   = conference.talks.filter { talk in
-                return (searchText.count == 0 || talk.searchString.contains(searchText.lowercased())) &&
-                       talk.matchesAll(activeTags: tagListView.activeTags())
-            }
-            newConference.talks = filteredTalks
-            
-            return newConference
-            }
-            .filter { $0.talks.count > 0 }
-        
-        let result = getFilterResult()
-        tagListView.didFilter(conferences: result.conferences, talks: result.talks)
-        
-        tableView.reloadData()
-    }
-    
     func isFiltering() -> Bool {
-        return searchController.isActive && (!searchBarIsEmpty() || tagListView.activeTags().count > 0)
+        return searchController.isActive && (!searchBarIsEmpty() || TagSyncService.shared.activeTags().count > 0)
     }
 }
 
 // MARK: - UISearchBar Delegate
 extension ListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        filterContent()
+
     }
 }
 
-// MARK: - UISearchBar Delegate
+// MARK: - TagListView Delegate
 extension ListViewController: TagListViewDelegate {
     func didTagSelected() {
-        filterContent()
+        tagListView.configureTags()
     }
     
     func didTagFilter() {
@@ -201,7 +155,33 @@ extension ListViewController: TagListViewDelegate {
     }
 
     func getFilterResult() -> (conferences: Int, talks: Int) {
-        return (conferences: filteredConferences.count, talks: filteredConferences.map { $0.talks.count }.reduce(0,+))
+        return (conferences: dataSource.conferences.count, talks: dataSource.conferences.map { $0.talks.count }.reduce(0,+))
     }
 }
 
+extension ListViewController: ListViewDataSourceDelegate {
+    func didSelectTalk(_ talk: TalkModel) {
+        self.splitDelegate?.didSelectTalk(talk: talk)
+    }
+    
+    func reload() {
+        let result = getFilterResult()
+        tagListView.didFilter(conferences: result.conferences, talks: result.talks)
+        tableView.reloadData()
+    }
+}
+
+extension ListViewController: TalkServiceDelegate {
+    func didFetch(_ conferences: [Codable]) {
+        dataSource.conferences = conferences as? [ConferenceModel] ?? []
+    }
+    
+    func fetchFailed(with error: APIError) {
+        dataSource.conferences = []
+    }
+
+    func getSearchText() -> String {
+        return searchController.searchBar.text ?? ""
+    }
+    
+}

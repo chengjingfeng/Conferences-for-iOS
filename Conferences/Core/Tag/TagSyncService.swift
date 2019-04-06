@@ -18,16 +18,21 @@ extension Notification.Name {
 final class TagSyncService {
     public static let shared = TagSyncService()
     private var initalized = false
+    
+    static let watchedTitle: String    = "Watched"
+    static let notWatchedTitle: String = "Not watched"
+    static let watchlistTitle: String  = "Watchlist"
+    static let continueWatchingTitle: String = "Continue watching"
 
     private var realmTags: [TagModel] {
         var realmTags: [TagModel] = []
 
         if !Storage.shared.getWatchlist().isEmpty {
-            realmTags.append(.init(title: "Watchlist", query: "realm_watchlist"))
+            realmTags.append(.init(title: TagSyncService.watchlistTitle, query: "realm_watchlist"))
         }
 
         if !Storage.shared.getModelsForContinue().isEmpty {
-            realmTags.append(.init(title: "Continue watching", query: "realm_continue"))
+            realmTags.append(.init(title: TagSyncService.continueWatchingTitle, query: "realm_continue"))
         }
 
         return realmTags
@@ -41,9 +46,14 @@ final class TagSyncService {
         .init(title: "iOS"),
         .init(title: "macOS")
     ]
+    
+    private let watchedTags: [TagModel] = [
+        .init(title: watchedTitle),
+        .init(title: notWatchedTitle)
+    ]
 
     private var defaultTags: [TagModel] {
-        return [realmTags, contentTags].flatMap { $0 }
+        return [realmTags, watchedTags, contentTags].flatMap { $0 }
     }
 
     var tags: [TagModel] = []
@@ -133,5 +143,9 @@ final class TagSyncService {
 
     private func contains(_ tags: [TagModel], _ tag: TagModel) -> Bool {
         return tags.first(where: {$0.query == tag.query}) != nil
+    }
+    
+    func activeTags() -> [TagModel] {
+        return tags.filter { $0.isActive }
     }
 }

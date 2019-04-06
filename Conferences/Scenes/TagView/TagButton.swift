@@ -62,7 +62,6 @@ class TagButton: UIButton {
     }
   
     @objc func tap() {
-        self.tagModel?.isActive.toggle()
         self.setColors()
       
         if let t = self.tagModel {

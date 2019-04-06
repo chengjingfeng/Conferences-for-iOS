@@ -16,7 +16,6 @@ protocol TagListViewDelegate: class {
 
 class TagListView: UIView {
 
-    var tags = TagSyncService.shared.tags
     private var tagButtons: [TagButton] = []
     private var rowViews: [UIView] = []
     weak var delegate: TagListViewDelegate?
@@ -37,11 +36,9 @@ class TagListView: UIView {
         super.layoutSubviews()
     }
     
-    func activeTags() -> [TagModel] {
-        return self.tags.filter { $0.isActive }
-    }
-    
     func configureTags() {
+        let tags = TagSyncService.shared.tags
+        
         let xPadding: CGFloat = 25
         let yPadding: CGFloat = 10
         
@@ -96,9 +93,8 @@ class TagListView: UIView {
         doneButton.rightAnchor.constraint(equalTo: resultRow.rightAnchor, constant: -10).isActive = true
         doneButton.centerYAnchor.constraint(equalTo: resultRow.centerYAnchor).isActive = true
         
-        synchronizeTags()
-        
         tags.forEach { (tag) in
+            
             let button = TagButton()
             tagButtons.append(button)
             button.setTag(to: tag)
@@ -125,25 +121,14 @@ class TagListView: UIView {
             rowTagCount = rowTagCount + 1
             rowWidth += button.frame.width + xPadding
             
-            rowView.frame.origin.x = (UIScreen.main.bounds.width - (rowWidth)) / 2
-
             rowView.frame.size.width = rowWidth + xPadding
             rowView.frame.size.height = max(buttonHeight, rowView.frame.height)
+            
+            rowView.frame.origin.x = (UIScreen.main.bounds.width - (rowView.frame.size.width)) / 2
         }
         
         self.frame.size.width = UIScreen.main.bounds.width
         self.frame.size.height = rowViews.map { $0.frame.size.height + yPadding }.reduce(0, +) - yPadding/2
-    }
-    
-    func synchronizeTags() {
-        guard (TagSyncService.shared.tags.count == self.tags.count) else { return }
-        
-        if (TagSyncService.shared.tags.count > self.tags.count) {
-            self.tags.append(contentsOf: TagSyncService.shared.tags.filter { !self.tags.contains($0) })
-        }
-        else if (TagSyncService.shared.tags.count < self.tags.count) {
-            self.tags.removeAll(where: { !TagSyncService.shared.tags.contains($0) })
-        }
     }
     
     @objc func donePressed() {
@@ -154,9 +139,9 @@ class TagListView: UIView {
 
 extension TagListView: TagButtonDelegate {
     func didSelectTag(_ tag: TagModel) {
-        for i in 0..<self.tags.count {
-            if (self.tags[i].title == tag.title) { self.tags[i].isActive.toggle() }
-        }
+        var copy = tag
+        copy.isActive.toggle()
+        TagSyncService.shared.handleTag(&copy)
         
         delegate?.didTagSelected()
     }
