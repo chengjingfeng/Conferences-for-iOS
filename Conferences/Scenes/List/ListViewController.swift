@@ -8,31 +8,29 @@
 
 import UIKit
 
-class ListViewController: UITableViewController {
+protocol ListViewUpdater {
+    func didFilter(conferences: Int, talks: Int)
+}
 
+class ListViewController: UITableViewController {
+    
     weak var splitDelegate: SplitViewDelegate?
     var detailViewController: DetailViewController? = nil
     var apiClient = APIClient()
-
-    var conferences: [ConferenceModel] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                if let talk = self.conferences.first?.talks.first,
-                    let window = UIApplication.shared.keyWindow,
-                    window.traitCollection.horizontalSizeClass == .regular {
-                    self.splitDelegate?.didSelectTalk(talk: talk)
-                }
-
-                self.tableView.reloadData()
-            }
-        }
-    }
-
+    let searchController = UISearchController(searchResultsController: nil)
+    let tagListView = TagListView()
+    let dataSource = ListViewDataSource()
+    private let talkService = TalkService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dataSource.delegate = self
 
         configureTableView()
-        fetchData()
+        configureSearchBar()
+        talkService.delegate = self
+        talkService.fetchData()
         listenForRefreshActiveCell()
     }
     
@@ -45,7 +43,7 @@ class ListViewController: UITableViewController {
     func reloadTableView() {
         tableView.reloadData()
     }
-
+    
     private func configureTableView() {
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.panelBackground
@@ -53,22 +51,27 @@ class ListViewController: UITableViewController {
         tableView.rowHeight = 70
         tableView.register(TalkViewCell.self, forCellReuseIdentifier: "TalkViewCell")
     }
-
-    private func fetchData() {
-        apiClient.send(resource: ConferenceResource.all, completionHandler: { [weak self] (response: Result<[ConferenceModel], APIError>) in
-            switch response {
-            case .success(let models):
-                self?.conferences = models
-            case .failure(let error):
-                print("error")
-            }
-        })
+    
+    func configureSearchBar() {
+        searchController.searchBar.delegate = self
+        searchController.searchBar.barStyle = .blackTranslucent
+        searchController.searchBar.placeholder = "search ..."
+        searchController.searchBar.autocapitalizationType = .none
+        
+        tagListView.delegate = self
+        searchController.searchBar.inputAccessoryView = tagListView
+                
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        
+        navigationItem.searchController = searchController
+        self.definesPresentationContext = true
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let talk = conferences[indexPath.section].talks[indexPath.row]
+                let talk = dataSource.conferences[indexPath.section].talks[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.configureView(with: talk)
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
@@ -76,45 +79,120 @@ class ListViewController: UITableViewController {
             }
         }
     }
-
-
+    
+    func activateSearch() {
+        searchController.searchBar.becomeFirstResponder()
+    }
+    
+    
     // MARK: - Table View
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return conferences.count
+        return dataSource.conferences.count
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return conferences[section].talks.count
+        return dataSource.conferences[section].talks.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TalkViewCell", for: indexPath) as? TalkViewCell else {
             return UITableViewCell()
         }
-
-        let talk = conferences[indexPath.section].talks[indexPath.row]
+        
+        let talk = dataSource.conferences[indexPath.section].talks[indexPath.row]
         cell.configureView(with: talk)
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.elementBackground
         cell.selectedBackgroundView = bgColorView
         cell.backgroundColor = UIColor.elementBackground
-
+        
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let conferenceView = ConferenceHeaderView(safeAreaInsets: tableView.safeAreaInsets)
-        let conference = conferences[section]
-
+        let conference = dataSource.conferences[section]
+        
         conferenceView.configureView(with: conference)
-
+        
         return conferenceView
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let talk = conferences[indexPath.section].talks[indexPath.row]
+        let talk = dataSource.conferences[indexPath.section].talks[indexPath.row]
         splitDelegate?.didSelectTalk(talk: talk)
     }
 }
 
+extension ListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        talkService.filterTalks(by: searchController.searchBar.text ?? "")
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        reload()
+    }
+}
+
+// MARK: - Search methods
+extension ListViewController {
+    
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && (!searchBarIsEmpty() || TagSyncService.shared.activeTags().count > 0)
+    }
+}
+
+// MARK: - UISearchBar Delegate
+extension ListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+
+    }
+}
+
+// MARK: - TagListView Delegate
+extension ListViewController: TagListViewDelegate {
+    func didTagSelected() {
+        tagListView.configureTags()
+    }
+    
+    func didTagFilter() {
+        didTagSelected()
+        searchController.isActive = false
+    }
+
+    func getFilterResult() -> (conferences: Int, talks: Int) {
+        return (conferences: dataSource.conferences.count, talks: dataSource.conferences.map { $0.talks.count }.reduce(0,+))
+    }
+}
+
+extension ListViewController: ListViewDataSourceDelegate {
+    func didSelectTalk(_ talk: TalkModel) {
+        self.splitDelegate?.didSelectTalk(talk: talk)
+    }
+    
+    func reload() {
+        let result = getFilterResult()
+        tagListView.didFilter(conferences: result.conferences, talks: result.talks)
+        tableView.reloadData()
+    }
+}
+
+extension ListViewController: TalkServiceDelegate {
+    func didFetch(_ conferences: [Codable]) {
+        dataSource.conferences = conferences as? [ConferenceModel] ?? []
+    }
+    
+    func fetchFailed(with error: APIError) {
+        dataSource.conferences = []
+    }
+
+    func getSearchText() -> String {
+        return searchController.searchBar.text ?? ""
+    }
+    
+}

@@ -44,6 +44,7 @@ final class SplitViewController: UISplitViewController {
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         listViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), landscapeImagePhone: UIImage(named: "settings"), style: .plain, target: nil, action: nil)
+        listViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search"), landscapeImagePhone: UIImage(named: "search"), style: .plain, target: self, action: #selector(activateSearch))
 
         return navigationController
     }()
@@ -61,6 +62,10 @@ final class SplitViewController: UISplitViewController {
         self.view.backgroundColor = .elementBackground
         self.preferredDisplayMode = .allVisible
         self.viewControllers = [listViewControllerNavigation, detailViewController]
+    }
+    
+    @objc func activateSearch() {
+        listViewController.activateSearch()
     }
 }
 

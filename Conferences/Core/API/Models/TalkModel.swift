@@ -108,6 +108,27 @@ extension TalkModel {
     }
 }
 
+extension TalkModel {
+    func matchesAll(activeTags: [TagModel]) -> Bool {
+        for active in activeTags {
+            if (active.title == TagSyncService.watchedTitle) {
+                if (!self.watched) { return false }
+            }
+            else if (active.title == TagSyncService.notWatchedTitle) {
+                if (self.watched) { return false }
+            }
+            else if (active.title == TagSyncService.watchlistTitle) {
+                if (!self.onWatchlist) { return false }
+            }
+            else if (active.title == TagSyncService.continueWatchingTitle) {
+                if (!self.currentlyPlaying) { return false }
+            }
+            else if (self.tags.filter { $0.contains(active.title) }.count == 0) { return false }
+        }
+        return true
+    }
+}
+
 extension MutableCollection {
     mutating func mapInPlace(_ x: (inout Element) -> ()) {
         for i in indices {
