@@ -12,61 +12,53 @@ protocol TagButtonDelegate {
   func didSelectTag(_ tag: TagModel)
 }
 
-class TagButton: UIButton {
-  
-    private var delegate: TagButtonDelegate?
-    private var tagModel: TagModel?
+class TagCell: UICollectionViewCell {
+
+    private var tagButton = TagButton()
 
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
+        configureView()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        setup()
-        super.layoutSubviews()
-     }
-    
-    func setTag(to tag: TagModel) {
-        self.tagModel = tag
-        setup()
+    func configureView() {
+        contentView.addSubview(tagButton)
+        tagButton.edgesToSuperview()
     }
     
-    func setDelegate(to: TagButtonDelegate?) {
-        self.delegate = to
+    func configureView(with tag: TagModel) {
+        tagButton.configureView(with: tag)
     }
+}
 
-    func setup() {
-        self.layer.cornerRadius = 5.0
-        self.layer.borderWidth  = 1
-        self.titleLabel?.font = .systemFont(ofSize: 13)
-        self.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-       
-        self.setTitle(tagModel?.title, for: .normal)
-       
-        self.addTarget(self, action: #selector(self.tap), for: .touchUpInside)
+class TagButton: UIButton {
+
+    init() {
+        super.init(frame: .zero)
         
-        setColors()
-     }
-  
-    func setColors() {
-        if let tm = self.tagModel {
-            let textColor          = tm.isActive ?  UIColor.inactiveButton : UIColor.primaryText
-            self.backgroundColor   = tm.isActive ? UIColor.primaryText : UIColor.inactiveButton
-            self.layer.borderColor = textColor.cgColor
-            self.setTitleColor(textColor, for: .normal)
-        }
-    }
-  
-    @objc func tap() {
-        self.setColors()
-      
-        if let t = self.tagModel {
-            delegate?.didSelectTag(t)
-        }
+        configureView()
     }
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configureView() {
+        self.isUserInteractionEnabled = false
+        self.layer.cornerRadius = 5.0
+        self.titleLabel?.font = .systemFont(ofSize: 13, weight: .semibold)
+        self.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        self.setTitleColor(.black, for: .normal)
+        self.backgroundColor = .white
+    }
+
+    func configureView(with tag: TagModel) {
+        setTitle(tag.title, for: .normal)
+
+        self.backgroundColor = tag.isActive ? UIColor(red:0.64, green:0.65, blue:0.69, alpha:1.0) : UIColor.white
+    }
 }

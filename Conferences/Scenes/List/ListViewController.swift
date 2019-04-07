@@ -47,7 +47,7 @@ class ListViewController: UITableViewController {
     private func configureTableView() {
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.panelBackground
-        tableView.sectionHeaderHeight = 220
+        tableView.sectionHeaderHeight = 100
         tableView.rowHeight = 70
         tableView.register(TalkViewCell.self, forCellReuseIdentifier: "TalkViewCell")
     }
@@ -55,10 +55,8 @@ class ListViewController: UITableViewController {
     func configureSearchBar() {
         searchController.searchBar.delegate = self
         searchController.searchBar.barStyle = .blackTranslucent
-        searchController.searchBar.placeholder = "search ..."
         searchController.searchBar.autocapitalizationType = .none
         
-        tagListView.delegate = self
         searchController.searchBar.inputAccessoryView = tagListView
                 
         searchController.searchResultsUpdater = self
@@ -154,30 +152,12 @@ extension ListViewController: UISearchBarDelegate {
     }
 }
 
-// MARK: - TagListView Delegate
-extension ListViewController: TagListViewDelegate {
-    func didTagSelected() {
-        tagListView.configureTags()
-    }
-    
-    func didTagFilter() {
-        didTagSelected()
-        searchController.isActive = false
-    }
-
-    func getFilterResult() -> (conferences: Int, talks: Int) {
-        return (conferences: dataSource.conferences.count, talks: dataSource.conferences.map { $0.talks.count }.reduce(0,+))
-    }
-}
-
 extension ListViewController: ListViewDataSourceDelegate {
     func didSelectTalk(_ talk: TalkModel) {
         self.splitDelegate?.didSelectTalk(talk: talk)
     }
     
     func reload() {
-        let result = getFilterResult()
-        tagListView.didFilter(conferences: result.conferences, talks: result.talks)
         tableView.reloadData()
     }
 }

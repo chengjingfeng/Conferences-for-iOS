@@ -18,7 +18,8 @@ final class AppCoordinator {
     }
 
     func start() {
-        window?.rootViewController = mainCoordinator.rootViewController
+        self.mainCoordinator.start()
+        window?.rootViewController = mainCoordinator.tabBarController
         window?.makeKeyAndVisible()
     }
 }

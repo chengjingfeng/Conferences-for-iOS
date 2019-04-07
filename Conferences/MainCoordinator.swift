@@ -10,9 +10,16 @@ import UIKit
 
 
 final class MainCoordinator {
-    let rootViewController: SplitViewController
+    let tabBarController: UITabBarController
 
     init() {
-        rootViewController = SplitViewController()
+        self.tabBarController = UITabBarController()
     }
+
+    func start() {
+        self.tabBarController.tabBar.tintColor = .primaryText
+        self.tabBarController.tabBar.barTintColor = .elementBackground
+        self.tabBarController.setViewControllers([SplitViewController()], animated: false)
+    }
+
 }

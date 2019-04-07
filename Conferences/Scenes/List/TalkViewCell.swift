@@ -130,13 +130,9 @@ class TalkViewCell: UITableViewCell {
         contentView.backgroundColor = UIColor.panelBackground
         contentView.addSubview(colorContainer)
         contentView.addSubview(thumbnailImageView)
-        contentView.addSubview(nowPlayingImage)
         contentView.addSubview(stackView)
 
-        nowPlayingImage.leading(to: self, offset: 10)
-        nowPlayingImage.centerY(to: self)
-
-        colorContainer.leading(to: nowPlayingImage, offset: 30)
+        colorContainer.leading(to: self, offset: 15)
         colorContainer.topToSuperview()
         colorContainer.bottomToSuperview()
 
