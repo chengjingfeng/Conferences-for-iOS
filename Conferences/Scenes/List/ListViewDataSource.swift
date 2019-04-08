@@ -15,7 +15,7 @@ protocol ListViewDataSourceDelegate: class {
 
 class ListViewDataSource: NSObject {
     
-    var delegate: ListViewDataSourceDelegate?
+    weak var delegate: ListViewDataSourceDelegate?
 
     var conferences: [ConferenceModel] = [] {
         didSet {
