@@ -12,6 +12,14 @@ import UIKit
 final class MainCoordinator {
     let tabBarController: UITabBarController
 
+    private lazy var settingsScene: SettingsCoordinator = {
+        let coordinator = SettingsCoordinator()
+        coordinator.start()
+
+        return coordinator
+    }()
+
+
     init() {
         self.tabBarController = UITabBarController()
     }
@@ -19,7 +27,7 @@ final class MainCoordinator {
     func start() {
         self.tabBarController.tabBar.tintColor = .primaryText
         self.tabBarController.tabBar.barTintColor = .elementBackground
-        self.tabBarController.setViewControllers([SplitViewController()], animated: false)
+        self.tabBarController.setViewControllers([SplitViewController(), settingsScene.rootViewController], animated: false)
     }
 
 }

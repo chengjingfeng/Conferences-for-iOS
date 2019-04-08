@@ -10,6 +10,9 @@
 		119C9FBB45ED84E8DAF963EC /* Pods_Conferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AB873A8F492095562F9056 /* Pods_Conferences.framework */; };
 		5C940C5EF6C5DE392CCB1EBA /* Pods_ConferencesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B886F8F5AE9EB165C358990 /* Pods_ConferencesTests.framework */; };
 		B9217C92225A4E89008EF906 /* ListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9217C91225A4E89008EF906 /* ListCoordinator.swift */; };
+		B9217C9A225B4B60008EF906 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9217C95225B4B60008EF906 /* SettingsViewModel.swift */; };
+		B9217C9B225B4B60008EF906 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9217C96225B4B60008EF906 /* SettingsCoordinator.swift */; };
+		B9217C9C225B4B60008EF906 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9217C97225B4B60008EF906 /* SettingsViewController.swift */; };
 		B950466E224A1B0300382DB5 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950466D224A1B0300382DB5 /* AppCoordinator.swift */; };
 		B9504670224A1BA500382DB5 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950466F224A1BA500382DB5 /* SplitViewController.swift */; };
 		B9504672224A1BDF00382DB5 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504671224A1BDF00382DB5 /* MainCoordinator.swift */; };
@@ -83,6 +86,9 @@
 		84AB873A8F492095562F9056 /* Pods_Conferences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Conferences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		868D2C02779B218982E45B05 /* Pods-Conferences.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conferences.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Conferences/Pods-Conferences.debug.xcconfig"; sourceTree = "<group>"; };
 		B9217C91225A4E89008EF906 /* ListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCoordinator.swift; sourceTree = "<group>"; };
+		B9217C95225B4B60008EF906 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		B9217C96225B4B60008EF906 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
+		B9217C97225B4B60008EF906 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B950466D224A1B0300382DB5 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		B950466F224A1BA500382DB5 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		B9504671224A1BDF00382DB5 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -161,13 +167,33 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B9217C94225B4B60008EF906 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B9217C95225B4B60008EF906 /* SettingsViewModel.swift */,
+				B9217C96225B4B60008EF906 /* SettingsCoordinator.swift */,
+				B9217C97225B4B60008EF906 /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		B9217C9F225B4B74008EF906 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				EB4B40152257E14200AAE0EB /* TagView */,
+			);
+			name = Shared;
+			path = ../..;
+			sourceTree = "<group>";
+		};
 		B950466A224A18D500382DB5 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
 				B950466F224A1BA500382DB5 /* SplitViewController.swift */,
-				EB4B40152257E14200AAE0EB /* TagView */,
+				B9217C9F225B4B74008EF906 /* Shared */,
 				B950466C224A18F200382DB5 /* Detail */,
 				B950466B224A18E800382DB5 /* List */,
+				B9217C94225B4B60008EF906 /* Settings */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -441,6 +467,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Conferences/Pods-Conferences-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AcknowList/AcknowList.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/TinyConstraints/TinyConstraints.framework",
@@ -450,6 +477,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AcknowList.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TinyConstraints.framework",
@@ -524,6 +552,7 @@
 				B99A5B2D2249769F00EE5033 /* LoggingHelper.swift in Sources */,
 				EB4B401A2257E18100AAE0EB /* TagListView.swift in Sources */,
 				B99A5B2F2249769F00EE5033 /* APIClient.swift in Sources */,
+				B9217C9A225B4B60008EF906 /* SettingsViewModel.swift in Sources */,
 				B99A5B282249769F00EE5033 /* CurrentlyWatchingModel.swift in Sources */,
 				B99A5B332249769F00EE5033 /* ConferenceModel.swift in Sources */,
 				B99A5B3A2249769F00EE5033 /* TalkService.swift in Sources */,
@@ -536,11 +565,13 @@
 				EBE79D352258D35F00853BD6 /* ListViewDataSource.swift in Sources */,
 				B99A5B312249769F00EE5033 /* VideoSourceModel.swift in Sources */,
 				B9504676224A307F00382DB5 /* TalkViewCell.swift in Sources */,
+				B9217C9C225B4B60008EF906 /* SettingsViewController.swift in Sources */,
 				B99A5B352249769F00EE5033 /* APIClient+Conference.swift in Sources */,
 				B99A5B302249769F00EE5033 /* OrganisatorModel.swift in Sources */,
 				B9AE243C22469A8A009A263D /* Styleguide.swift in Sources */,
 				B99A5B2B2249769F00EE5033 /* FavoriteModel.swift in Sources */,
 				B9504674224A257900382DB5 /* ConferenceHeaderView.swift in Sources */,
+				B9217C9B225B4B60008EF906 /* SettingsCoordinator.swift in Sources */,
 				B99A5B342249769F00EE5033 /* SpeakerModel.swift in Sources */,
 				B950467C224A459A00382DB5 /* DetailSummaryViewController.swift in Sources */,
 				B950467E224A469A00382DB5 /* ActionView.swift in Sources */,

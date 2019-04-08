@@ -12,6 +12,7 @@ target 'Conferences' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'YoutubeKit'
+  pod 'AcknowList', '~> 1.7'
 
   target 'ConferencesTests' do
     inherit! :search_paths

@@ -36,14 +36,15 @@ final class SplitViewController: UISplitViewController {
         listViewController.splitDelegate = self
         return listViewController
     }()
-    
+
     private lazy var listViewControllerNavigation: UINavigationController = {
         let navigationController = UINavigationController(rootViewController: listViewController)
         navigationController.navigationBar.barTintColor = UIColor.elementBackground
         navigationController.navigationBar.tintColor = UIColor.white
         navigationController.navigationBar.isTranslucent = false
+        navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-
+        navigationController.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         return navigationController
     }()
 
@@ -55,6 +56,7 @@ final class SplitViewController: UISplitViewController {
 
     private func configureView() {
         self.delegate = self
+        self.tabBarItem.title = "Conferences"
         self.minimumPrimaryColumnWidth = 380
         self.maximumPrimaryColumnWidth = 400
         self.view.backgroundColor = .elementBackground
