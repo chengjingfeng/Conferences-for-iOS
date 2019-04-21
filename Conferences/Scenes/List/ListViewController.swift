@@ -26,6 +26,7 @@ class ListViewController: UITableViewController {
         super.viewDidLoad()
         
         dataSource.delegate = self
+        tagListView.suggestionsDelegate = self
 
         configureTableView()
         configureSearchBar()
@@ -126,6 +127,16 @@ class ListViewController: UITableViewController {
 extension ListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         talkService.filterTalks(by: searchController.searchBar.text ?? "")
+        
+        // To avoid performance issues, only get suggestions when the searchbar text has a minimun length of 2 characters
+        if (searchController.searchBar.text?.count ?? 0 > 1) {
+            tagListView.updateSuggestions(to: dataSource.getSuggestions(basedOn: searchController.searchBar.text))
+            tagListView.showSuggestionsTable()
+        }
+        else {
+            tagListView.hideSuggestionsTable()
+        }
+        
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -174,5 +185,12 @@ extension ListViewController: TalkServiceDelegate {
     func getSearchText() -> String {
         return searchController.searchBar.text ?? ""
     }
+}
+
+extension ListViewController: SuggestionDelegate {
+    func didSelectSuggestion(_ suggestion: Suggestion) {
+        searchController.searchBar.text = suggestion.completeWord
+    }
+    
     
 }

@@ -53,6 +53,8 @@
 		B9AE243C22469A8A009A263D /* Styleguide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE243B22469A8A009A263D /* Styleguide.swift */; };
 		EB4B40192257E18100AAE0EB /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B40172257E18100AAE0EB /* TagButton.swift */; };
 		EB4B401A2257E18100AAE0EB /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B40182257E18100AAE0EB /* TagListView.swift */; };
+		EB7EF022226BE1BC00E5FA93 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7EF021226BE1BC00E5FA93 /* Suggestion.swift */; };
+		EBA9064D226B87FB000439DB /* SuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA9064C226B87FB000439DB /* SuggestionCell.swift */; };
 		EBE79D352258D35F00853BD6 /* ListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE79D342258D35F00853BD6 /* ListViewDataSource.swift */; };
 /* End PBXBuildFile section */
 
@@ -118,7 +120,7 @@
 		B99A5B202249769F00EE5033 /* TagModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
 		B99A5B212249769F00EE5033 /* TagSyncService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagSyncService.swift; sourceTree = "<group>"; };
 		B99A5B222249769F00EE5033 /* SearchableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchableProtocol.swift; sourceTree = "<group>"; };
-		B99A5B242249769F00EE5033 /* TalkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkService.swift; sourceTree = "<group>"; };
+		B99A5B242249769F00EE5033 /* TalkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkService.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		B9AE241622469743009A263D /* Conferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9AE241922469743009A263D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9AE241B22469743009A263D /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -134,7 +136,9 @@
 		D7BE1B9BC975C0F64EE3C240 /* Pods-ConferencesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConferencesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConferencesTests/Pods-ConferencesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB4B40172257E18100AAE0EB /* TagButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		EB4B40182257E18100AAE0EB /* TagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
-		EBE79D342258D35F00853BD6 /* ListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewDataSource.swift; sourceTree = "<group>"; };
+		EB7EF021226BE1BC00E5FA93 /* Suggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		EBA9064C226B87FB000439DB /* SuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionCell.swift; sourceTree = "<group>"; };
+		EBE79D342258D35F00853BD6 /* ListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewDataSource.swift; sourceTree = "<group>"; wrapsLines = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -351,6 +355,8 @@
 			children = (
 				EB4B40172257E18100AAE0EB /* TagButton.swift */,
 				EB4B40182257E18100AAE0EB /* TagListView.swift */,
+				EBA9064C226B87FB000439DB /* SuggestionCell.swift */,
+				EB7EF021226BE1BC00E5FA93 /* Suggestion.swift */,
 			);
 			path = TagView;
 			sourceTree = "<group>";
@@ -562,8 +568,10 @@
 				EB4B40192257E18100AAE0EB /* TagButton.swift in Sources */,
 				B9217C92225A4E89008EF906 /* ListCoordinator.swift in Sources */,
 				B99A5B322249769F00EE5033 /* TalkModel.swift in Sources */,
+				EBA9064D226B87FB000439DB /* SuggestionCell.swift in Sources */,
 				EBE79D352258D35F00853BD6 /* ListViewDataSource.swift in Sources */,
 				B99A5B312249769F00EE5033 /* VideoSourceModel.swift in Sources */,
+				EB7EF022226BE1BC00E5FA93 /* Suggestion.swift in Sources */,
 				B9504676224A307F00382DB5 /* TalkViewCell.swift in Sources */,
 				B9217C9C225B4B60008EF906 /* SettingsViewController.swift in Sources */,
 				B99A5B352249769F00EE5033 /* APIClient+Conference.swift in Sources */,
@@ -733,7 +741,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MVQE7PHKXD;
+				DEVELOPMENT_TEAM = S3P397D556;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Realm\"",
@@ -751,7 +759,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = digital.conferences.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = "digital.conferences.ios-pdiazmon";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -764,7 +772,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MVQE7PHKXD;
+				DEVELOPMENT_TEAM = S3P397D556;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Conferences",
@@ -776,7 +784,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = digital.conferences.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = "digital.conferences.ios-pdiazmon";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
