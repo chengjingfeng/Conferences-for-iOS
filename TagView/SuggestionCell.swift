@@ -11,6 +11,15 @@ import UIKit
 class SuggestionCell: UITableViewCell {
     
     let suggestionLbl = UILabel()
+    
+    private let stackImg: UIStackView = {
+        let s = UIStackView()
+        
+        s.axis    = .horizontal
+        s.spacing = 2
+        
+        return s
+    }()
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -25,6 +34,7 @@ class SuggestionCell: UITableViewCell {
 private extension SuggestionCell {
     func setup() {
         suggestionLbl.numberOfLines = 0
+        contentView.addSubview(stackImg)
         contentView.addSubview(suggestionLbl)
     }
 }
@@ -32,10 +42,14 @@ private extension SuggestionCell {
 // MARK: Layout
 private extension SuggestionCell {
     func layoutViews() {
+        stackImg.translatesAutoresizingMaskIntoConstraints = false
+        stackImg.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15).isActive = true
+        stackImg.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        
         suggestionLbl.translatesAutoresizingMaskIntoConstraints = false
         suggestionLbl.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
         suggestionLbl.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
-        suggestionLbl.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15).isActive = true
+        suggestionLbl.leftAnchor.constraint(equalTo: stackImg.rightAnchor, constant: 5).isActive = true
         suggestionLbl.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -15).isActive = true
     }
 }
@@ -53,8 +67,47 @@ private extension SuggestionCell {
 // MARK: render
 extension SuggestionCell {
     func render(suggestion: Suggestion) {
+        var imgview: UIImageView
+        let imgHeightWidth: CGFloat = TagListView.SUGGESTIONROW_HEIGHT * 0.5
+
+        for v in stackImg.arrangedSubviews { v.removeFromSuperview() }
+        
+        for source in suggestion.sources.sorted() {
+            switch source {
+            case .speakerFirstname, .speakerLastname:
+                imgview = UIImageView(image: UIImage(named: "speaker-black")?.resized(to: imgHeightWidth))
+            case .title:
+                imgview = UIImageView(image: UIImage(named: "title")?.resized(to: imgHeightWidth))
+            case .details:
+                imgview = UIImageView(image: UIImage(named: "details")?.resized(to: imgHeightWidth))
+            case .twitter:
+                imgview = UIImageView(image: UIImage(named: "twitter-black")?.resized(to: imgHeightWidth))
+            }
+            
+            self.stackImg.addArrangedSubview(imgview)
+            
+        }
+        
+        if let constraint = (stackImg.constraints.filter{$0.firstAttribute == .width}.first) {
+            constraint.constant = (imgHeightWidth + 2) * CGFloat(suggestion.sources.count)
+        }
+        else {
+            stackImg.width((imgHeightWidth + 2) * CGFloat(suggestion.sources.count))
+        }
+
+        
         self.suggestionLbl.attributedText = suggestion.getAttributedText()
+
     }
 }
 
+extension UIImage {
+    func resized(toWidth width: CGFloat) -> UIImage? {
+        let canvasSize = CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))
+        UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
+        defer { UIGraphicsEndImageContext() }
+        draw(in: CGRect(origin: .zero, size: canvasSize))
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}
 

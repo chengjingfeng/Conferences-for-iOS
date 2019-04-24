@@ -20,7 +20,7 @@ class TagListView: UIInputView {
     var suggestionsDelegate: SuggestionDelegate?
     
     static private let TAGLIST_HEIGHT: CGFloat            = 35
-    static private let SUGGESTIONROW_HEIGHT: CGFloat      = 25
+    static let SUGGESTIONROW_HEIGHT: CGFloat              = 25
     static private let SUGGESTIONTABLE_MAXROWS: CGFloat   = 4
     static private let SUGGESTIONTABLE_MAXHEIGHT: CGFloat = TagListView.SUGGESTIONROW_HEIGHT * TagListView.SUGGESTIONTABLE_MAXROWS
 

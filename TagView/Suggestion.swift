@@ -9,17 +9,38 @@
 import Foundation
 import UIKit
 
+enum SuggestionSource: Int, Comparable {
+    case speakerFirstname = 0
+    case speakerLastname  = 1
+    case title            = 2
+    case details          = 3
+    case twitter          = 4
 
-struct Suggestion {
+    static func ==(lhs: SuggestionSource, rhs: SuggestionSource) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+
+    static func <(lhs: SuggestionSource, rhs: SuggestionSource) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+}
+
+class Suggestion {
     var text: String
     var completeWord: String
     private var attributedText: NSAttributedString
+    var sources: [SuggestionSource]
+    
+    func description() -> String {
+       return "\(text) - \(completeWord) - \(sources)"
+    }
     
     init(text: String, completeWord: String) {
         
-        self.text = text
-        self.completeWord = completeWord
+        self.text           = text
+        self.completeWord   = completeWord
         self.attributedText = NSAttributedString()
+        self.sources        = []
         
         self.attributedText = setAttributedText()
     }
