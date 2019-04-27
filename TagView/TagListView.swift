@@ -10,17 +10,19 @@ import UIKit
 
 protocol SuggestionDelegate {
     func didSelectSuggestion(_ suggestion: Suggestion)
+    func didSelectSuggestionSource(suggestionSource: SuggestionSource, completeWord: String)
     func getSearchText() -> String
 }
 
 class TagListView: UIInputView {
     
     var suggestions: [Suggestion] = []
+    var selectedSuggestion: Suggestion?
     
     var suggestionsDelegate: SuggestionDelegate?
     
     static private let TAGLIST_HEIGHT: CGFloat            = 35
-    static let SUGGESTIONROW_HEIGHT: CGFloat              = 25
+    static let SUGGESTIONROW_HEIGHT: CGFloat              = 30
     static private let SUGGESTIONTABLE_MAXROWS: CGFloat   = 4
     static private let SUGGESTIONTABLE_MAXHEIGHT: CGFloat = TagListView.SUGGESTIONROW_HEIGHT * TagListView.SUGGESTIONTABLE_MAXROWS
 
@@ -68,6 +70,20 @@ class TagListView: UIInputView {
         return table
     }()
     
+    private lazy var suggestionSourcesTable: UITableView = {
+        let table = UITableView()
+        
+        table.delegate                                  = self
+        table.dataSource                                = self
+        table.backgroundColor                           = .clear
+        table.rowHeight                                 = TagListView.SUGGESTIONROW_HEIGHT
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.register(SuggestionSourcesCell.self, forCellReuseIdentifier: "SuggestionSourcesCell")
+        
+        return table
+        
+    }()
+    
     private var stack: UIStackView = {
         let st = UIStackView()
 
@@ -82,6 +98,7 @@ class TagListView: UIInputView {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         stack.addArrangedSubview(suggestionsTable)
+        stack.addArrangedSubview(suggestionSourcesTable)
         stack.addArrangedSubview(collectionView)
         
         addSubview(stack)
@@ -96,28 +113,44 @@ class TagListView: UIInputView {
             suggestionsTable.removeFromSuperview()
 
             stack.edgesToSuperview()
-            if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-                layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 5)
-            }
-
         }
     }
     
+    func hideSuggestionSourcesTable() {
+        guard areSuggestionSourcesShown() else { return }
+
+        suggestionSourcesTable.removeFromSuperview()
+        stack.edgesToSuperview()
+    }
+    
     func showSuggestionsTable() {
+        guard !areSuggestionsShown() else { return }
 
-        if (!areSuggestionsShown()) {
-            stack.removeArrangedSubview(suggestionsTable)
-            stack.removeArrangedSubview(collectionView)
-            
-            stack.addArrangedSubview(suggestionsTable)
-            stack.addArrangedSubview(collectionView)
+        stack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        stack.addArrangedSubview(suggestionsTable)
+        stack.addArrangedSubview(collectionView)
 
-            stack.edgesToSuperview()
-        }
+        stack.edgesToSuperview()
+    }
+    
+    func showSuggestionSourcesTable() {
+        guard !areSuggestionSourcesShown() else { return }
+        
+        stack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        stack.addArrangedSubview(suggestionSourcesTable)
+        stack.addArrangedSubview(collectionView)
+        
+        stack.edgesToSuperview()        
     }
 
     func areSuggestionsShown() -> Bool {
         return self.suggestionsTable.superview != nil
+    }
+    
+    func areSuggestionSourcesShown() -> Bool {
+        return self.suggestionSourcesTable.superview != nil
     }
     
     func updateSuggestions(to newSuggestions: [Suggestion]) {
@@ -132,8 +165,22 @@ class TagListView: UIInputView {
         
         suggestionsTable.reloadData()
     }
+    
+    func updateSuggestionSources(to newSuggestion: Suggestion) {
+        self.selectedSuggestion = newSuggestion
+        
+        if let constraint = (suggestionSourcesTable.constraints.filter{$0.firstAttribute == .height}.first) {
+            constraint.constant = min(TagListView.SUGGESTIONTABLE_MAXHEIGHT, CGFloat(newSuggestion.sources.count) * TagListView.SUGGESTIONROW_HEIGHT)
+        }
+        else {
+            suggestionSourcesTable.height(min(TagListView.SUGGESTIONTABLE_MAXHEIGHT, CGFloat(newSuggestion.sources.count) * TagListView.SUGGESTIONROW_HEIGHT))
+        }
+        
+        suggestionSourcesTable.reloadData()
+    }
 }
 
+// MARK: - collectionView Delegate & DataSource
 extension TagListView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tags.count
@@ -158,26 +205,63 @@ extension TagListView: UICollectionViewDataSource, UICollectionViewDelegate {
     }
 }
 
-// MARK: - Suggestions Table
+// MARK: - TableView Delegate & DataSource
 extension TagListView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return suggestions.count
+        if (tableView == suggestionsTable) {
+            return suggestions.count
+        }
+        else if (tableView == suggestionSourcesTable) {
+            return selectedSuggestion?.sources.count ?? 0
+        }
+        else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = suggestionsTable.dequeueReusableCell(withIdentifier: "SuggestionCell", for: indexPath) as? SuggestionCell else {
+        if (tableView == suggestionsTable) {
+            guard let cell = suggestionsTable.dequeueReusableCell(withIdentifier: "SuggestionCell", for: indexPath) as? SuggestionCell else {
+                return UITableViewCell()
+            }
+            
+            cell.render(suggestion: suggestions[indexPath.row])
+            
+            return cell
+        }
+        else if (tableView == suggestionSourcesTable) {
+            guard let cell = suggestionSourcesTable.dequeueReusableCell(withIdentifier: "SuggestionSourcesCell", for: indexPath) as? SuggestionSourcesCell else {
+                return UITableViewCell()
+            }
+            
+            cell.render(source: selectedSuggestion?.sources[indexPath.row] ?? nil, completeWord: selectedSuggestion?.completeWord)
+            
+            return cell
+        }
+        else {
             return UITableViewCell()
         }
-        
-        cell.render(suggestion: suggestions[indexPath.row])
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.row < suggestions.count else { return }
-        
-        suggestionsDelegate?.didSelectSuggestion(suggestions[indexPath.row])
+        if (tableView == suggestionsTable) {
+            guard indexPath.row < suggestions.count else { return }
+            
+            if (suggestions[indexPath.row].sources.count > 1) {
+                self.selectedSuggestion = suggestions[indexPath.row]
+            }
+            else {
+                self.selectedSuggestion = nil
+            }
+            
+            suggestionsDelegate?.didSelectSuggestion(suggestions[indexPath.row])
+        }
+        else if (tableView == suggestionSourcesTable) {
+            guard let sug_sources = selectedSuggestion else { return }
+            guard indexPath.row < sug_sources.sources.count else { return }
+            
+            suggestionsDelegate?.didSelectSuggestionSource(suggestionSource: sug_sources.sources[indexPath.row], completeWord: sug_sources.completeWord)
+        }
     }
 }

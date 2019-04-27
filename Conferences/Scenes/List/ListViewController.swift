@@ -130,11 +130,12 @@ extension ListViewController: UISearchResultsUpdating {
         
         // To avoid performance issues, only get suggestions when the searchbar text has a minimun length of 2 characters
         if (searchController.searchBar.text?.count ?? 0 > 1) {
-            tagListView.updateSuggestions(to: dataSource.getSuggestions(basedOn: searchController.searchBar.text))
+            tagListView.updateSuggestions(to: talkService.getSuggestions(basedOn: searchController.searchBar.text))
             tagListView.showSuggestionsTable()
         }
         else {
             tagListView.hideSuggestionsTable()
+            tagListView.hideSuggestionSourcesTable()
         }
         
     }
@@ -190,7 +191,16 @@ extension ListViewController: TalkServiceDelegate {
 extension ListViewController: SuggestionDelegate {
     func didSelectSuggestion(_ suggestion: Suggestion) {
         searchController.searchBar.text = suggestion.completeWord
+        
+        if (suggestion.sources.count > 1) {
+            tagListView.updateSuggestionSources(to: suggestion)
+            tagListView.showSuggestionSourcesTable()
+        }
     }
     
+    func didSelectSuggestionSource(suggestionSource: SuggestionSource, completeWord: String) {
+        searchController.searchBar.text = suggestionSource.getSearchText() + SuggestionSource.sourceCriteriaLimit + completeWord
+        tagListView.hideSuggestionSourcesTable()
+    }
     
 }

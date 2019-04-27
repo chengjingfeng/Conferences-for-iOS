@@ -73,19 +73,8 @@ extension SuggestionCell {
         for v in stackImg.arrangedSubviews { v.removeFromSuperview() }
         
         for source in suggestion.sources.sorted() {
-            switch source {
-            case .speakerFirstname, .speakerLastname:
-                imgview = UIImageView(image: UIImage(named: "speaker-black")?.resized(to: imgHeightWidth))
-            case .title:
-                imgview = UIImageView(image: UIImage(named: "title")?.resized(to: imgHeightWidth))
-            case .details:
-                imgview = UIImageView(image: UIImage(named: "details")?.resized(to: imgHeightWidth))
-            case .twitter:
-                imgview = UIImageView(image: UIImage(named: "twitter-black")?.resized(to: imgHeightWidth))
-            }
-            
+            imgview = UIImageView(image: source.getImage()?.resized(to: imgHeightWidth))
             self.stackImg.addArrangedSubview(imgview)
-            
         }
         
         if let constraint = (stackImg.constraints.filter{$0.firstAttribute == .width}.first) {

@@ -51,6 +51,7 @@
 		B9AE242622469746009A263D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9AE242422469746009A263D /* LaunchScreen.storyboard */; };
 		B9AE243122469746009A263D /* ConferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE243022469746009A263D /* ConferencesTests.swift */; };
 		B9AE243C22469A8A009A263D /* Styleguide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE243B22469A8A009A263D /* Styleguide.swift */; };
+		EB26D00222746CDE000654F9 /* SuggestionSourcesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB26D00122746CDE000654F9 /* SuggestionSourcesCell.swift */; };
 		EB4B40192257E18100AAE0EB /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B40172257E18100AAE0EB /* TagButton.swift */; };
 		EB4B401A2257E18100AAE0EB /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B40182257E18100AAE0EB /* TagListView.swift */; };
 		EB7EF022226BE1BC00E5FA93 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7EF021226BE1BC00E5FA93 /* Suggestion.swift */; };
@@ -113,7 +114,7 @@
 		B99A5B172249769F00EE5033 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		B99A5B192249769F00EE5033 /* OrganisatorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganisatorModel.swift; sourceTree = "<group>"; };
 		B99A5B1A2249769F00EE5033 /* VideoSourceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoSourceModel.swift; sourceTree = "<group>"; };
-		B99A5B1B2249769F00EE5033 /* TalkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkModel.swift; sourceTree = "<group>"; };
+		B99A5B1B2249769F00EE5033 /* TalkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkModel.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		B99A5B1C2249769F00EE5033 /* ConferenceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConferenceModel.swift; sourceTree = "<group>"; };
 		B99A5B1D2249769F00EE5033 /* SpeakerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeakerModel.swift; sourceTree = "<group>"; };
 		B99A5B1E2249769F00EE5033 /* APIClient+Conference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APIClient+Conference.swift"; sourceTree = "<group>"; };
@@ -134,8 +135,9 @@
 		B9AE243B22469A8A009A263D /* Styleguide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styleguide.swift; sourceTree = "<group>"; };
 		D5DECBFE49653B8525CD601F /* Pods-Conferences.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conferences.release.xcconfig"; path = "Pods/Target Support Files/Pods-Conferences/Pods-Conferences.release.xcconfig"; sourceTree = "<group>"; };
 		D7BE1B9BC975C0F64EE3C240 /* Pods-ConferencesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConferencesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConferencesTests/Pods-ConferencesTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EB26D00122746CDE000654F9 /* SuggestionSourcesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionSourcesCell.swift; sourceTree = "<group>"; };
 		EB4B40172257E18100AAE0EB /* TagButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
-		EB4B40182257E18100AAE0EB /* TagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
+		EB4B40182257E18100AAE0EB /* TagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		EB7EF021226BE1BC00E5FA93 /* Suggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		EBA9064C226B87FB000439DB /* SuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionCell.swift; sourceTree = "<group>"; };
 		EBE79D342258D35F00853BD6 /* ListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewDataSource.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -357,6 +359,7 @@
 				EB4B40182257E18100AAE0EB /* TagListView.swift */,
 				EBA9064C226B87FB000439DB /* SuggestionCell.swift */,
 				EB7EF021226BE1BC00E5FA93 /* Suggestion.swift */,
+				EB26D00122746CDE000654F9 /* SuggestionSourcesCell.swift */,
 			);
 			path = TagView;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB26D00222746CDE000654F9 /* SuggestionSourcesCell.swift in Sources */,
 				B99A5B262249769F00EE5033 /* VimeoFetcher.swift in Sources */,
 				B9504672224A1BDF00382DB5 /* MainCoordinator.swift in Sources */,
 				B99A5B272249769F00EE5033 /* Storage.swift in Sources */,

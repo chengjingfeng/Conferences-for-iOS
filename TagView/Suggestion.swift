@@ -9,19 +9,83 @@
 import Foundation
 import UIKit
 
-enum SuggestionSource: Int, Comparable {
-    case speakerFirstname = 0
-    case speakerLastname  = 1
-    case title            = 2
-    case details          = 3
-    case twitter          = 4
+class SuggestionAttribute: Equatable, ExpressibleByStringLiteral {
+    typealias StringLiteralType = String
+    
+    var order: Int?
+    var text: String?
+    
+    public static func ==(lhs: SuggestionAttribute, rhs: SuggestionAttribute) -> Bool {
+        return lhs.order == rhs.order
+    }
+    
+    public required init(stringLiteral value: String) {
+        let components = value.components(separatedBy: ",")
+        
+        if components.count == 2 {
+            self.order = Int(components[0]) ?? -1
+            self.text = components[1]
+        }
+    }
+    
+    public required convenience init(unicodeScalarLiteral value: String) {
+        self.init(stringLiteral: value)
+    }
+    public required convenience init(extendedGraphemeClusterLiteral value: String) {
+        self.init(stringLiteral: value)
+    }
+}
 
+enum SuggestionSource: SuggestionAttribute, Comparable, RawRepresentable, CaseIterable {
+    typealias RawValue = SuggestionAttribute
+    
+    case speakerFirstname = "1, speaker"
+    case speakerLastname  = "2, speaker"
+    case title            = "3, title"
+    case details          = "4, details"
+    case twitter          = "5, twitter"
+    
+    static let sourceCriteriaLimit: String = ":"
+    
     static func ==(lhs: SuggestionSource, rhs: SuggestionSource) -> Bool {
-        return lhs.rawValue == rhs.rawValue
+        return lhs.rawValue.order == rhs.rawValue.order
     }
 
     static func <(lhs: SuggestionSource, rhs: SuggestionSource) -> Bool {
-        return lhs.rawValue < rhs.rawValue
+        guard let lhsOrder = lhs.rawValue.order, let rhsOrder = rhs.rawValue.order else { return false }
+        
+        return lhsOrder < rhsOrder
+    }
+    
+    func getSearchText() -> String {
+        return self.rawValue.text ?? ""
+    }
+    
+    func getImage() -> UIImage? {
+        switch self {
+        case .speakerFirstname, .speakerLastname:
+            return UIImage(named: "speaker-black")
+        case .title:
+            return UIImage(named: "title")
+        case .details:
+            return UIImage(named: "details")
+        case .twitter:
+            return UIImage(named: "twitter-black")
+        }
+    }
+    
+    func getAttributedText(for completeWord: String) -> NSAttributedString {
+        var attributed = NSMutableAttributedString()
+        
+        attributed = NSMutableAttributedString(string: getSearchText() + SuggestionSource.sourceCriteriaLimit, attributes: [NSMutableAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)])
+            
+        attributed.append(NSMutableAttributedString(string: completeWord, attributes: [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 13),
+                                                                                       NSMutableAttributedString.Key.foregroundColor: UIColor.tertiaryText]))
+        return attributed
+    }
+    
+    static func isSource(text: String) -> Bool {
+        return SuggestionSource.allCases.filter { $0.rawValue.text == text }.count > 0
     }
 }
 
