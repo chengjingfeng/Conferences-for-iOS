@@ -11,6 +11,7 @@ import UIKit
 class SuggestionCell: UITableViewCell {
     
     let suggestionLbl = UILabel()
+    let talksLbl      = UILabel()
     
     private let stackImg: UIStackView = {
         let s = UIStackView()
@@ -36,6 +37,7 @@ private extension SuggestionCell {
         suggestionLbl.numberOfLines = 0
         contentView.addSubview(stackImg)
         contentView.addSubview(suggestionLbl)
+        contentView.addSubview(talksLbl)
     }
 }
 
@@ -50,7 +52,12 @@ private extension SuggestionCell {
         suggestionLbl.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
         suggestionLbl.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
         suggestionLbl.leftAnchor.constraint(equalTo: stackImg.rightAnchor, constant: 5).isActive = true
-        suggestionLbl.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -15).isActive = true
+        suggestionLbl.rightAnchor.constraint(equalTo: talksLbl.leftAnchor).isActive = true
+        
+        talksLbl.translatesAutoresizingMaskIntoConstraints = false
+        talksLbl.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
+        talksLbl.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
+        talksLbl.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -15).isActive = true
     }
 }
 
@@ -60,7 +67,8 @@ private extension SuggestionCell {
         contentView.backgroundColor = UIColor.clear
         suggestionLbl.textAlignment    = .left
         suggestionLbl.backgroundColor  = UIColor.clear
-
+        talksLbl.textAlignment         = .right
+        talksLbl.backgroundColor       = UIColor.clear
     }
 }
 
@@ -72,8 +80,8 @@ extension SuggestionCell {
 
         for v in stackImg.arrangedSubviews { v.removeFromSuperview() }
         
-        for source in suggestion.sources.sorted() {
-            imgview = UIImageView(image: source.getImage()?.resized(to: imgHeightWidth))
+        for source in suggestion.sources.sorted(by: { ($0.source.rawValue.order ?? 0) < ($1.source.rawValue.order ?? 0) }) {
+            imgview = UIImageView(image: source.source.getImage()?.resized(to: imgHeightWidth))
             self.stackImg.addArrangedSubview(imgview)
         }
         
@@ -86,6 +94,9 @@ extension SuggestionCell {
 
         
         self.suggestionLbl.attributedText = suggestion.getAttributedText()
+        self.talksLbl.attributedText = NSMutableAttributedString(string: "(" + String(suggestion.inTalks.count) + " talk" + (suggestion.inTalks.count > 1 ? "s" : "") + ")",
+                                                                 attributes: [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 12),
+                                                                              NSMutableAttributedString.Key.foregroundColor: UIColor.tertiaryText])
 
     }
 }

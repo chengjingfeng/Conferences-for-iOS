@@ -39,6 +39,9 @@ class ListViewController: UITableViewController {
         NotificationCenter.default.addObserver(forName: .refreshActiveCell, object: nil, queue: nil) { [weak self] (notification) in
             self?.tableView.reloadData()
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSuggestionTables), name: .refreshTableView, object: nil)
+
     }
     
     func reloadTableView() {
@@ -128,6 +131,11 @@ extension ListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         talkService.filterTalks(by: searchController.searchBar.text ?? "")
         
+        updateSuggestionTables()
+        
+    }
+    
+    @objc func updateSuggestionTables() {
         // To avoid performance issues, only get suggestions when the searchbar text has a minimun length of 2 characters
         if (searchController.searchBar.text?.count ?? 0 > 1) {
             tagListView.updateSuggestions(to: talkService.getSuggestions(basedOn: searchController.searchBar.text))
@@ -137,7 +145,6 @@ extension ListViewController: UISearchResultsUpdating {
             tagListView.hideSuggestionsTable()
             tagListView.hideSuggestionSourcesTable()
         }
-        
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -199,7 +206,7 @@ extension ListViewController: SuggestionDelegate {
     }
     
     func didSelectSuggestionSource(suggestionSource: SuggestionSource, completeWord: String) {
-        searchController.searchBar.text = suggestionSource.getSearchText() + SuggestionSource.sourceCriteriaLimit + completeWord
+        searchController.searchBar.text = suggestionSource.source.getSearchText() + SuggestionSourceEnum.sourceCriteriaLimit + completeWord
         tagListView.hideSuggestionSourcesTable()
     }
     

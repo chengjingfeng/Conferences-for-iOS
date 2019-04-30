@@ -36,7 +36,7 @@ class SuggestionAttribute: Equatable, ExpressibleByStringLiteral {
     }
 }
 
-enum SuggestionSource: SuggestionAttribute, Comparable, RawRepresentable, CaseIterable {
+enum SuggestionSourceEnum: SuggestionAttribute, Comparable, RawRepresentable, CaseIterable {
     typealias RawValue = SuggestionAttribute
     
     case speakerFirstname = "1, speaker"
@@ -47,11 +47,11 @@ enum SuggestionSource: SuggestionAttribute, Comparable, RawRepresentable, CaseIt
     
     static let sourceCriteriaLimit: String = ":"
     
-    static func ==(lhs: SuggestionSource, rhs: SuggestionSource) -> Bool {
+    static func ==(lhs: SuggestionSourceEnum, rhs: SuggestionSourceEnum) -> Bool {
         return lhs.rawValue.order == rhs.rawValue.order
     }
 
-    static func <(lhs: SuggestionSource, rhs: SuggestionSource) -> Bool {
+    static func <(lhs: SuggestionSourceEnum, rhs: SuggestionSourceEnum) -> Bool {
         guard let lhsOrder = lhs.rawValue.order, let rhsOrder = rhs.rawValue.order else { return false }
         
         return lhsOrder < rhsOrder
@@ -77,7 +77,7 @@ enum SuggestionSource: SuggestionAttribute, Comparable, RawRepresentable, CaseIt
     func getAttributedText(for completeWord: String) -> NSAttributedString {
         var attributed = NSMutableAttributedString()
         
-        attributed = NSMutableAttributedString(string: getSearchText() + SuggestionSource.sourceCriteriaLimit, attributes: [NSMutableAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)])
+        attributed = NSMutableAttributedString(string: getSearchText() + SuggestionSourceEnum.sourceCriteriaLimit, attributes: [NSMutableAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)])
             
         attributed.append(NSMutableAttributedString(string: completeWord, attributes: [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 13),
                                                                                        NSMutableAttributedString.Key.foregroundColor: UIColor.tertiaryText]))
@@ -85,15 +85,28 @@ enum SuggestionSource: SuggestionAttribute, Comparable, RawRepresentable, CaseIt
     }
     
     static func isSource(text: String) -> Bool {
-        return SuggestionSource.allCases.filter { $0.rawValue.text == text }.count > 0
+        return SuggestionSourceEnum.allCases.filter { $0.rawValue.text == text }.count > 0
     }
 }
+
+class SuggestionSource {
+    var source: SuggestionSourceEnum
+    var inTalks: [TalkModel]
+    
+    init(source: SuggestionSourceEnum, inTalks: [TalkModel]) {
+        self.source = source
+        self.inTalks = inTalks
+    }
+    
+}
+
 
 class Suggestion {
     var text: String
     var completeWord: String
     private var attributedText: NSAttributedString
     var sources: [SuggestionSource]
+    var inTalks: [TalkModel]
     
     func description() -> String {
        return "\(text) - \(completeWord) - \(sources)"
@@ -105,6 +118,7 @@ class Suggestion {
         self.completeWord   = completeWord
         self.attributedText = NSAttributedString()
         self.sources        = []
+        self.inTalks        = []
         
         self.attributedText = setAttributedText()
     }
@@ -131,6 +145,23 @@ class Suggestion {
         }
         
         return attributed
+    }
+    
+    func add(talk: TalkModel) {
+        guard !inTalks.contains(talk) else { return }
+        
+        inTalks.append(talk)
+    }
+    
+    func add(source: SuggestionSourceEnum, for talk: TalkModel) {
+        if let src = (sources.filter { $0.source == source }.first) {
+            if (!src.inTalks.contains(talk)) {
+                src.inTalks.append(talk)
+            }
+        }
+        else {
+            sources.append(SuggestionSource(source: source, inTalks: [talk]))
+        }
     }
 }
 

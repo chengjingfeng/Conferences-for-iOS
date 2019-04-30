@@ -85,45 +85,46 @@ final class TalkService {
         guard let based = basedOn else { return [] }
 
         var ret: [Suggestion] = []
+        let activeTags = TagSyncService.shared.activeTags()
         
         for conference in conferencesBackup {
             for talk in conference.talks {
                 
-                if (talk.speaker.firstname.lowercased().contains(based.lowercased())) {
+                if (talk.speaker.firstname.lowercased().contains(based.lowercased()) && talk.matchesAll(activeTags: activeTags)) {
                     if let existingSuggestion = ret.filter ({ $0.completeWord == talk.speaker.firstname.lowercased() }).first {
-                        if (existingSuggestion.sources.filter {$0 == .speakerFirstname}.count == 0) {
-                            existingSuggestion.sources.append(.speakerFirstname)
-                        }
+                        existingSuggestion.add(source: .speakerFirstname, for: talk)
+                        existingSuggestion.add(talk: talk)
                     }
                     else {
                         let suggestion = Suggestion(text: based, completeWord: talk.speaker.firstname.lowercased())
-                        suggestion.sources.append(.speakerFirstname)
+                        suggestion.add(source: .speakerFirstname, for: talk)
+                        suggestion.add(talk: talk)
                         ret.append(suggestion)
                     }
                 }
                 
-                if (talk.speaker.lastname.lowercased().contains(based.lowercased())) {
+                if (talk.speaker.lastname.lowercased().contains(based.lowercased()) && talk.matchesAll(activeTags: activeTags)) {
                     if let existingSuggestion = ret.filter ({ $0.completeWord == talk.speaker.lastname.lowercased() }).first {
-                        if (existingSuggestion.sources.filter {$0 == .speakerLastname}.count == 0) {
-                            existingSuggestion.sources.append(.speakerLastname)
-                        }
+                        existingSuggestion.add(source: .speakerLastname, for: talk)
+                        existingSuggestion.add(talk: talk)
                     }
                     else {
                         let suggestion = Suggestion(text: based, completeWord: talk.speaker.lastname.lowercased())
-                        suggestion.sources.append(.speakerLastname)
+                        suggestion.add(source: .speakerLastname, for: talk)
+                        suggestion.add(talk: talk)
                         ret.append(suggestion)
                     }
                 }
                 
-                if (talk.speaker.twitter?.lowercased().contains(based.lowercased()) ?? false) {
+                if ((talk.speaker.twitter?.lowercased().contains(based.lowercased()) ?? false) && talk.matchesAll(activeTags: activeTags)) {
                     if let existingSuggestion = ret.filter ({ $0.completeWord == talk.speaker.twitter?.lowercased() }).first {
-                        if (existingSuggestion.sources.filter {$0 == .twitter}.count == 0) {
-                            existingSuggestion.sources.append(.twitter)
-                        }
+                        existingSuggestion.add(source: .twitter, for: talk)
+                        existingSuggestion.add(talk: talk)
                     }
                     else {
                         let suggestion = Suggestion(text: based, completeWord: talk.speaker.twitter?.lowercased() ?? "")
-                        suggestion.sources.append(.twitter)
+                        suggestion.add(source: .twitter, for: talk)
+                        suggestion.add(talk: talk)
                         ret.append(suggestion)
                     }
                 }
@@ -132,15 +133,15 @@ final class TalkService {
                 
                 var result = talk.title.replacingOccurrences(of: pattern, with: " ", options: [.regularExpression])
                 for word in result.components(separatedBy: " ") {
-                    if (word.lowercased().contains(based.lowercased())) {
+                    if (word.lowercased().contains(based.lowercased()) && talk.matchesAll(activeTags: activeTags)) {
                         if let existingSuggestion = ret.filter ({ $0.completeWord == word.lowercased() }).first {
-                            if (existingSuggestion.sources.filter {$0 == .title}.count == 0) {
-                                existingSuggestion.sources.append(.title)
-                            }
+                            existingSuggestion.add(source: .title, for: talk)
+                            existingSuggestion.add(talk: talk)
                         }
                         else {
                             let suggestion = Suggestion(text: based, completeWord: word.lowercased())
-                            suggestion.sources.append(.title)
+                            suggestion.add(source: .title, for: talk)
+                            suggestion.add(talk: talk)
                             ret.append(suggestion)
                         }
                     }
@@ -148,15 +149,15 @@ final class TalkService {
                 
                 result = talk.details?.replacingOccurrences(of: pattern, with: " ", options: [.regularExpression]) ?? ""
                 for word in result.components(separatedBy: " ") {
-                    if (word.lowercased().contains(based.lowercased())) {
+                    if (word.lowercased().contains(based.lowercased()) && talk.matchesAll(activeTags: activeTags)) {
                         if let existingSuggestion = ret.filter({ $0.completeWord == word.lowercased() }).first {
-                            if (existingSuggestion.sources.filter {$0 == .details}.count == 0) {
-                                existingSuggestion.sources.append(.details)
-                            }
+                            existingSuggestion.add(source: .details, for: talk)
+                            existingSuggestion.add(talk: talk)
                         }
                         else {
                             let suggestion = Suggestion(text: based, completeWord: word.lowercased())
-                            suggestion.sources.append(.details)
+                            suggestion.add(source: .details, for: talk)
+                            suggestion.add(talk: talk)
                             ret.append(suggestion)
                         }
                     }
@@ -164,6 +165,6 @@ final class TalkService {
             }
         }
         
-        return ret
+        return ret.sorted { $0.inTalks.count > $1.inTalks.count }
     }
 }
