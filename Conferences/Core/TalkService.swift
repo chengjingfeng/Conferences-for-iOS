@@ -96,10 +96,10 @@ final class TalkService {
                         existingSuggestion.add(talk: talk)
                     }
                     else {
-                        let suggestion = Suggestion(text: based, completeWord: talk.speaker.firstname.lowercased())
-                        suggestion.add(source: .speakerFirstname, for: talk)
-                        suggestion.add(talk: talk)
-                        ret.append(suggestion)
+                        let newSuggestion = Suggestion(text: based, completeWord: talk.speaker.firstname.lowercased())
+                        newSuggestion.add(source: .speakerFirstname, for: talk)
+                        newSuggestion.add(talk: talk)
+                        ret.append(newSuggestion)
                     }
                 }
                 
@@ -109,10 +109,10 @@ final class TalkService {
                         existingSuggestion.add(talk: talk)
                     }
                     else {
-                        let suggestion = Suggestion(text: based, completeWord: talk.speaker.lastname.lowercased())
-                        suggestion.add(source: .speakerLastname, for: talk)
-                        suggestion.add(talk: talk)
-                        ret.append(suggestion)
+                        let newSuggestion = Suggestion(text: based, completeWord: talk.speaker.lastname.lowercased())
+                        newSuggestion.add(source: .speakerLastname, for: talk)
+                        newSuggestion.add(talk: talk)
+                        ret.append(newSuggestion)
                     }
                 }
                 
@@ -122,10 +122,10 @@ final class TalkService {
                         existingSuggestion.add(talk: talk)
                     }
                     else {
-                        let suggestion = Suggestion(text: based, completeWord: talk.speaker.twitter?.lowercased() ?? "")
-                        suggestion.add(source: .twitter, for: talk)
-                        suggestion.add(talk: talk)
-                        ret.append(suggestion)
+                        let newSuggestion = Suggestion(text: based, completeWord: talk.speaker.twitter?.lowercased() ?? "")
+                        newSuggestion.add(source: .twitter, for: talk)
+                        newSuggestion.add(talk: talk)
+                        ret.append(newSuggestion)
                     }
                 }
                 
@@ -139,10 +139,10 @@ final class TalkService {
                             existingSuggestion.add(talk: talk)
                         }
                         else {
-                            let suggestion = Suggestion(text: based, completeWord: word.lowercased())
-                            suggestion.add(source: .title, for: talk)
-                            suggestion.add(talk: talk)
-                            ret.append(suggestion)
+                            let newSuggestion = Suggestion(text: based, completeWord: word.lowercased())
+                            newSuggestion.add(source: .title, for: talk)
+                            newSuggestion.add(talk: talk)
+                            ret.append(newSuggestion)
                         }
                     }
                 }
@@ -155,10 +155,10 @@ final class TalkService {
                             existingSuggestion.add(talk: talk)
                         }
                         else {
-                            let suggestion = Suggestion(text: based, completeWord: word.lowercased())
-                            suggestion.add(source: .details, for: talk)
-                            suggestion.add(talk: talk)
-                            ret.append(suggestion)
+                            let newSuggestion = Suggestion(text: based, completeWord: word.lowercased())
+                            newSuggestion.add(source: .details, for: talk)
+                            newSuggestion.add(talk: talk)
+                            ret.append(newSuggestion)
                         }
                     }
                 }

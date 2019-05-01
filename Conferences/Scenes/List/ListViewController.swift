@@ -138,8 +138,21 @@ extension ListViewController: UISearchResultsUpdating {
     @objc func updateSuggestionTables() {
         // To avoid performance issues, only get suggestions when the searchbar text has a minimun length of 2 characters
         if (searchController.searchBar.text?.count ?? 0 > 1) {
+            var prevSelectedSuggestion: Suggestion?
+            
+            if (tagListView.areSuggestionSourcesShown()) {
+                prevSelectedSuggestion = tagListView.selectedSuggestion
+            }
+            
             tagListView.updateSuggestions(to: talkService.getSuggestions(basedOn: searchController.searchBar.text))
-            tagListView.showSuggestionsTable()
+            
+            tagListView.selectedSuggestion = tagListView.suggestions.filter { $0.completeWord == prevSelectedSuggestion?.completeWord }.first
+            
+k            tagListView.reloadTables()
+            
+            if ( !tagListView.areSuggestionsShown() && !tagListView.areSuggestionSourcesShown()) {
+                tagListView.showSuggestionsTable()
+            }
         }
         else {
             tagListView.hideSuggestionsTable()

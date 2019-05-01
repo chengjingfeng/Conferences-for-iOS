@@ -108,12 +108,10 @@ class TagListView: UIInputView {
     }
     
     func hideSuggestionsTable() {
+        guard areSuggestionsShown() else { return }
 
-        if (areSuggestionsShown()) {
-            suggestionsTable.removeFromSuperview()
-
-            stack.edgesToSuperview()
-        }
+        suggestionsTable.removeFromSuperview()
+        stack.edgesToSuperview()
     }
     
     func hideSuggestionSourcesTable() {
@@ -167,6 +165,15 @@ class TagListView: UIInputView {
         suggestionSourcesTable.updateConstraint(attribute: .height, constant: min(TagListView.SUGGESTIONTABLE_MAXHEIGHT, CGFloat(newSuggestion.sources.count) * TagListView.SUGGESTIONROW_HEIGHT))
         
         suggestionSourcesTable.reloadData()
+    }
+    
+    func reloadTables() {
+        if (areSuggestionsShown()) {
+            suggestionsTable.reloadData()
+        }
+        if (areSuggestionSourcesShown()) {
+            suggestionSourcesTable.reloadData()
+        }
     }
 }
 
