@@ -148,7 +148,7 @@ extension ListViewController: UISearchResultsUpdating {
             
             tagListView.selectedSuggestion = tagListView.suggestions.filter { $0.completeWord == prevSelectedSuggestion?.completeWord }.first
             
-k            tagListView.reloadTables()
+            tagListView.reloadTables()
             
             if ( !tagListView.areSuggestionsShown() && !tagListView.areSuggestionSourcesShown()) {
                 tagListView.showSuggestionsTable()
