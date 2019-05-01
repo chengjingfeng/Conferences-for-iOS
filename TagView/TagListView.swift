@@ -156,12 +156,7 @@ class TagListView: UIInputView {
     func updateSuggestions(to newSuggestions: [Suggestion]) {
         self.suggestions = newSuggestions
         
-        if let constraint = (suggestionsTable.constraints.filter{$0.firstAttribute == .height}.first) {
-            constraint.constant = min(TagListView.SUGGESTIONTABLE_MAXHEIGHT, CGFloat(suggestions.count) * TagListView.SUGGESTIONROW_HEIGHT)
-        }
-        else {
-            suggestionsTable.height(min(TagListView.SUGGESTIONTABLE_MAXHEIGHT, CGFloat(suggestions.count) * TagListView.SUGGESTIONROW_HEIGHT))
-        }
+        suggestionsTable.updateConstraint(attribute: .height, constant: min(TagListView.SUGGESTIONTABLE_MAXHEIGHT, CGFloat(suggestions.count) * TagListView.SUGGESTIONROW_HEIGHT))
         
         suggestionsTable.reloadData()
     }
@@ -169,12 +164,7 @@ class TagListView: UIInputView {
     func updateSuggestionSources(to newSuggestion: Suggestion) {
         self.selectedSuggestion = newSuggestion
         
-        if let constraint = (suggestionSourcesTable.constraints.filter{$0.firstAttribute == .height}.first) {
-            constraint.constant = min(TagListView.SUGGESTIONTABLE_MAXHEIGHT, CGFloat(newSuggestion.sources.count) * TagListView.SUGGESTIONROW_HEIGHT)
-        }
-        else {
-            suggestionSourcesTable.height(min(TagListView.SUGGESTIONTABLE_MAXHEIGHT, CGFloat(newSuggestion.sources.count) * TagListView.SUGGESTIONROW_HEIGHT))
-        }
+        suggestionSourcesTable.updateConstraint(attribute: .height, constant: min(TagListView.SUGGESTIONTABLE_MAXHEIGHT, CGFloat(newSuggestion.sources.count) * TagListView.SUGGESTIONROW_HEIGHT))
         
         suggestionSourcesTable.reloadData()
     }

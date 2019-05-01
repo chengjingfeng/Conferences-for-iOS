@@ -85,13 +85,7 @@ extension SuggestionCell {
             self.stackImg.addArrangedSubview(imgview)
         }
         
-        if let constraint = (stackImg.constraints.filter{$0.firstAttribute == .width}.first) {
-            constraint.constant = (imgHeightWidth + 2) * CGFloat(suggestion.sources.count)
-        }
-        else {
-            stackImg.width((imgHeightWidth + 2) * CGFloat(suggestion.sources.count))
-        }
-
+        stackImg.updateConstraint(attribute: .width, constant: (imgHeightWidth + 2) * CGFloat(suggestion.sources.count))
         
         self.suggestionLbl.attributedText = suggestion.getAttributedText()
         self.talksLbl.attributedText = NSMutableAttributedString(string: "(" + String(suggestion.inTalks.count) + " talk" + (suggestion.inTalks.count > 1 ? "s" : "") + ")",
@@ -101,13 +95,5 @@ extension SuggestionCell {
     }
 }
 
-extension UIImage {
-    func resized(toWidth width: CGFloat) -> UIImage? {
-        let canvasSize = CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))
-        UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
-        defer { UIGraphicsEndImageContext() }
-        draw(in: CGRect(origin: .zero, size: canvasSize))
-        return UIGraphicsGetImageFromCurrentImageContext()
-    }
-}
+
 

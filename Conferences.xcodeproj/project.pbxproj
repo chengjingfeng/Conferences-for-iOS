@@ -51,6 +51,9 @@
 		B9AE242622469746009A263D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9AE242422469746009A263D /* LaunchScreen.storyboard */; };
 		B9AE243122469746009A263D /* ConferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE243022469746009A263D /* ConferencesTests.swift */; };
 		B9AE243C22469A8A009A263D /* Styleguide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE243B22469A8A009A263D /* Styleguide.swift */; };
+		EB1CE5F42279AB7900A6AB67 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1CE5F32279AB7900A6AB67 /* UIView.swift */; };
+		EB1CE5F62279AD3200A6AB67 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1CE5F52279AD3200A6AB67 /* UIImage.swift */; };
+		EB1CE5F82279AD6400A6AB67 /* StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1CE5F72279AD6400A6AB67 /* StringProtocol.swift */; };
 		EB26D00222746CDE000654F9 /* SuggestionSourcesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB26D00122746CDE000654F9 /* SuggestionSourcesCell.swift */; };
 		EB4B40192257E18100AAE0EB /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B40172257E18100AAE0EB /* TagButton.swift */; };
 		EB4B401A2257E18100AAE0EB /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B40182257E18100AAE0EB /* TagListView.swift */; };
@@ -135,6 +138,9 @@
 		B9AE243B22469A8A009A263D /* Styleguide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styleguide.swift; sourceTree = "<group>"; };
 		D5DECBFE49653B8525CD601F /* Pods-Conferences.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conferences.release.xcconfig"; path = "Pods/Target Support Files/Pods-Conferences/Pods-Conferences.release.xcconfig"; sourceTree = "<group>"; };
 		D7BE1B9BC975C0F64EE3C240 /* Pods-ConferencesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConferencesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConferencesTests/Pods-ConferencesTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EB1CE5F32279AB7900A6AB67 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		EB1CE5F52279AD3200A6AB67 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		EB1CE5F72279AD6400A6AB67 /* StringProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringProtocol.swift; sourceTree = "<group>"; };
 		EB26D00122746CDE000654F9 /* SuggestionSourcesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionSourcesCell.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		EB4B40172257E18100AAE0EB /* TagButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		EB4B40182257E18100AAE0EB /* TagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -186,6 +192,7 @@
 		B9217C9F225B4B74008EF906 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				EB1CE5F22279AB6100A6AB67 /* Extensions */,
 				EB4B40152257E14200AAE0EB /* TagView */,
 			);
 			name = Shared;
@@ -350,6 +357,16 @@
 				7E03FBF0215F727EEAE89189 /* Pods-ConferencesTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		EB1CE5F22279AB6100A6AB67 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EB1CE5F32279AB7900A6AB67 /* UIView.swift */,
+				EB1CE5F52279AD3200A6AB67 /* UIImage.swift */,
+				EB1CE5F72279AD6400A6AB67 /* StringProtocol.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		EB4B40152257E14200AAE0EB /* TagView */ = {
@@ -549,6 +566,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB26D00222746CDE000654F9 /* SuggestionSourcesCell.swift in Sources */,
+				EB1CE5F62279AD3200A6AB67 /* UIImage.swift in Sources */,
 				B99A5B262249769F00EE5033 /* VimeoFetcher.swift in Sources */,
 				B9504672224A1BDF00382DB5 /* MainCoordinator.swift in Sources */,
 				B99A5B272249769F00EE5033 /* Storage.swift in Sources */,
@@ -576,6 +594,7 @@
 				EBE79D352258D35F00853BD6 /* ListViewDataSource.swift in Sources */,
 				B99A5B312249769F00EE5033 /* VideoSourceModel.swift in Sources */,
 				EB7EF022226BE1BC00E5FA93 /* Suggestion.swift in Sources */,
+				EB1CE5F82279AD6400A6AB67 /* StringProtocol.swift in Sources */,
 				B9504676224A307F00382DB5 /* TalkViewCell.swift in Sources */,
 				B9217C9C225B4B60008EF906 /* SettingsViewController.swift in Sources */,
 				B99A5B352249769F00EE5033 /* APIClient+Conference.swift in Sources */,
@@ -584,6 +603,7 @@
 				B99A5B2B2249769F00EE5033 /* FavoriteModel.swift in Sources */,
 				B9504674224A257900382DB5 /* ConferenceHeaderView.swift in Sources */,
 				B9217C9B225B4B60008EF906 /* SettingsCoordinator.swift in Sources */,
+				EB1CE5F42279AB7900A6AB67 /* UIView.swift in Sources */,
 				B99A5B342249769F00EE5033 /* SpeakerModel.swift in Sources */,
 				B950467C224A459A00382DB5 /* DetailSummaryViewController.swift in Sources */,
 				B950467E224A469A00382DB5 /* ActionView.swift in Sources */,

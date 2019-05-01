@@ -165,14 +165,5 @@ class Suggestion {
     }
 }
 
-extension StringProtocol where Index == String.Index {
-    func startIndex(of string: Self, options: String.CompareOptions = []) -> Index? {
-        return range(of: string, options: options)?.lowerBound
-    }
-    
-    func endIndex(of string: Self, options: String.CompareOptions = []) -> Index? {
-        return range(of: string, options: options)?.upperBound
-    }
-}
 
 
