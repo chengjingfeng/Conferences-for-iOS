@@ -127,6 +127,36 @@ extension TalkModel {
         }
         return true
     }
+    
+    func matches(searchCriteria: String) -> Bool {
+        guard searchCriteria.count > 0 else { return true }
+        
+        let components = searchCriteria.components(separatedBy: SuggestionSourceEnum.sourceCriteriaLimit)
+        
+        // TODO: Seach with multiple "key:text" criterias
+        if (components.count == 2 && SuggestionSourceEnum.isSource(text: components.first ?? "")) {
+            
+            if (components.first == SuggestionSourceEnum.speakerFirstname.rawValue.text) {
+                return self.speaker.firstname.lowercased().contains(components.last?.lowercased() ?? "") ||
+                       self.speaker.lastname.lowercased().contains(components.last?.lowercased() ?? "")
+            }
+            else if (components.first == SuggestionSourceEnum.title.rawValue.text) {
+                return self.title.lowercased().contains(components.last?.lowercased() ?? "")
+            }
+            else if (components.first == SuggestionSourceEnum.twitter.rawValue.text) {
+                return self.speaker.twitter?.lowercased().contains(components.last?.lowercased() ?? "") ?? false
+            }
+            else if (components.first == SuggestionSourceEnum.details.rawValue.text) {
+                return self.details?.lowercased().contains(components.last?.lowercased() ?? "") ?? false
+            }
+            else {
+                return false
+            }
+        }
+        else {
+            return self.searchString.contains(searchCriteria.lowercased())
+        }
+    }
 }
 
 extension MutableCollection {

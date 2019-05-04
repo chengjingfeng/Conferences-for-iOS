@@ -26,6 +26,7 @@ class ListViewController: UITableViewController {
         super.viewDidLoad()
         
         dataSource.delegate = self
+        tagListView.suggestionsDelegate = self
 
         configureTableView()
         configureSearchBar()
@@ -38,6 +39,9 @@ class ListViewController: UITableViewController {
         NotificationCenter.default.addObserver(forName: .refreshActiveCell, object: nil, queue: nil) { [weak self] (notification) in
             self?.tableView.reloadData()
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSuggestionTables), name: .refreshTableView, object: nil)
+
     }
     
     func reloadTableView() {
@@ -126,6 +130,34 @@ class ListViewController: UITableViewController {
 extension ListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         talkService.filterTalks(by: searchController.searchBar.text ?? "")
+        
+        updateSuggestionTables()
+        
+    }
+    
+    @objc func updateSuggestionTables() {
+        // To avoid performance issues, only get suggestions when the searchbar text has a minimun length of 2 characters
+        if (searchController.searchBar.text?.count ?? 0 > 1) {
+            var prevSelectedSuggestion: Suggestion?
+            
+            if (tagListView.areSuggestionSourcesShown()) {
+                prevSelectedSuggestion = tagListView.selectedSuggestion
+            }
+            
+            tagListView.updateSuggestions(to: talkService.getSuggestions(basedOn: searchController.searchBar.text))
+            
+            tagListView.selectedSuggestion = tagListView.suggestions.filter { $0.completeWord == prevSelectedSuggestion?.completeWord }.first
+            
+            tagListView.reloadTables()
+            
+            if ( !tagListView.areSuggestionsShown() && !tagListView.areSuggestionSourcesShown()) {
+                tagListView.showSuggestionsTable()
+            }
+        }
+        else {
+            tagListView.hideSuggestionsTable()
+            tagListView.hideSuggestionSourcesTable()
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -173,6 +205,22 @@ extension ListViewController: TalkServiceDelegate {
 
     func getSearchText() -> String {
         return searchController.searchBar.text ?? ""
+    }
+}
+
+extension ListViewController: SuggestionDelegate {
+    func didSelectSuggestion(_ suggestion: Suggestion) {
+        searchController.searchBar.text = suggestion.completeWord
+        
+        if (suggestion.sources.count > 1) {
+            tagListView.updateSuggestionSources(to: suggestion)
+            tagListView.showSuggestionSourcesTable()
+        }
+    }
+    
+    func didSelectSuggestionSource(suggestionSource: SuggestionSource, completeWord: String) {
+        searchController.searchBar.text = suggestionSource.source.getSearchText() + SuggestionSourceEnum.sourceCriteriaLimit + completeWord
+        tagListView.hideSuggestionSourcesTable()
     }
     
 }
