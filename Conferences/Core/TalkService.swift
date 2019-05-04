@@ -9,67 +9,55 @@
 import Foundation
 
 protocol TalkServiceDelegate: class {
-    func didFetch(_ conferences: [Codable])
+    func didFetch(_ conferences: [ConferenceModel])
     func fetchFailed(with error: APIError)
-    func getSearchText() -> String
 }
 
 final class TalkService {
     weak var delegate: TalkServiceDelegate?
-    private let apiClient = APIClient()
 
-    private var conferences = [Codable]()
-    private var backup = [Codable]()
+    private var conferences = [ConferenceModel]()
+    private var backup = [ConferenceModel]()
 
-    init() {
-        observe()
-    }
+    func fetchData(type: PresentationType ) {
+        let response = APIClient.shared.result
 
-    func observe() {
-        NotificationCenter.default.addObserver(self, selector: #selector(filterTalks as () -> Void), name: .refreshTableView, object: nil)
-    }
-
-    func fetchData() {
-        apiClient.send(resource: ConferenceResource.all, completionHandler: { [weak self] (response: Result<[ConferenceModel], APIError>) in
+        DispatchQueue.main.async {
             switch response {
             case .success(let conferences):
-                self?.conferences = conferences
-                self?.backup      = conferences
-                
-                DispatchQueue.main.async {
-                    self?.delegate?.didFetch(conferences)
-                }
+                self.conferences = conferences
+                self.backup = conferences
 
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self?.delegate?.fetchFailed(with: error)
+                switch type {
+                case .watchlist:
+                    self.filterTalks(by: type.rawValue)
+                default:
+                    self.delegate?.didFetch(conferences)
                 }
+            case .failure(let error):
+                self.delegate?.fetchFailed(with: error)
             }
-        })
+        }
     }
 
     func filterTalks(by searchString: String) {
-        guard let seachableBackup = self.backup as? [Searchable] else { return }
         let activeTags = TagSyncService.shared.activeTags()
         
-        var currentBatch = seachableBackup
+        var currentBatch = self.backup
         
-        for i in 0..<currentBatch.count {
-            var conf = currentBatch[i] as? ConferenceModel
-            if (conf != nil) {
-                if (searchString.count > 0) {
-                    conf!.talks = conf!.talks.filter { $0.matches(searchCriteria: searchString) && $0.matchesAll(activeTags: activeTags) }
-                }
-                else {
-                    conf!.talks = conf!.talks.filter { $0.matchesAll(activeTags: activeTags) }
-                }
-                currentBatch[i] = conf!
+        for (index, var conference) in currentBatch.enumerated() {
+            if (searchString.count > 0) {
+                conference.talks = conference.talks.filter { $0.matches(searchCriteria: searchString) && $0.matchesAll(activeTags: activeTags) }
+            } else {
+                conference.talks = conference.talks.filter { $0.matchesAll(activeTags: activeTags) }
             }
+
+             currentBatch[index] = conference
         }
         
-        currentBatch = currentBatch.filter { ($0 as? ConferenceModel)?.talks.count ?? 0 > 0 }
+        currentBatch = currentBatch.filter { !$0.talks.isEmpty }
         
-        self.conferences = currentBatch as! [Codable]
+        self.conferences = currentBatch
         
         DispatchQueue.main.async {
             self.delegate?.didFetch(self.conferences)

@@ -9,7 +9,7 @@
 import UIKit
 
 class SettingsViewController: UITableViewController {
-//    lazy var footerView = LoadingFooterView()
+    lazy var footerView = LoadingFooterView()
 
     weak var viewModel: SettingsViewModel!
 
@@ -28,12 +28,12 @@ class SettingsViewController: UITableViewController {
     
     func configureView() {
         title = "Settings"
-//        footerView.frame.size = CGSize(width: footerView.frame.width, height: 200)
-//        footerView.showFooterWithVersion()
+        footerView.frame.size = CGSize(width: footerView.frame.width, height: 200)
+        footerView.showFooterWithVersion()
     }
     
     func configureTableView() {
-//        tableView.tableFooterView = footerView
+        tableView.tableFooterView = footerView
         tableView.backgroundColor = .panelBackground
         tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.identifier)
     }

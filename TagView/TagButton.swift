@@ -52,13 +52,13 @@ class TagButton: UIButton {
         self.layer.cornerRadius = 5.0
         self.titleLabel?.font = .systemFont(ofSize: 13, weight: .semibold)
         self.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-        self.setTitleColor(.black, for: .normal)
-        self.backgroundColor = .white
+        self.setTitleColor(.white, for: .normal)
+        self.backgroundColor = UIColor(red:0.38, green:0.38, blue:0.38, alpha:1.0)
     }
 
     func configureView(with tag: TagModel) {
         setTitle(tag.title, for: .normal)
 
-        self.backgroundColor = tag.isActive ? UIColor(red:0.64, green:0.65, blue:0.69, alpha:1.0) : UIColor.white
+        backgroundColor = tag.isActive ? UIColor(red:0.23, green:0.23, blue:0.23, alpha:1.0) : UIColor(red:0.38, green:0.38, blue:0.38, alpha:1.0)
     }
 }

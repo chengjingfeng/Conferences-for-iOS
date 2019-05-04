@@ -10,7 +10,22 @@ import Foundation
 import ConferencesCore
 
 final class APIClient {
-    func send<T: Codable>(resource: Resource, completionHandler: @escaping (Result<[T], APIError>) -> Void) {
+    static let shared = APIClient()
+
+    private(set) var result: Result<[ConferenceModel], APIError> = .failure(.unknown)
+
+    func fetchConferences() {
+        send(resource: ConferenceResource.all, completionHandler: { [weak self] (response: Result<[ConferenceModel], APIError>) in
+
+            self?.result = response
+            let notification = Notification(name: .apiStatusChanged)
+           // NotificationQueue.default.enqueue(notification, postingStyle: .asap, coalesceMask: .onName, forModes: [.common])
+            NotificationCenter.default.post(notification)
+        })
+    }
+
+
+   private func send<T: Codable>(resource: Resource, completionHandler: @escaping (Result<[T], APIError>) -> Void) {
         let request = resource.urlRequest()
 
         URLSession.shared.dataTask(with: request) { (data, response, error) in

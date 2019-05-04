@@ -8,17 +8,9 @@
 
 import Foundation
 
-extension Notification.Name {
-    static let clearTags = Notification.Name("ClearTagsNotification")
-    static let refreshTagView = Notification.Name("RefreshTagViewNotifiaction")
-    static let refreshTableView = Notification.Name("RefreshTableViewNotifiaction")
-    static let refreshActiveCell = Notification.Name("RefreshActiveCellNotifiaction")
-}
-
 final class TagSyncService {
     public static let shared = TagSyncService()
-    private var initalized = false
-    
+
     static let watchedTitle: String    = "Watched"
     static let notWatchedTitle: String = "Not watched"
     static let watchlistTitle: String  = "Watchlist"
@@ -59,24 +51,10 @@ final class TagSyncService {
     var tags: [TagModel] = []
 
     init() {
-        if !initalized {
-            self.tags = defaultTags
-            initalized = true    
-        }
-    }
-
-    @objc func clear() {
-        if self.tags != defaultTags {
-            self.tags = defaultTags
-
-            NotificationCenter.default.post(.init(name: .refreshTagView))
-            NotificationCenter.default.post(.init(name: .refreshTableView))
-        }
+        self.tags = defaultTags
     }
 
     func handleTag(_ tag: inout TagModel) {
-        let existingTage = self.tags
-
         if tag.isActive && !contains(tags, tag) && !contains(defaultTags, tag) {
             tags.append(tag)
         } else if !tag.isActive && contains(tags, tag) {
@@ -92,16 +70,9 @@ final class TagSyncService {
                 tags[index] = tag
             }
         }
-
-        if existingTage != self.tags {
-            NotificationCenter.default.post(.init(name: .refreshTagView))
-            NotificationCenter.default.post(.init(name: .refreshTableView))
-        }
     }
 
     func handleStoredTag(_ tag: inout TagModel) {
-        let existingTags = self.tags
-
         if tag.isActive && !contains(tags, tag) {
             loop: for (index, element) in defaultTags.enumerated() {
                 if element.query == tag.query {
@@ -110,34 +81,8 @@ final class TagSyncService {
                     break loop
                 }
             }
-
-            NotificationCenter.default.post(.init(name: .refreshTagView))
-
-            return
         } else if !tag.isActive && contains(tags, tag) && !contains(defaultTags, tag) {
-            let copy = tag
-
             tags = tags.filter { $0.query != tag.query }
-
-            if existingTags.first(where: { $0.query == copy.query })?.isActive == false {
-                NotificationCenter.default.post(.init(name: .refreshTagView))
-                return
-            }
-
-        } else if tag.isActive && contains(tags, tag) {
-            return
-        } else if !tag.isActive && contains(tags, tag) {
-            let copy = tag
-            if existingTags.first(where: { $0.query == copy.query })?.isActive == true {
-                NotificationCenter.default.post(.init(name: .refreshTableView))
-            }
-
-            return
-        }
-
-        if existingTags != self.tags {
-            NotificationCenter.default.post(.init(name: .refreshTagView))
-            NotificationCenter.default.post(.init(name: .refreshTableView))
         }
     }
 

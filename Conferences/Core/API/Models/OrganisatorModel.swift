@@ -9,9 +9,9 @@
 import Foundation
 
 struct OrganisatorModel: Codable {
-    var id: Int
-    var name: String
-    var twitter: String?
-    var nextEvent: String?
+    let id: Int
+    let name: String
+    let twitter: String?
+    let nextEvent: String?
 }
 

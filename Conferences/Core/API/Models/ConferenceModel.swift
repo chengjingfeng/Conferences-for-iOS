@@ -10,15 +10,15 @@ import Foundation
 import ConferencesCore
 
 struct ConferenceModel: Codable {
-    var id: Int
-    var organisator: OrganisatorModel
-    var name: String
-    var url: String
-    var location: String
-    var date: String
-    var highlightColor: String
+    let id: Int
+    let organisator: OrganisatorModel
+    let name: String
+    let url: String
+    let location: String
+    let date: String
+    let highlightColor: String
     var talks: [TalkModel]
-    var about: String
+    let about: String
 }
 
 extension ConferenceModel: Searchable {

@@ -9,11 +9,11 @@
 import Foundation
 
 struct SpeakerModel: Codable {
-    var id: Int
-    var firstname: String
-    var lastname: String
-    var image: String
-    var twitter: String?
-    var github: String?
-    var about: String?
+    let id: Int
+    let firstname: String
+    let lastname: String
+    let image: String
+    let twitter: String?
+    let github: String?
+    let about: String?
 }

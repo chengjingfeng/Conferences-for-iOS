@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		119C9FBB45ED84E8DAF963EC /* Pods_Conferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AB873A8F492095562F9056 /* Pods_Conferences.framework */; };
 		5C940C5EF6C5DE392CCB1EBA /* Pods_ConferencesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B886F8F5AE9EB165C358990 /* Pods_ConferencesTests.framework */; };
-		B9217C92225A4E89008EF906 /* ListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9217C91225A4E89008EF906 /* ListCoordinator.swift */; };
 		B9217C9A225B4B60008EF906 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9217C95225B4B60008EF906 /* SettingsViewModel.swift */; };
 		B9217C9B225B4B60008EF906 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9217C96225B4B60008EF906 /* SettingsCoordinator.swift */; };
 		B9217C9C225B4B60008EF906 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9217C97225B4B60008EF906 /* SettingsViewController.swift */; };
-		B950466E224A1B0300382DB5 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950466D224A1B0300382DB5 /* AppCoordinator.swift */; };
+		B92FDE9C2274952000237E43 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92FDE9B2274952000237E43 /* HomeCoordinator.swift */; };
+		B92FDE9E2275AC8A00237E43 /* APIStatusNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92FDE9D2275AC8A00237E43 /* APIStatusNotification.swift */; };
 		B9504670224A1BA500382DB5 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950466F224A1BA500382DB5 /* SplitViewController.swift */; };
 		B9504672224A1BDF00382DB5 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504671224A1BDF00382DB5 /* MainCoordinator.swift */; };
 		B9504674224A257900382DB5 /* ConferenceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504673224A257900382DB5 /* ConferenceHeaderView.swift */; };
@@ -44,6 +44,7 @@
 		B99A5B372249769F00EE5033 /* TagSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B212249769F00EE5033 /* TagSyncService.swift */; };
 		B99A5B382249769F00EE5033 /* SearchableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B222249769F00EE5033 /* SearchableProtocol.swift */; };
 		B99A5B3A2249769F00EE5033 /* TalkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B242249769F00EE5033 /* TalkService.swift */; };
+		B9A0A99A2271F1DB0013EF8D /* TableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A0A9992271F1DB0013EF8D /* TableViewFooter.swift */; };
 		B9AE241A22469743009A263D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE241922469743009A263D /* AppDelegate.swift */; };
 		B9AE241C22469743009A263D /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE241B22469743009A263D /* ListViewController.swift */; };
 		B9AE241E22469743009A263D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE241D22469743009A263D /* DetailViewController.swift */; };
@@ -60,6 +61,10 @@
 		EB7EF022226BE1BC00E5FA93 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7EF021226BE1BC00E5FA93 /* Suggestion.swift */; };
 		EBA9064D226B87FB000439DB /* SuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA9064C226B87FB000439DB /* SuggestionCell.swift */; };
 		EBE79D352258D35F00853BD6 /* ListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE79D342258D35F00853BD6 /* ListViewDataSource.swift */; };
+		B9F3B44C22732B9200D0743B /* ConferencesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F3B44B22732B9200D0743B /* ConferencesCoordinator.swift */; };
+		B9F4878C227314740070E29F /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4878B227314740070E29F /* CoordinatorProtocol.swift */; };
+		EB4B40192257E18100AAE0EB /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B40172257E18100AAE0EB /* TagButton.swift */; };
+		EB4B401A2257E18100AAE0EB /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B40182257E18100AAE0EB /* TagListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,11 +96,11 @@
 		7E03FBF0215F727EEAE89189 /* Pods-ConferencesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConferencesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ConferencesTests/Pods-ConferencesTests.release.xcconfig"; sourceTree = "<group>"; };
 		84AB873A8F492095562F9056 /* Pods_Conferences.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Conferences.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		868D2C02779B218982E45B05 /* Pods-Conferences.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conferences.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Conferences/Pods-Conferences.debug.xcconfig"; sourceTree = "<group>"; };
-		B9217C91225A4E89008EF906 /* ListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCoordinator.swift; sourceTree = "<group>"; };
 		B9217C95225B4B60008EF906 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		B9217C96225B4B60008EF906 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		B9217C97225B4B60008EF906 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		B950466D224A1B0300382DB5 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		B92FDE9B2274952000237E43 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		B92FDE9D2275AC8A00237E43 /* APIStatusNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStatusNotification.swift; sourceTree = "<group>"; };
 		B950466F224A1BA500382DB5 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		B9504671224A1BDF00382DB5 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		B9504673224A257900382DB5 /* ConferenceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceHeaderView.swift; sourceTree = "<group>"; };
@@ -125,6 +130,8 @@
 		B99A5B212249769F00EE5033 /* TagSyncService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagSyncService.swift; sourceTree = "<group>"; };
 		B99A5B222249769F00EE5033 /* SearchableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchableProtocol.swift; sourceTree = "<group>"; };
 		B99A5B242249769F00EE5033 /* TalkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkService.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		B99A5B242249769F00EE5033 /* TalkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkService.swift; sourceTree = "<group>"; };
+		B9A0A9992271F1DB0013EF8D /* TableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewFooter.swift; sourceTree = "<group>"; };
 		B9AE241622469743009A263D /* Conferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9AE241922469743009A263D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9AE241B22469743009A263D /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +143,8 @@
 		B9AE243022469746009A263D /* ConferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferencesTests.swift; sourceTree = "<group>"; };
 		B9AE243222469746009A263D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9AE243B22469A8A009A263D /* Styleguide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styleguide.swift; sourceTree = "<group>"; };
+		B9F3B44B22732B9200D0743B /* ConferencesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferencesCoordinator.swift; sourceTree = "<group>"; };
+		B9F4878B227314740070E29F /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		D5DECBFE49653B8525CD601F /* Pods-Conferences.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conferences.release.xcconfig"; path = "Pods/Target Support Files/Pods-Conferences/Pods-Conferences.release.xcconfig"; sourceTree = "<group>"; };
 		D7BE1B9BC975C0F64EE3C240 /* Pods-ConferencesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConferencesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConferencesTests/Pods-ConferencesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB1CE5F32279AB7900A6AB67 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -147,6 +156,7 @@
 		EB7EF021226BE1BC00E5FA93 /* Suggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		EBA9064C226B87FB000439DB /* SuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionCell.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		EBE79D342258D35F00853BD6 /* ListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewDataSource.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		EB4B40182257E18100AAE0EB /* TagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,7 +203,9 @@
 			isa = PBXGroup;
 			children = (
 				EB1CE5F22279AB6100A6AB67 /* Extensions */,
+				B9F48785227312F80070E29F /* SplitList */,
 				EB4B40152257E14200AAE0EB /* TagView */,
+				B9A0A9992271F1DB0013EF8D /* TableViewFooter.swift */,
 			);
 			name = Shared;
 			path = ../..;
@@ -202,11 +214,11 @@
 		B950466A224A18D500382DB5 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				B950466F224A1BA500382DB5 /* SplitViewController.swift */,
-				B9217C9F225B4B74008EF906 /* Shared */,
-				B950466C224A18F200382DB5 /* Detail */,
-				B950466B224A18E800382DB5 /* List */,
+				B9F487862273132F0070E29F /* Home */,
+				B9F48787227313590070E29F /* Conferences */,
+				B9F48788227313690070E29F /* Watchlist */,
 				B9217C94225B4B60008EF906 /* Settings */,
+				B9217C9F225B4B74008EF906 /* Shared */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -215,10 +227,8 @@
 			isa = PBXGroup;
 			children = (
 				B9AE241B22469743009A263D /* ListViewController.swift */,
-				EBE79D342258D35F00853BD6 /* ListViewDataSource.swift */,
 				B9504673224A257900382DB5 /* ConferenceHeaderView.swift */,
 				B9504675224A307F00382DB5 /* TalkViewCell.swift */,
-				B9217C91225A4E89008EF906 /* ListCoordinator.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -276,6 +286,7 @@
 				B99A5B172249769F00EE5033 /* APIClient.swift */,
 				B99A5B182249769F00EE5033 /* Models */,
 				B99A5B1E2249769F00EE5033 /* APIClient+Conference.swift */,
+				B92FDE9D2275AC8A00237E43 /* APIStatusNotification.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -325,14 +336,11 @@
 		B9AE241822469743009A263D /* Conferences */ = {
 			isa = PBXGroup;
 			children = (
-				B95046A1224A7E8800382DB5 /* Main.storyboard */,
-				B950466D224A1B0300382DB5 /* AppCoordinator.swift */,
 				B9AE241922469743009A263D /* AppDelegate.swift */,
 				B99A5B092249769F00EE5033 /* Core */,
 				B950466A224A18D500382DB5 /* Scenes */,
-				B9AE242222469746009A263D /* Assets.xcassets */,
-				B9AE242422469746009A263D /* LaunchScreen.storyboard */,
-				B9AE242722469746009A263D /* Info.plist */,
+				B9F48789227313890070E29F /* SupportingFiles */,
+				B9F4878A227314600070E29F /* Protocols */,
 				B9AE243B22469A8A009A263D /* Styleguide.swift */,
 				B9504671224A1BDF00382DB5 /* MainCoordinator.swift */,
 			);
@@ -346,6 +354,58 @@
 				B9AE243222469746009A263D /* Info.plist */,
 			);
 			path = ConferencesTests;
+			sourceTree = "<group>";
+		};
+		B9F48785227312F80070E29F /* SplitList */ = {
+			isa = PBXGroup;
+			children = (
+				B950466F224A1BA500382DB5 /* SplitViewController.swift */,
+				B950466C224A18F200382DB5 /* Detail */,
+				B950466B224A18E800382DB5 /* List */,
+			);
+			path = SplitList;
+			sourceTree = "<group>";
+		};
+		B9F487862273132F0070E29F /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				B92FDE9B2274952000237E43 /* HomeCoordinator.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		B9F48787227313590070E29F /* Conferences */ = {
+			isa = PBXGroup;
+			children = (
+				B9F3B44B22732B9200D0743B /* ConferencesCoordinator.swift */,
+			);
+			path = Conferences;
+			sourceTree = "<group>";
+		};
+		B9F48788227313690070E29F /* Watchlist */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Watchlist;
+			sourceTree = "<group>";
+		};
+		B9F48789227313890070E29F /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				B9AE242222469746009A263D /* Assets.xcassets */,
+				B9AE242722469746009A263D /* Info.plist */,
+				B9AE242422469746009A263D /* LaunchScreen.storyboard */,
+				B95046A1224A7E8800382DB5 /* Main.storyboard */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		B9F4878A227314600070E29F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B9F4878B227314740070E29F /* CoordinatorProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		CCFCFA8A2E7F49B392E047A8 /* Pods */ = {
@@ -570,14 +630,15 @@
 				B99A5B262249769F00EE5033 /* VimeoFetcher.swift in Sources */,
 				B9504672224A1BDF00382DB5 /* MainCoordinator.swift in Sources */,
 				B99A5B272249769F00EE5033 /* Storage.swift in Sources */,
-				B950466E224A1B0300382DB5 /* AppCoordinator.swift in Sources */,
 				B9504680224A46A400382DB5 /* SpeakerView.swift in Sources */,
 				B99A5B372249769F00EE5033 /* TagSyncService.swift in Sources */,
+				B92FDE9C2274952000237E43 /* HomeCoordinator.swift in Sources */,
 				B9AE241E22469743009A263D /* DetailViewController.swift in Sources */,
 				B99A5B252249769F00EE5033 /* YoutubeFetcher.swift in Sources */,
 				B99A5B2A2249769F00EE5033 /* ProgressModel.swift in Sources */,
 				B9AE241C22469743009A263D /* ListViewController.swift in Sources */,
 				B99A5B2D2249769F00EE5033 /* LoggingHelper.swift in Sources */,
+				B9F4878C227314740070E29F /* CoordinatorProtocol.swift in Sources */,
 				EB4B401A2257E18100AAE0EB /* TagListView.swift in Sources */,
 				B99A5B2F2249769F00EE5033 /* APIClient.swift in Sources */,
 				B9217C9A225B4B60008EF906 /* SettingsViewModel.swift in Sources */,
@@ -585,13 +646,14 @@
 				B99A5B332249769F00EE5033 /* ConferenceModel.swift in Sources */,
 				B99A5B3A2249769F00EE5033 /* TalkService.swift in Sources */,
 				B9504670224A1BA500382DB5 /* SplitViewController.swift in Sources */,
+				B9A0A99A2271F1DB0013EF8D /* TableViewFooter.swift in Sources */,
 				B99A5B2C2249769F00EE5033 /* ImageDownloadCenter.swift in Sources */,
 				B99A5B362249769F00EE5033 /* TagModel.swift in Sources */,
 				EB4B40192257E18100AAE0EB /* TagButton.swift in Sources */,
-				B9217C92225A4E89008EF906 /* ListCoordinator.swift in Sources */,
 				B99A5B322249769F00EE5033 /* TalkModel.swift in Sources */,
 				EBA9064D226B87FB000439DB /* SuggestionCell.swift in Sources */,
 				EBE79D352258D35F00853BD6 /* ListViewDataSource.swift in Sources */,
+				B9F3B44C22732B9200D0743B /* ConferencesCoordinator.swift in Sources */,
 				B99A5B312249769F00EE5033 /* VideoSourceModel.swift in Sources */,
 				EB7EF022226BE1BC00E5FA93 /* Suggestion.swift in Sources */,
 				EB1CE5F82279AD6400A6AB67 /* StringProtocol.swift in Sources */,
@@ -608,6 +670,7 @@
 				B950467C224A459A00382DB5 /* DetailSummaryViewController.swift in Sources */,
 				B950467E224A469A00382DB5 /* ActionView.swift in Sources */,
 				B99A5B2E2249769F00EE5033 /* Error.swift in Sources */,
+				B92FDE9E2275AC8A00237E43 /* APIStatusNotification.swift in Sources */,
 				B9AE241A22469743009A263D /* AppDelegate.swift in Sources */,
 				B99A5B382249769F00EE5033 /* SearchableProtocol.swift in Sources */,
 			);
@@ -777,7 +840,7 @@
 					"$(PROJECT_DIR)/Conferences",
 					"$(PROJECT_DIR)/Conferences/Core",
 				);
-				INFOPLIST_FILE = Conferences/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Conferences/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -802,7 +865,7 @@
 					"$(PROJECT_DIR)/Conferences",
 					"$(PROJECT_DIR)/Conferences/Core",
 				);
-				INFOPLIST_FILE = Conferences/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Conferences/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
