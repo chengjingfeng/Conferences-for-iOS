@@ -31,18 +31,45 @@ final class Storage {
         return realm?.objects(WatchlistModel.self).filter { $0.active == true }.map { $0.id } ?? []
     }
 
-    func setFavorite(_ object: WatchlistModel)   {
+    func togggleWatchlist(_ viewModel: TalkViewModel) -> Bool  {
+        let model = WatchlistModel()
+        model.id = viewModel.id
+        model.active = viewModel.onWatchlist
+
         try! realm?.write {
-            if object.active {
-                LoggingHelper.register(event: .addToWatchlist, info: ["videoId": String(object.id)])
-                realm?.add(object, update: true)
-            } else {
-                if let objectToRemove = realm?.object(ofType: WatchlistModel.self, forPrimaryKey: object.id) {
-                    LoggingHelper.register(event: .removeFromWatchlist, info: ["videoId": String(object.id)])
+            if model.active {
+                if let objectToRemove = realm?.object(ofType: WatchlistModel.self, forPrimaryKey: model.id) {
+                    LoggingHelper.register(event: .removeFromWatchlist, info: ["videoId": String(model.id)])
                     realm?.delete(objectToRemove)
                 }
+            } else {
+                LoggingHelper.register(event: .addToWatchlist, info: ["videoId": String(model.id)])
+                realm?.add(model, update: true)
             }
         }
+
+        return !viewModel.onWatchlist
+    }
+
+    func toggleWatched(_ viewModel: TalkViewModel) -> Bool {
+        if let model = getProgress(for: viewModel.id) {
+            try! realm?.write {
+                model.currentPosition = viewModel.watched ? 0.0 : 1.0
+                model.relativePosition = viewModel.watched ? 0.0 : 1.0
+                model.watched = !viewModel.watched
+            }
+
+            trackProgress(object: model)
+        } else {
+            let model = ProgressModel()
+            model.currentPosition = viewModel.watched ? 0.0 : 1.0
+            model.relativePosition = viewModel.watched ? 0.0 : 1.0
+            model.watched = !viewModel.watched
+
+            trackProgress(object: model)
+        }
+
+        return !viewModel.watched
     }
 
     func trackProgress(object: ProgressModel)   {

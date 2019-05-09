@@ -11,5 +11,4 @@ import UIKit
 protocol Coordinator: AnyObject {
     var vc: UIViewController { get }
     func start()
-    func coordinatorWillAppear()
 }

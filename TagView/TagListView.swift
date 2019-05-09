@@ -25,7 +25,7 @@ class TagListView: UIInputView {
     static let SUGGESTIONROW_HEIGHT: CGFloat              = 30
     static private let SUGGESTIONTABLE_MAXROWS: CGFloat   = 4
     static private let SUGGESTIONTABLE_MAXHEIGHT: CGFloat = TagListView.SUGGESTIONROW_HEIGHT * TagListView.SUGGESTIONTABLE_MAXROWS
-    var selectionHandler: ((TagModel) -> Void)?
+    var selectionHandler: ((String) -> Void)?
 
     init() {
         super.init(frame: .zero, inputViewStyle: .default)
@@ -198,7 +198,7 @@ extension TagListView: UICollectionViewDataSource, UICollectionViewDelegate {
         tag.isActive.toggle()
         TagSyncService.shared.handleTag(&tag)
         self.tags = TagSyncService.shared.tags
-        selectionHandler?(tag)
+        selectionHandler?("")
         collectionView.reloadData()
     }
 }

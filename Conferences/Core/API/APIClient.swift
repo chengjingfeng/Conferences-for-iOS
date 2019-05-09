@@ -12,15 +12,21 @@ import ConferencesCore
 final class APIClient {
     static let shared = APIClient()
 
-    private(set) var result: Result<[ConferenceModel], APIError> = .failure(.unknown)
+    private(set) var models: [ConferenceModel] = []
 
-    func fetchConferences() {
+    func fetchConferences(completion: @escaping(_ error: APIError? ) -> Void) {
         send(resource: ConferenceResource.all, completionHandler: { [weak self] (response: Result<[ConferenceModel], APIError>) in
 
-            self?.result = response
-            let notification = Notification(name: .apiStatusChanged)
-           // NotificationQueue.default.enqueue(notification, postingStyle: .asap, coalesceMask: .onName, forModes: [.common])
-            NotificationCenter.default.post(notification)
+            var error: APIError?
+
+            switch response {
+            case .success(let conferences):
+                self?.models = conferences
+            case .failure(let apiError):
+                error = apiError
+            }
+
+            completion(error)
         })
     }
 

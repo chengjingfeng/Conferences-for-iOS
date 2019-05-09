@@ -12,7 +12,7 @@ import UIKit
 final class HomeCoordinator: Coordinator {
     private var presentationType: PresentationType
 
-    init(type: PresentationType = .all) {
+    init(type: PresentationType = .search) {
         self.presentationType = type
     }
 

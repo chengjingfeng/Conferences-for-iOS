@@ -11,13 +11,10 @@ import UIKit
 class ConferenceHeaderView: UIView {
 
     private weak var imageDownloadOperation: Operation?
-    private var leftSafeAreaInset: CGFloat = 0
-    
-    init(safeAreaInsets: UIEdgeInsets) {
-        leftSafeAreaInset = safeAreaInsets.left
-        
-        super.init(frame: .zero)
-        
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
         configureView()
     }
     
@@ -67,8 +64,6 @@ class ConferenceHeaderView: UIView {
         return v
     }()
 
-
-
     private lazy var stackView: UIStackView = {
         let v = UIStackView(arrangedSubviews: [self.logo, self.textStackView])
 
@@ -90,19 +85,18 @@ class ConferenceHeaderView: UIView {
         stackView.edgesToSuperview(insets: .init(top: 10, left: 10, bottom: 10, right: 10))
     }
 
-    func configureView(with conference: ConferenceModel) {
-        titleLabel.text = conference.name
+    func configureView(with conference: ConferenceViewModel) {
+        titleLabel.text = conference.title
         subtitleLabel.text = conference.location
 
-        guard let imageUrl = URL(string: conference.logo) else { return }
+        guard let imageUrl = URL(string: conference.image) else { return }
 
         self.imageDownloadOperation?.cancel()
         //self.logo.image = NSImage(named: "placeholder-square")
-        self.imageDownloadOperation = ImageDownloadCenter.shared.downloadImage(from: imageUrl, thumbnailHeight: 100) { [weak self] url, _, thumb in
+        self.imageDownloadOperation = ImageDownloadCenter.shared.downloadImage(from: imageUrl, thumbnailHeight: 60) { [weak self] url, _, thumb in
             guard url == imageUrl, thumb != nil else { return }
             self?.logo.isHidden = false
             self?.logo.image = thumb
         }
     }
-
 }

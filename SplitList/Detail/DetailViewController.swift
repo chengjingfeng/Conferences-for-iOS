@@ -11,15 +11,17 @@ import YoutubeKit
 import TinyConstraints
 
 class DetailViewController: UIViewController {
-    private let watchlistButtom = UIBarButtonItem(image: UIImage(named: "watchlist"), style: .plain, target: self, action: #selector(addToWatchlist))
-    private let watchedButton = UIBarButtonItem(image: UIImage(named: "watch"), style: .plain, target: self, action: nil)
-    private let fullscreenButton = UIBarButtonItem(image: UIImage(named: "fullscreen"), style: .plain, target: self, action: #selector(triggerFullscreen))
+    private let watchlistButtom = UIBarButtonItem(image: UIImage(named: "watchlist"), style: .plain, target: nil, action: nil)
+    private let watchedButton = UIBarButtonItem(image: UIImage(named: "watch"), style: .plain, target: nil, action: nil)
+    private let fullscreenButton = UIBarButtonItem(image: UIImage(named: "fullscreen"), style: .plain, target: nil, action: nil)
 
     private weak var imageDownloadOperation: Operation?
-    private var talkItem: TalkItem?
-    private var wachlistAction: ((TalkItem) -> Void)?
+    var talk: TalkViewModel?
 
-    private lazy var blockingView: UIView = {
+    var wachlistAction: (() -> Void)?
+    var watchedAction: (() -> Void)?
+
+    lazy var blockingView: UIView = {
         let view = UIView()
         view.backgroundColor = .panelBackground
 
@@ -70,6 +72,21 @@ class DetailViewController: UIViewController {
         return v
     }()
 
+    private lazy var navigationBar: UINavigationBar = {
+        let bar = UINavigationBar()
+        bar.isTranslucent = false
+        bar.delegate = self
+        bar.barTintColor = .black
+        bar.tintColor = .white
+        view.addSubview(bar)
+        bar.translatesAutoresizingMaskIntoConstraints = false
+        bar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        bar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        bar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+
+        return bar
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -79,6 +96,7 @@ class DetailViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         if UIDevice.current.userInterfaceIdiom == .phone {
             navigationController?.navigationBar.barTintColor = .black
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain, target: self, action: #selector(pop))
@@ -87,6 +105,12 @@ class DetailViewController: UIViewController {
         }
 
         scrollView.setContentOffset(.zero, animated: false)
+
+        guard let talk = talk else {
+            return
+        }
+
+        configureView(with: talk)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -103,12 +127,22 @@ class DetailViewController: UIViewController {
         player?.evaluateJavaScript(###"document.getElementById("player").contentWindow.document.querySelector('video').webkitEnterFullscreen();"###, completionHandler: nil)
     }
 
-    @objc func addToWatchlist() {
-        guard var talkItem = self.talkItem else { return }
-       talk.onWatchlist.toggle()
+    @objc func markAsWatched() {
+        guard var talk = self.talk else { return }
+        let state = Storage.shared.toggleWatched(talk)
+        self.talk?.watched = state
+        let icon = state ? UIImage(named: "watch_filled") : UIImage(named: "watch")
+        watchedButton.image = icon
+        watchedAction?()
+    }
 
-        let icon = talk.onWatchlist ? UIImage(named: "watchlist_filled") : UIImage(named: "watchlist")
+    @objc func addToWatchlist() {
+        guard var talk = self.talk else { return }
+        let state = Storage.shared.togggleWatchlist(talk)
+        self.talk?.onWatchlist = state
+        let icon = state ? UIImage(named: "watchlist_filled") : UIImage(named: "watchlist")
         watchlistButtom.image = icon
+        wachlistAction?()
     }
 
     func configureNavigationBar() -> UINavigationBar? {
@@ -122,24 +156,23 @@ class DetailViewController: UIViewController {
 
         fullscreenButton.isEnabled = false
         items.insert(fullscreenButton, at: 0)
-        let bar = UINavigationBar()
-        bar.isTranslucent = false
-        bar.delegate = self
-        bar.barTintColor = .black
-        bar.tintColor = .white
         let navItem = UINavigationItem(title: "")
         navItem.setRightBarButtonItems(items, animated: false)
-        bar.items = [navItem]
-        view.addSubview(bar)
-        bar.translatesAutoresizingMaskIntoConstraints = false
-        bar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        bar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        bar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navigationBar.items = [navItem]
 
-        return bar
+        return navigationBar
     }
 
     private func configureView() {
+        watchlistButtom.target = self
+        watchlistButtom.action = #selector(addToWatchlist)
+
+        watchedButton.target = self
+        watchedButton.action = #selector(markAsWatched)
+
+        fullscreenButton.target = self
+        fullscreenButton.action = #selector(triggerFullscreen)
+
         view.backgroundColor = .panelBackground
         view.addSubview(scrollView)
 
@@ -160,11 +193,13 @@ class DetailViewController: UIViewController {
         blockingView.edgesToSuperview()
     }
 
-    func configureView(with talkItem: TalkItem) {
-        self.talkItem = talkItem
+    func configureView(with talk: TalkViewModel) {
+        self.talk = talk
+        let watchlistIcon = talk.onWatchlist ? UIImage(named: "watchlist_filled") : UIImage(named: "watchlist")
+        watchlistButtom.image = watchlistIcon
 
-        let icon = talkItem.talk.onWatchlist ? UIImage(named: "watchlist_filled") : UIImage(named: "watchlist")
-        watchlistButtom.image = icon
+        let watchedItem = talk.watched ? UIImage(named: "watch_filled") : UIImage(named: "watch")
+        watchedButton.image = watchedItem
 
         fullscreenButton.isEnabled = false
         if blockingView.alpha == 1.0 {
@@ -175,11 +210,11 @@ class DetailViewController: UIViewController {
         }
 
 
-        detailSummaryViewController.configureView(with: talkItem.talk)
+        detailSummaryViewController.configureView(with: talk)
         player?.clearVideo()
         player?.removeFromSuperview()
         player = nil
-        guard let imageUrl = URL(string: talkItem.talk.previewImage) else { return }
+        guard let imageUrl = talk.image else { return }
 
         self.imageDownloadOperation?.cancel()
 

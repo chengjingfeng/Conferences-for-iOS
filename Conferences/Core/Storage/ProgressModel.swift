@@ -18,3 +18,7 @@ class ProgressModel: Object {
         return "id"
     }
 }
+
+func == (lhs: ProgressModel, rhs: ProgressModel) -> Bool {
+    return lhs.id == rhs.id && lhs.watched == rhs.watched && lhs.currentPosition == rhs.currentPosition && lhs.relativePosition == rhs.currentPosition
+}

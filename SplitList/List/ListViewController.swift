@@ -7,34 +7,49 @@
 //
 
 import UIKit
+import DifferenceKit
 
 class ConferneceListController: UITableViewController {
     private let footerView = LoadingFooterView()
+    private var data: [ConferenceViewModel] = []
 
-    var items: [ConferenceModel] = [] {
-        didSet {
-            UIView.transition(with: tableView, duration: 0.35, options: .transitionCrossDissolve, animations: {
-                self.tableView.reloadData()
-            }) { (_) in
-                self.footerView.isHidden = !self.items.isEmpty
+    var dataInput: [ConferenceViewModel] {
+        get { return data }
+        set {
+            footerView.showFooter()
+
+            let changeset = StagedChangeset(source: data, target: newValue)
+            print(changeset)
+            print(changeset.count)
+            let selectedRows = self.tableView.indexPathsForSelectedRows ?? []
+
+            tableView.reload(using: changeset, with: .fade) { data in
+                self.data = data
             }
+
+            tableView.selectRow(at: selectedRows.first, animated: false, scrollPosition: .none)
         }
     }
 
-    var selectionHandler: ((TalkModel, IndexPath) -> Void)?
+    override weak var preferredFocusedView: UIView? {
+        return tableView
+    }
+
+    var selectionHandler: ((TalkViewModel, IndexPath) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureTableView()
-        self.extendedLayoutIncludesOpaqueBars = true
-       // definesPresentationContext = true
+        extendedLayoutIncludesOpaqueBars = true
+        definesPresentationContext = true
     }
 
     private func configureTableView() {
+        clearsSelectionOnViewWillAppear = false
+        tableView.remembersLastFocusedIndexPath = true
         footerView.frame.size = CGSize(width: footerView.frame.width, height: 200)
         footerView.startAnimating()
-
         tableView.tableFooterView = footerView
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.panelBackground
@@ -45,11 +60,11 @@ class ConferneceListController: UITableViewController {
     
     // MARK: - Table View
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return items.count
+        return data.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items[section].talks.count
+        return data[section].talks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,7 +72,7 @@ class ConferneceListController: UITableViewController {
             return UITableViewCell()
         }
         
-        let talk = items[indexPath.section].talks[indexPath.row]
+        let talk = data[indexPath.section].talks[indexPath.row]
         cell.configureView(with: talk)
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.elementBackground
@@ -72,16 +87,31 @@ class ConferneceListController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let conferenceView = ConferenceHeaderView(safeAreaInsets: tableView.safeAreaInsets)
-        let conference = items[section]
-        
+        let conferenceView = ConferenceHeaderView()
+        let conference = data[section]
+        let tap = UITapGestureRecognizer(target: self, action:#selector(self.didSelectConference))
+
         conferenceView.configureView(with: conference)
-        
+        conferenceView.addGestureRecognizer(tap)
+        conferenceView.tag = section
+
         return conferenceView
+    }
+
+    @objc func didSelectConference(sender: UITapGestureRecognizer) {
+        guard let conferenceView = sender.view else { return }
+        guard let conference = data.indices.contains(conferenceView.tag) ? data[conferenceView.tag] : nil else { return }
+
+        let vc = ConferenceDetailVC(model: conference)
+        let navVC = UINavigationController(rootViewController: vc)
+
+        navVC.modalPresentationStyle = .formSheet
+
+        present(navVC, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let talk = items[indexPath.section].talks[indexPath.row]
+        let talk = data[indexPath.section].talks[indexPath.row]
         selectionHandler?(talk, indexPath)
     }
 }

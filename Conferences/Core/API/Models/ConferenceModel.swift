@@ -8,6 +8,7 @@
 
 import Foundation
 import ConferencesCore
+import DifferenceKit
 
 struct ConferenceModel: Codable {
     let id: Int
@@ -17,18 +18,6 @@ struct ConferenceModel: Codable {
     let location: String
     let date: String
     let highlightColor: String
-    var talks: [TalkModel]
+    let talks: [TalkModel]
     let about: String
-}
-
-extension ConferenceModel: Searchable {
-    var searchString: String {
-        return "\(date) \(location)  \(name)\(organisator.name)".lowercased()
-    }
-}
-
-extension ConferenceModel {
-    var logo: String {
-        return "\(Environment.url)/conferences/\(organisator.id).png" 
-    }
 }

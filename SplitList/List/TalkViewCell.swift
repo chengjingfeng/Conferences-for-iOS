@@ -149,7 +149,7 @@ class TalkViewCell: UITableViewCell {
         stackView.trailing(to: self, offset: -20)
     }
 
-    func configureView(with model: TalkModel) {
+    func configureView(with model: TalkViewModel) {
         titleLabel.text = model.title
 
         subtitleLabel.text = "\(model.speaker.firstname) \(model.speaker.lastname)"
@@ -162,10 +162,6 @@ class TalkViewCell: UITableViewCell {
         nowPlayingImage.isHidden = true
 
         if let progress = model.progress {
-            if model.currentlyPlaying {
-                nowPlayingImage.isHidden = false
-            }
-
             if progress.relativePosition == 1 && progress.watched {
                 watchtedIndicator.isHidden = false
             } else if progress.relativePosition > 0 {
@@ -176,7 +172,8 @@ class TalkViewCell: UITableViewCell {
         }
 
 
-        guard let imageUrl = URL(string: model.previewImage) else { return }
+        guard let imageUrl = model.image else { return }
+        
         self.imageDownloadOperation?.cancel()
 //        self.thumbnailImageView.image = NSImage(named: "placeholder")
 

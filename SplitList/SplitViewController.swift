@@ -8,14 +8,39 @@
 
 import UIKit
 
-typealias TalkItem = (talk: TalkModel, indexPath: IndexPath)
 
 final class SplitViewController: UISplitViewController {
     weak var coordinator: ConferencesCoordinator?
     private var type: PresentationType
 
-    private let detailViewController = DetailViewController()
-    private lazy var tagListView: TagListView = {
+    private lazy var detailViewController: DetailViewController = {
+        let vc = DetailViewController()
+
+        vc.wachlistAction = { [weak self] () in
+            guard let self = self else { return }
+
+            switch self.type {
+            case .search:
+                self.coordinator?.start()
+            case .watchlist:
+                self.listViewControllerNavigation.popToViewController(self.listViewController, animated: true)
+                self.coordinator?.start()
+            case .custom(_):
+                print("todo")
+            }
+        }
+
+        vc.watchedAction = { [weak self] () in
+            guard let self = self else { return }
+
+            self.coordinator?.start()
+        }
+
+
+        return vc
+    }()
+
+    lazy var tagListView: TagListView = {
         let view = TagListView()
 
         view.selectionHandler = { [weak self] (tag) in
@@ -26,7 +51,7 @@ final class SplitViewController: UISplitViewController {
         return view
     }()
 
-    private lazy var listViewController: ConferneceListController = {
+    lazy var listViewController: ConferneceListController = {
         let vc = ConferneceListController(style: .grouped)
         vc.title = type.title
 
@@ -35,7 +60,7 @@ final class SplitViewController: UISplitViewController {
             vc.navigationItem.hidesSearchBarWhenScrolling = false
         }
 
-        vc.selectionHandler = { [weak self] (talkItem) in
+        vc.selectionHandler = { [weak self] (talk, index) in
             guard let self = self else { return }
 
             self.detailViewController.configureView(with: talk)
@@ -87,6 +112,11 @@ final class SplitViewController: UISplitViewController {
         configureView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        coordinator?.start()
+    }
+
     private func configureView() {
         self.delegate = self
         self.minimumPrimaryColumnWidth = 380
@@ -95,23 +125,34 @@ final class SplitViewController: UISplitViewController {
         self.preferredDisplayMode = .allVisible
     }
 
-    func set(_ conferences: [ConferenceModel]) {
-        listViewController.items = conferences
+    func set(_ conferences: [ConferenceViewModel]) {
+        listViewController.dataInput = conferences
+
+        if listViewController.tableView.indexPathForSelectedRow == nil {
+            if let firstTalk = conferences.first?.talks.first {
+                listViewController.tableView.selectRow(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .none)
+                detailViewController.configureView(with: firstTalk)
+            } else {
+                showEmptyList()
+            }
+        }
+    }
+
+    func showEmptyList() {
+        UIView.animate(withDuration: 0.2) {
+            self.detailViewController.navigationController?.navigationBar.barTintColor = .panelBackground
+            self.detailViewController.blockingView.alpha = 1
+        }
 
         switch type {
         case .watchlist:
-            if conferences.isEmpty {
-                listViewController.showEmtpyWatchlist()
-            }
-        default:
-            print("")
-        }
-
-        if let firstTalk = conferences.first?.talks.first {
-            detailViewController.configureView(with: firstTalk)
+            listViewController.showEmtpyWatchlist()
+        case .search:
+            print("no results for search found")
+        case .custom(_):
+            print("todo")
         }
     }
-    
 }
 
 extension SplitViewController: UISplitViewControllerDelegate {

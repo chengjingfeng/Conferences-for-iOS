@@ -80,7 +80,7 @@ class DetailSummaryViewController: UIViewController {
             stackView.edgesToSuperview(insets: .init(top: 20, left: 20, bottom: 120, right: 20))
         }
 
-        func configureView(with talk: TalkModel) {
+        func configureView(with talk: TalkViewModel) {
             titleLabel.text = talk.title
             summaryLabel.text = talk.details ?? ""
             contextLabel.text = talk.tags.filter { !$0.contains("2019") && !$0.contains("2018") && !$0.contains("2017") && !$0.contains("2016")}.joined(separator: " • ")

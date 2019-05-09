@@ -23,7 +23,7 @@ extension UITableView {
 final class LoadingFooterView: UICollectionReusableView {
     class var identifier: String { return "LoadingTableFooterViewIdentifier"}
 
-    let loadingView = LoadingView()
+    fileprivate let loadingView = LoadingView()
     let messageLabel = UILabel()
     let imageView = UIImageView()
 
@@ -148,7 +148,7 @@ final class LoadingFooterView: UICollectionReusableView {
     }
 }
 
-class LoadingView: UIView {
+fileprivate class LoadingView: UIView {
     let size: CGFloat
 
     internal var colorCircle = UIColor.black

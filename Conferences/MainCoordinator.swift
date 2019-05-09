@@ -40,30 +40,5 @@ final class MainTabBarController: UITabBarController, UITabBarControllerDelegate
         tabBar.tintColor = .primaryText
         tabBar.barTintColor = .elementBackground
         viewControllers = [home.vc, conferences.vc, watchlist.vc]
-
-        APIClient.shared.fetchConferences()
-    }
-
-    func handle(_ launchOption: [UIApplication.LaunchOptionsKey: Any]?) {
-        // handle shourt cut items
-    }
-
-    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        guard let index = tabBar.items?.firstIndex(of: item) else { return }
-
-        notifyCoordinator(at: index)
-    }
-
-    func notifyCoordinator(at index: Int) {
-        switch index {
-        case Tab.home.rawValue:
-            home.coordinatorWillAppear()
-        case Tab.conferences.rawValue:
-            conferences.coordinatorWillAppear()
-        case Tab.watchlist.rawValue:
-            watchlist.coordinatorWillAppear()
-        default:
-            break
-        }
     }
 }

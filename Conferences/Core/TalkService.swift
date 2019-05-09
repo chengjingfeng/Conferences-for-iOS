@@ -9,33 +9,27 @@
 import Foundation
 
 protocol TalkServiceDelegate: class {
-    func didFetch(_ conferences: [ConferenceModel])
+    func didFetch(_ conferences: [ConferenceViewModel])
     func fetchFailed(with error: APIError)
 }
 
 final class TalkService {
     weak var delegate: TalkServiceDelegate?
 
-    private var conferences = [ConferenceModel]()
-    private var backup = [ConferenceModel]()
+    private var conferences: [ConferenceViewModel] = []
+    private var backup: [ConferenceViewModel] = []
 
     func fetchData(type: PresentationType ) {
-        let response = APIClient.shared.result
+        let models = APIClient.shared.models.map { ConferenceViewModel(conferenceModel: $0) }
+        self.conferences = models
+        self.backup = models
 
-        DispatchQueue.main.async {
-            switch response {
-            case .success(let conferences):
-                self.conferences = conferences
-                self.backup = conferences
-
-                switch type {
-                case .watchlist:
-                    self.filterTalks(by: type.rawValue)
-                default:
-                    self.delegate?.didFetch(conferences)
-                }
-            case .failure(let error):
-                self.delegate?.fetchFailed(with: error)
+        switch type {
+        case .watchlist:
+            filterTalks(by: type.filter)
+        default:
+            DispatchQueue.main.async {
+                self.delegate?.didFetch(self.conferences)
             }
         }
     }
@@ -65,17 +59,16 @@ final class TalkService {
     }
 
     @objc private func filterTalks() {
-        filterTalks(by: delegate?.getSearchText() ?? "")
+        //filterTalks(by: delegate?.getSearchText() ?? "")
     }
     
     func getSuggestions(basedOn: String?) -> [Suggestion] {
-        guard let conferencesBackup = self.backup as? [ConferenceModel] else { return [] }
         guard let based = basedOn else { return [] }
 
         var ret: [Suggestion] = []
         let activeTags = TagSyncService.shared.activeTags()
         
-        for conference in conferencesBackup {
+        for conference in self.backup {
             for talk in conference.talks {
                 
                 if (talk.speaker.firstname.lowercased().contains(based.lowercased()) && talk.matchesAll(activeTags: activeTags)) {

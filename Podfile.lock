@@ -2,6 +2,12 @@ PODS:
   - AcknowList (1.8)
   - Crashlytics (3.12.0):
     - Fabric (~> 1.9.0)
+  - DifferenceKit (1.1.1):
+    - DifferenceKit/Core (= 1.1.1)
+    - DifferenceKit/UIKitExtension (= 1.1.1)
+  - DifferenceKit/Core (1.1.1)
+  - DifferenceKit/UIKitExtension (1.1.1):
+    - DifferenceKit/Core
   - Fabric (1.9.0)
   - Realm (3.13.1):
     - Realm/Headers (= 3.13.1)
@@ -14,6 +20,7 @@ PODS:
 DEPENDENCIES:
   - AcknowList (~> 1.7)
   - Crashlytics
+  - DifferenceKit
   - Fabric
   - RealmSwift
   - TinyConstraints
@@ -23,6 +30,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AcknowList
     - Crashlytics
+    - DifferenceKit
     - Fabric
     - Realm
     - RealmSwift
@@ -32,12 +40,13 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AcknowList: 5b8820004d019d0a8d6a091ea2392dcb54bd3ad2
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  DifferenceKit: cf1b84e2207ea45c3640381cb229cf46c1647466
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   Realm: 50071da38fe079e0735e47c9f2eae738c68c5996
   RealmSwift: 8a1e6a02b7a08cd17a31e3115143fb69fe5f3fb9
   TinyConstraints: dbf7519aefc01ea59d62244300c7718aec68e280
   YoutubeKit: a00e9eebcb3cfe26d7e233c5f8591dfd0b08f7a0
 
-PODFILE CHECKSUM: ec8d3f90b40266f7e86e67cff6b63473b77e7fcf
+PODFILE CHECKSUM: 0f1e08d1d0950871dd19a97b504dc16c890e8e52
 
 COCOAPODS: 1.6.1

@@ -13,15 +13,16 @@
 		B9217C9B225B4B60008EF906 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9217C96225B4B60008EF906 /* SettingsCoordinator.swift */; };
 		B9217C9C225B4B60008EF906 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9217C97225B4B60008EF906 /* SettingsViewController.swift */; };
 		B92FDE9C2274952000237E43 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92FDE9B2274952000237E43 /* HomeCoordinator.swift */; };
-		B92FDE9E2275AC8A00237E43 /* APIStatusNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92FDE9D2275AC8A00237E43 /* APIStatusNotification.swift */; };
 		B9504670224A1BA500382DB5 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950466F224A1BA500382DB5 /* SplitViewController.swift */; };
 		B9504672224A1BDF00382DB5 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504671224A1BDF00382DB5 /* MainCoordinator.swift */; };
 		B9504674224A257900382DB5 /* ConferenceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504673224A257900382DB5 /* ConferenceHeaderView.swift */; };
 		B9504676224A307F00382DB5 /* TalkViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9504675224A307F00382DB5 /* TalkViewCell.swift */; };
 		B950467C224A459A00382DB5 /* DetailSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950467B224A459A00382DB5 /* DetailSummaryViewController.swift */; };
-		B950467E224A469A00382DB5 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950467D224A469A00382DB5 /* ActionView.swift */; };
 		B9504680224A46A400382DB5 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950467F224A46A400382DB5 /* SpeakerView.swift */; };
 		B95046A2224A7E8800382DB5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B95046A1224A7E8800382DB5 /* Main.storyboard */; };
+		B969F283227F2D9400A9937D /* ConferenceDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B969F282227F2D9400A9937D /* ConferenceDetailVC.swift */; };
+		B969F28522802C2800A9937D /* ConferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B969F28422802C2800A9937D /* ConferenceViewModel.swift */; };
+		B969F28722802C8C00A9937D /* TalkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B969F28622802C8C00A9937D /* TalkViewModel.swift */; };
 		B9925031224E880400AA85EE /* ConferencesCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B992502F224E87F500AA85EE /* ConferencesCore.framework */; };
 		B9925032224E880400AA85EE /* ConferencesCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B992502F224E87F500AA85EE /* ConferencesCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B99A5B252249769F00EE5033 /* YoutubeFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99A5B0B2249769F00EE5033 /* YoutubeFetcher.swift */; };
@@ -52,6 +53,9 @@
 		B9AE242622469746009A263D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9AE242422469746009A263D /* LaunchScreen.storyboard */; };
 		B9AE243122469746009A263D /* ConferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE243022469746009A263D /* ConferencesTests.swift */; };
 		B9AE243C22469A8A009A263D /* Styleguide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE243B22469A8A009A263D /* Styleguide.swift */; };
+		B9E1410A227DCF14003B89A0 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E14109227DCF14003B89A0 /* LoadingViewController.swift */; };
+		B9F3B44C22732B9200D0743B /* ConferencesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F3B44B22732B9200D0743B /* ConferencesCoordinator.swift */; };
+		B9F4878C227314740070E29F /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4878B227314740070E29F /* CoordinatorProtocol.swift */; };
 		EB1CE5F42279AB7900A6AB67 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1CE5F32279AB7900A6AB67 /* UIView.swift */; };
 		EB1CE5F62279AD3200A6AB67 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1CE5F52279AD3200A6AB67 /* UIImage.swift */; };
 		EB1CE5F82279AD6400A6AB67 /* StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1CE5F72279AD6400A6AB67 /* StringProtocol.swift */; };
@@ -60,11 +64,6 @@
 		EB4B401A2257E18100AAE0EB /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B40182257E18100AAE0EB /* TagListView.swift */; };
 		EB7EF022226BE1BC00E5FA93 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7EF021226BE1BC00E5FA93 /* Suggestion.swift */; };
 		EBA9064D226B87FB000439DB /* SuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA9064C226B87FB000439DB /* SuggestionCell.swift */; };
-		EBE79D352258D35F00853BD6 /* ListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE79D342258D35F00853BD6 /* ListViewDataSource.swift */; };
-		B9F3B44C22732B9200D0743B /* ConferencesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F3B44B22732B9200D0743B /* ConferencesCoordinator.swift */; };
-		B9F4878C227314740070E29F /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4878B227314740070E29F /* CoordinatorProtocol.swift */; };
-		EB4B40192257E18100AAE0EB /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B40172257E18100AAE0EB /* TagButton.swift */; };
-		EB4B401A2257E18100AAE0EB /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B40182257E18100AAE0EB /* TagListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,15 +99,16 @@
 		B9217C96225B4B60008EF906 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		B9217C97225B4B60008EF906 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B92FDE9B2274952000237E43 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
-		B92FDE9D2275AC8A00237E43 /* APIStatusNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStatusNotification.swift; sourceTree = "<group>"; };
 		B950466F224A1BA500382DB5 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		B9504671224A1BDF00382DB5 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		B9504673224A257900382DB5 /* ConferenceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceHeaderView.swift; sourceTree = "<group>"; };
 		B9504675224A307F00382DB5 /* TalkViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkViewCell.swift; sourceTree = "<group>"; };
 		B950467B224A459A00382DB5 /* DetailSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSummaryViewController.swift; sourceTree = "<group>"; };
-		B950467D224A469A00382DB5 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		B950467F224A46A400382DB5 /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		B95046A1224A7E8800382DB5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		B969F282227F2D9400A9937D /* ConferenceDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceDetailVC.swift; sourceTree = "<group>"; };
+		B969F28422802C2800A9937D /* ConferenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceViewModel.swift; sourceTree = "<group>"; };
+		B969F28622802C8C00A9937D /* TalkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkViewModel.swift; sourceTree = "<group>"; };
 		B992502F224E87F500AA85EE /* ConferencesCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ConferencesCore.framework; sourceTree = "<group>"; };
 		B99A5B0B2249769F00EE5033 /* YoutubeFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeFetcher.swift; sourceTree = "<group>"; };
 		B99A5B0C2249769F00EE5033 /* VimeoFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VimeoFetcher.swift; sourceTree = "<group>"; };
@@ -129,7 +129,6 @@
 		B99A5B202249769F00EE5033 /* TagModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
 		B99A5B212249769F00EE5033 /* TagSyncService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagSyncService.swift; sourceTree = "<group>"; };
 		B99A5B222249769F00EE5033 /* SearchableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchableProtocol.swift; sourceTree = "<group>"; };
-		B99A5B242249769F00EE5033 /* TalkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkService.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		B99A5B242249769F00EE5033 /* TalkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkService.swift; sourceTree = "<group>"; };
 		B9A0A9992271F1DB0013EF8D /* TableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewFooter.swift; sourceTree = "<group>"; };
 		B9AE241622469743009A263D /* Conferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +142,7 @@
 		B9AE243022469746009A263D /* ConferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferencesTests.swift; sourceTree = "<group>"; };
 		B9AE243222469746009A263D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9AE243B22469A8A009A263D /* Styleguide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styleguide.swift; sourceTree = "<group>"; };
+		B9E14109227DCF14003B89A0 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		B9F3B44B22732B9200D0743B /* ConferencesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferencesCoordinator.swift; sourceTree = "<group>"; };
 		B9F4878B227314740070E29F /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		D5DECBFE49653B8525CD601F /* Pods-Conferences.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conferences.release.xcconfig"; path = "Pods/Target Support Files/Pods-Conferences/Pods-Conferences.release.xcconfig"; sourceTree = "<group>"; };
@@ -152,11 +152,9 @@
 		EB1CE5F72279AD6400A6AB67 /* StringProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringProtocol.swift; sourceTree = "<group>"; };
 		EB26D00122746CDE000654F9 /* SuggestionSourcesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionSourcesCell.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		EB4B40172257E18100AAE0EB /* TagButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
-		EB4B40182257E18100AAE0EB /* TagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		EB4B40182257E18100AAE0EB /* TagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 		EB7EF021226BE1BC00E5FA93 /* Suggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		EBA9064C226B87FB000439DB /* SuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionCell.swift; sourceTree = "<group>"; wrapsLines = 0; };
-		EBE79D342258D35F00853BD6 /* ListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewDataSource.swift; sourceTree = "<group>"; wrapsLines = 0; };
-		EB4B40182257E18100AAE0EB /* TagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,10 +200,11 @@
 		B9217C9F225B4B74008EF906 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				EB1CE5F22279AB6100A6AB67 /* Extensions */,
 				B9F48785227312F80070E29F /* SplitList */,
 				EB4B40152257E14200AAE0EB /* TagView */,
 				B9A0A9992271F1DB0013EF8D /* TableViewFooter.swift */,
+				B969F28422802C2800A9937D /* ConferenceViewModel.swift */,
+				B969F28622802C8C00A9937D /* TalkViewModel.swift */,
 			);
 			name = Shared;
 			path = ../..;
@@ -214,8 +213,9 @@
 		B950466A224A18D500382DB5 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				B9E14108227DCEFE003B89A0 /* Loading */,
 				B9F487862273132F0070E29F /* Home */,
-				B9F48787227313590070E29F /* Conferences */,
+				B9F48787227313590070E29F /* ConferenceDetail */,
 				B9F48788227313690070E29F /* Watchlist */,
 				B9217C94225B4B60008EF906 /* Settings */,
 				B9217C9F225B4B74008EF906 /* Shared */,
@@ -238,7 +238,6 @@
 			children = (
 				B9AE241D22469743009A263D /* DetailViewController.swift */,
 				B950467B224A459A00382DB5 /* DetailSummaryViewController.swift */,
-				B950467D224A469A00382DB5 /* ActionView.swift */,
 				B950467F224A46A400382DB5 /* SpeakerView.swift */,
 			);
 			path = Detail;
@@ -286,7 +285,6 @@
 				B99A5B172249769F00EE5033 /* APIClient.swift */,
 				B99A5B182249769F00EE5033 /* Models */,
 				B99A5B1E2249769F00EE5033 /* APIClient+Conference.swift */,
-				B92FDE9D2275AC8A00237E43 /* APIStatusNotification.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -321,6 +319,7 @@
 				B9AE241722469743009A263D /* Products */,
 				CCFCFA8A2E7F49B392E047A8 /* Pods */,
 				6B3F6E1E5CAD1E684BC5C7B5 /* Frameworks */,
+				B9E14107227DB850003B89A0 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -338,6 +337,7 @@
 			children = (
 				B9AE241922469743009A263D /* AppDelegate.swift */,
 				B99A5B092249769F00EE5033 /* Core */,
+				EB1CE5F22279AB6100A6AB67 /* Extensions */,
 				B950466A224A18D500382DB5 /* Scenes */,
 				B9F48789227313890070E29F /* SupportingFiles */,
 				B9F4878A227314600070E29F /* Protocols */,
@@ -356,9 +356,25 @@
 			path = ConferencesTests;
 			sourceTree = "<group>";
 		};
+		B9E14107227DB850003B89A0 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		B9E14108227DCEFE003B89A0 /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				B9E14109227DCF14003B89A0 /* LoadingViewController.swift */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
 		B9F48785227312F80070E29F /* SplitList */ = {
 			isa = PBXGroup;
 			children = (
+				B9F3B44B22732B9200D0743B /* ConferencesCoordinator.swift */,
 				B950466F224A1BA500382DB5 /* SplitViewController.swift */,
 				B950466C224A18F200382DB5 /* Detail */,
 				B950466B224A18E800382DB5 /* List */,
@@ -374,12 +390,12 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		B9F48787227313590070E29F /* Conferences */ = {
+		B9F48787227313590070E29F /* ConferenceDetail */ = {
 			isa = PBXGroup;
 			children = (
-				B9F3B44B22732B9200D0743B /* ConferencesCoordinator.swift */,
+				B969F282227F2D9400A9937D /* ConferenceDetailVC.swift */,
 			);
-			path = Conferences;
+			path = ConferenceDetail;
 			sourceTree = "<group>";
 		};
 		B9F48788227313690070E29F /* Watchlist */ = {
@@ -554,6 +570,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Conferences/Pods-Conferences-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AcknowList/AcknowList.framework",
+				"${BUILT_PRODUCTS_DIR}/DifferenceKit/DifferenceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/TinyConstraints/TinyConstraints.framework",
@@ -564,6 +581,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AcknowList.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DifferenceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TinyConstraints.framework",
@@ -640,6 +658,7 @@
 				B99A5B2D2249769F00EE5033 /* LoggingHelper.swift in Sources */,
 				B9F4878C227314740070E29F /* CoordinatorProtocol.swift in Sources */,
 				EB4B401A2257E18100AAE0EB /* TagListView.swift in Sources */,
+				B9E1410A227DCF14003B89A0 /* LoadingViewController.swift in Sources */,
 				B99A5B2F2249769F00EE5033 /* APIClient.swift in Sources */,
 				B9217C9A225B4B60008EF906 /* SettingsViewModel.swift in Sources */,
 				B99A5B282249769F00EE5033 /* CurrentlyWatchingModel.swift in Sources */,
@@ -652,7 +671,6 @@
 				EB4B40192257E18100AAE0EB /* TagButton.swift in Sources */,
 				B99A5B322249769F00EE5033 /* TalkModel.swift in Sources */,
 				EBA9064D226B87FB000439DB /* SuggestionCell.swift in Sources */,
-				EBE79D352258D35F00853BD6 /* ListViewDataSource.swift in Sources */,
 				B9F3B44C22732B9200D0743B /* ConferencesCoordinator.swift in Sources */,
 				B99A5B312249769F00EE5033 /* VideoSourceModel.swift in Sources */,
 				EB7EF022226BE1BC00E5FA93 /* Suggestion.swift in Sources */,
@@ -664,13 +682,14 @@
 				B9AE243C22469A8A009A263D /* Styleguide.swift in Sources */,
 				B99A5B2B2249769F00EE5033 /* FavoriteModel.swift in Sources */,
 				B9504674224A257900382DB5 /* ConferenceHeaderView.swift in Sources */,
+				B969F283227F2D9400A9937D /* ConferenceDetailVC.swift in Sources */,
+				B969F28722802C8C00A9937D /* TalkViewModel.swift in Sources */,
+				B969F28522802C2800A9937D /* ConferenceViewModel.swift in Sources */,
 				B9217C9B225B4B60008EF906 /* SettingsCoordinator.swift in Sources */,
 				EB1CE5F42279AB7900A6AB67 /* UIView.swift in Sources */,
 				B99A5B342249769F00EE5033 /* SpeakerModel.swift in Sources */,
 				B950467C224A459A00382DB5 /* DetailSummaryViewController.swift in Sources */,
-				B950467E224A469A00382DB5 /* ActionView.swift in Sources */,
 				B99A5B2E2249769F00EE5033 /* Error.swift in Sources */,
-				B92FDE9E2275AC8A00237E43 /* APIStatusNotification.swift in Sources */,
 				B9AE241A22469743009A263D /* AppDelegate.swift in Sources */,
 				B99A5B382249769F00EE5033 /* SearchableProtocol.swift in Sources */,
 			);
@@ -828,7 +847,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = S3P397D556;
+				DEVELOPMENT_TEAM = MVQE7PHKXD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Realm\"",
@@ -846,7 +865,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "digital.conferences.ios-pdiazmon";
+				PRODUCT_BUNDLE_IDENTIFIER = digital.conferences.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -859,7 +878,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = S3P397D556;
+				DEVELOPMENT_TEAM = MVQE7PHKXD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Conferences",
@@ -871,7 +890,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "digital.conferences.ios-pdiazmon";
+				PRODUCT_BUNDLE_IDENTIFIER = digital.conferences.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
