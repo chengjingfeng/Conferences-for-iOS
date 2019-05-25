@@ -23,10 +23,6 @@ final class TagSyncService {
             realmTags.append(.init(title: TagSyncService.watchlistTitle, query: "realm_watchlist"))
         }
 
-        if !Storage.shared.getModelsForContinue().isEmpty {
-            realmTags.append(.init(title: TagSyncService.continueWatchingTitle, query: "realm_continue"))
-        }
-
         return realmTags
     }
 

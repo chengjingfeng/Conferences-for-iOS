@@ -19,33 +19,18 @@ protocol SettingsCoordinatorDelegate: class {
 
 final class SettingsCoordinator {
     
-    let rootViewController: UINavigationController
-
-    private lazy var tabBarItem: UITabBarItem = {
-        return UITabBarItem(title: "Settings", image: UIImage(named: "settings"), selectedImage: nil)
-    }()
+    let rootViewController = UINavigationController()
     
     private lazy var viewModel: SettingsViewModel = {
         let viewModel = SettingsViewModel()
         viewModel.coordinatorDelegate = self
         return viewModel
     }()
-
-     init() {
-        self.rootViewController = UINavigationController()
-    }
     
      func start() {
          let settingsVC = SettingsViewController(style: .grouped)
 
-        settingsVC.tabBarItem = tabBarItem
         settingsVC.viewModel = viewModel
-        rootViewController.navigationBar.prefersLargeTitles = true
-        rootViewController.navigationBar.barTintColor = UIColor.elementBackground
-        rootViewController.navigationBar.tintColor = UIColor.white
-        rootViewController.navigationBar.isTranslucent = false
-        rootViewController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        rootViewController.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         rootViewController.setViewControllers([settingsVC], animated: true)
     }
 }

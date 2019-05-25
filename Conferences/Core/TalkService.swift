@@ -8,36 +8,24 @@
 
 import Foundation
 
-protocol TalkServiceDelegate: class {
-    func didFetch(_ conferences: [ConferenceViewModel])
-    func fetchFailed(with error: APIError)
-}
-
 final class TalkService {
-    weak var delegate: TalkServiceDelegate?
-
-    private var conferences: [ConferenceViewModel] = []
-    private var backup: [ConferenceViewModel] = []
-
-    func fetchData(type: PresentationType ) {
-        let models = APIClient.shared.models.map { ConferenceViewModel(conferenceModel: $0) }
-        self.conferences = models
-        self.backup = models
+    static func fetchData(type: PresentationType ) -> [ListRepresentable]{
+        let models = APIClient.shared.models
 
         switch type {
         case .watchlist:
-            filterTalks(by: type.filter)
+            return filterConferences(by: type.filter)
+        case .speaker(let filter, _):
+            return filterConferences(by: filter)
         default:
-            DispatchQueue.main.async {
-                self.delegate?.didFetch(self.conferences)
-            }
+            return models
         }
     }
 
-    func filterTalks(by searchString: String) {
+    static func filterConferences(by searchString: String) -> [ConferenceModel] {
         let activeTags = TagSyncService.shared.activeTags()
         
-        var currentBatch = self.backup
+        var currentBatch = APIClient.shared.models
         
         for (index, var conference) in currentBatch.enumerated() {
             if (searchString.count > 0) {
@@ -48,104 +36,46 @@ final class TalkService {
 
              currentBatch[index] = conference
         }
-        
-        currentBatch = currentBatch.filter { !$0.talks.isEmpty }
-        
-        self.conferences = currentBatch
-        
-        DispatchQueue.main.async {
-            self.delegate?.didFetch(self.conferences)
-        }
+
+        return currentBatch.filter { !$0.talks.isEmpty }
     }
 
-    @objc private func filterTalks() {
-        //filterTalks(by: delegate?.getSearchText() ?? "")
-    }
-    
-    func getSuggestions(basedOn: String?) -> [Suggestion] {
-        guard let based = basedOn else { return [] }
-
-        var ret: [Suggestion] = []
+    static func filterTalks(by searchString: String) -> [TalkModel] {
         let activeTags = TagSyncService.shared.activeTags()
-        
-        for conference in self.backup {
-            for talk in conference.talks {
-                
-                if (talk.speaker.firstname.lowercased().contains(based.lowercased()) && talk.matchesAll(activeTags: activeTags)) {
-                    if let existingSuggestion = ret.filter ({ $0.completeWord == talk.speaker.firstname.lowercased() }).first {
-                        existingSuggestion.add(source: .speakerFirstname, for: talk)
-                        existingSuggestion.add(talk: talk)
-                    }
-                    else {
-                        let newSuggestion = Suggestion(text: based, completeWord: talk.speaker.firstname.lowercased())
-                        newSuggestion.add(source: .speakerFirstname, for: talk)
-                        newSuggestion.add(talk: talk)
-                        ret.append(newSuggestion)
-                    }
-                }
-                
-                if (talk.speaker.lastname.lowercased().contains(based.lowercased()) && talk.matchesAll(activeTags: activeTags)) {
-                    if let existingSuggestion = ret.filter ({ $0.completeWord == talk.speaker.lastname.lowercased() }).first {
-                        existingSuggestion.add(source: .speakerLastname, for: talk)
-                        existingSuggestion.add(talk: talk)
-                    }
-                    else {
-                        let newSuggestion = Suggestion(text: based, completeWord: talk.speaker.lastname.lowercased())
-                        newSuggestion.add(source: .speakerLastname, for: talk)
-                        newSuggestion.add(talk: talk)
-                        ret.append(newSuggestion)
-                    }
-                }
-                
-                if ((talk.speaker.twitter?.lowercased().contains(based.lowercased()) ?? false) && talk.matchesAll(activeTags: activeTags)) {
-                    if let existingSuggestion = ret.filter ({ $0.completeWord == talk.speaker.twitter?.lowercased() }).first {
-                        existingSuggestion.add(source: .twitter, for: talk)
-                        existingSuggestion.add(talk: talk)
-                    }
-                    else {
-                        let newSuggestion = Suggestion(text: based, completeWord: talk.speaker.twitter?.lowercased() ?? "")
-                        newSuggestion.add(source: .twitter, for: talk)
-                        newSuggestion.add(talk: talk)
-                        ret.append(newSuggestion)
-                    }
-                }
-                
-                let pattern = "[^A-Za-z0-9\\-]+"
-                
-                var result = talk.title.replacingOccurrences(of: pattern, with: " ", options: [.regularExpression])
-                for word in result.components(separatedBy: " ") {
-                    if (word.lowercased().contains(based.lowercased()) && talk.matchesAll(activeTags: activeTags)) {
-                        if let existingSuggestion = ret.filter ({ $0.completeWord == word.lowercased() }).first {
-                            existingSuggestion.add(source: .title, for: talk)
-                            existingSuggestion.add(talk: talk)
-                        }
-                        else {
-                            let newSuggestion = Suggestion(text: based, completeWord: word.lowercased())
-                            newSuggestion.add(source: .title, for: talk)
-                            newSuggestion.add(talk: talk)
-                            ret.append(newSuggestion)
-                        }
-                    }
-                }
-                
-                result = talk.details?.replacingOccurrences(of: pattern, with: " ", options: [.regularExpression]) ?? ""
-                for word in result.components(separatedBy: " ") {
-                    if (word.lowercased().contains(based.lowercased()) && talk.matchesAll(activeTags: activeTags)) {
-                        if let existingSuggestion = ret.filter({ $0.completeWord == word.lowercased() }).first {
-                            existingSuggestion.add(source: .details, for: talk)
-                            existingSuggestion.add(talk: talk)
-                        }
-                        else {
-                            let newSuggestion = Suggestion(text: based, completeWord: word.lowercased())
-                            newSuggestion.add(source: .details, for: talk)
-                            newSuggestion.add(talk: talk)
-                            ret.append(newSuggestion)
-                        }
-                    }
-                }
+
+        var currentBatch = APIClient.shared.models
+
+        for (index, var conference) in currentBatch.enumerated() {
+            if (searchString.count > 0) {
+                conference.talks = conference.talks.filter { $0.matches(searchCriteria: searchString) && $0.matchesAll(activeTags: activeTags) }
+            } else {
+                conference.talks = conference.talks.filter { $0.matchesAll(activeTags: activeTags) }
             }
+
+            currentBatch[index] = conference
         }
-        
-        return ret.sorted { $0.inTalks.count > $1.inTalks.count }
+
+        currentBatch = currentBatch.filter { !$0.talks.isEmpty }
+
+
+        return currentBatch.flatMap { $0.talks }
+    }
+
+    static func filterSpeakers(by searchString: String) -> [SpeakerModel] {
+        let activeTags = TagSyncService.shared.activeTags()
+
+        var currentBatch = APIClient.shared.models
+
+        for (index, var conference) in currentBatch.enumerated() {
+            if (searchString.count > 0) {
+                conference.talks = conference.talks.filter { $0.matches(searchCriteria: searchString) && $0.matchesAll(activeTags: activeTags) }
+            } else {
+                conference.talks = conference.talks.filter { $0.matchesAll(activeTags: activeTags) }
+            }
+
+            currentBatch[index] = conference
+        }
+
+        return currentBatch.flatMap { $0.talks }.compactMap { $0.speaker }
     }
 }

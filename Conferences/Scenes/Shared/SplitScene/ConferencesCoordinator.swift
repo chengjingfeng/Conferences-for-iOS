@@ -11,7 +11,8 @@ import UIKit
 enum PresentationType {
     case search
     case watchlist
-    case custom(String) //Paul Hudson, dotSwift 20
+    case filter(String)
+    case custom(String, [ListRepresentable])
 
     var title: String {
         switch self {
@@ -19,7 +20,9 @@ enum PresentationType {
             return "Search"
         case .watchlist:
             return "Watchlist"
-        case .custom(let title):
+        case .filter(let title):
+            return title
+        case .custom(let title, _):
             return title
         }
     }
@@ -43,7 +46,7 @@ enum PresentationType {
     }
 }
 
-final class ConferencesCoordinator: Coordinator {
+final class SplitCoordinator: Coordinator {
     private var presentationType: PresentationType
 
     init(type: PresentationType = .search) {
@@ -64,22 +67,19 @@ final class ConferencesCoordinator: Coordinator {
             return UITabBarItem(title: "Search", image: UIImage(named: "search"), selectedImage: nil)
         case .watchlist:
             return UITabBarItem(title: "Watchlist", image: UIImage(named: "watchlist_filled"), selectedImage: nil)
-        case .custom:
-            print("return nothing")
+        default:
             return UITabBarItem(title: "", image: nil, selectedImage: nil)
         }
 
     }()
 
-    private lazy var talkService: TalkService = {
-        let service = TalkService()
-        service.delegate = self
-
-        return service
-    }()
-
     func start() {
-        talkService.fetchData(type: presentationType)
+        switch presentationType {
+        case .custom(_, let items):
+            (vc as? SplitViewController)?.set(items)
+        default:
+            talkService.fetchData(type: presentationType)
+        }
     }
 
     func filter(by searchTerm: String = "") {
@@ -89,8 +89,8 @@ final class ConferencesCoordinator: Coordinator {
     }
 }
 
-extension ConferencesCoordinator: TalkServiceDelegate {
-    func didFetch(_ conferences: [ConferenceViewModel]) {
+extension SplitCoordinator: TalkServiceDelegate {
+    func didFetch(_ conferences: [ConferenceModel]) {
         (vc as? SplitViewController)?.set(conferences)
     }
 

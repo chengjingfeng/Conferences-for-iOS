@@ -13,7 +13,9 @@ target 'Conferences' do
   pod 'Crashlytics'
   pod 'YoutubeKit'
   pod 'AcknowList', '~> 1.7'
-  pod 'DifferenceKit'
+  pod 'Firebase/Core'
+  pod 'Firebase/RemoteConfig'
+  pod 'Firebase/Performance'
 
   target 'ConferencesTests' do
     inherit! :search_paths

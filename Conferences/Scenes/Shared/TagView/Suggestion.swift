@@ -91,9 +91,9 @@ enum SuggestionSourceEnum: SuggestionAttribute, Comparable, RawRepresentable, Ca
 
 class SuggestionSource {
     var source: SuggestionSourceEnum
-    var inTalks: [TalkViewModel]
+    var inTalks: [TalkModel]
     
-    init(source: SuggestionSourceEnum, inTalks: [TalkViewModel]) {
+    init(source: SuggestionSourceEnum, inTalks: [TalkModel]) {
         self.source = source
         self.inTalks = inTalks
     }
@@ -106,7 +106,7 @@ class Suggestion {
     var completeWord: String
     private var attributedText: NSAttributedString
     var sources: [SuggestionSource]
-    var inTalks: [TalkViewModel]
+    var inTalks: [TalkModel]
     
     func description() -> String {
        return "\(text) - \(completeWord) - \(sources)"
@@ -147,13 +147,13 @@ class Suggestion {
         return attributed
     }
     
-    func add(talk: TalkViewModel) {
+    func add(talk: TalkModel) {
         guard !inTalks.contains(talk) else { return }
         
         inTalks.append(talk)
     }
     
-    func add(source: SuggestionSourceEnum, for talk: TalkViewModel) {
+    func add(source: SuggestionSourceEnum, for talk: TalkModel) {
         if let src = (sources.filter { $0.source == source }.first) {
             if (!src.inTalks.contains(talk)) {
                 src.inTalks.append(talk)

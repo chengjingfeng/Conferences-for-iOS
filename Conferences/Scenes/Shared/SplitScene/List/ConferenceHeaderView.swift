@@ -16,6 +16,7 @@ class ConferenceHeaderView: UIView {
         super.init(frame: frame)
 
         configureView()
+        setUpTheming()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,7 +39,6 @@ class ConferenceHeaderView: UIView {
     private lazy var titleLabel: UILabel = {
         let l = UILabel()
         l.font = .systemFont(ofSize: 16, weight: .semibold)
-        l.textColor = .primaryText
         l.lineBreakMode = .byTruncatingTail
         l.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
@@ -74,29 +74,42 @@ class ConferenceHeaderView: UIView {
         return v
     }()
 
+    private lazy var containerView: UIView = {
+        let v = UIView()
+        v.layer.cornerRadius = 10
+
+        return v
+    }()
+
     private func configureView() {
-        let containerView = UIView()
-        backgroundColor = UIColor.panelBackground
-        containerView.layer.cornerRadius = 10
-        containerView.backgroundColor = UIColor.elementBackground
         addSubview(containerView)
         containerView.edgesToSuperview(insets: .init(top: 10, left: 10, bottom: 10, right: 10))
         containerView.addSubview(stackView)
         stackView.edgesToSuperview(insets: .init(top: 10, left: 10, bottom: 10, right: 10))
     }
 
-    func configureView(with conference: ConferenceViewModel) {
-        titleLabel.text = conference.title
-        subtitleLabel.text = conference.location
+    func configureView(with model: ListRepresentable) {
+        titleLabel.text = model.title
+        subtitleLabel.text = model.subtitle
+        logo.image = UIImage(named: "placeholder-square")
 
-        guard let imageUrl = URL(string: conference.image) else { return }
+        guard let imageUrl = URL(string: model.image ?? "") else { return }
 
         self.imageDownloadOperation?.cancel()
-        //self.logo.image = NSImage(named: "placeholder-square")
+
         self.imageDownloadOperation = ImageDownloadCenter.shared.downloadImage(from: imageUrl, thumbnailHeight: 60) { [weak self] url, _, thumb in
             guard url == imageUrl, thumb != nil else { return }
             self?.logo.isHidden = false
             self?.logo.image = thumb
         }
+    }
+}
+
+extension ConferenceHeaderView: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        backgroundColor = theme.backgroundColor
+        containerView.backgroundColor = theme.secondaryBackgroundColor
+        titleLabel.textColor = theme.textColor
+        subtitleLabel.textColor = theme.secondaryTextColor
     }
 }

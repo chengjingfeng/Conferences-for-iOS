@@ -8,14 +8,14 @@
 
 import UIKit
 
-class SpeakerView: UIView {
-
-    private var speaker: SpeakerModel?
+class HighlightView: UIView {
+    private var model: ListRepresentable?
     private weak var imageDownloadOperation: Operation?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        setUpTheming()
         configureView()
     }
 
@@ -23,7 +23,7 @@ class SpeakerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private lazy var profilePicture: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let v = UIImageView()
 
         v.layer.borderWidth = 2
@@ -36,25 +36,11 @@ class SpeakerView: UIView {
         return v
     }()
 
-    private lazy var aboutLabel: UILabel = {
-        let l = UILabel()
-        l.font = .systemFont(ofSize: 12, weight: .semibold)
-        l.textColor = .secondaryText
-
-
-        l.lineBreakMode = NSLineBreakMode.byTruncatingTail
-        l.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        l.allowsDefaultTighteningForTruncation = true
-        l.numberOfLines = 20
-
-        return l
-    }()
-
     private lazy var twitterButton: UIButton = {
         let b = UIButton(frame: .zero)
         b.height(20)
         b.width(20)
-        b.tintColor = .white
+
         b.setImage(UIImage(named: "twitter"), for: .normal)
         b.addTarget(self, action: #selector(openTwitter), for: .touchUpInside)
 
@@ -65,7 +51,7 @@ class SpeakerView: UIView {
         let b = UIButton(frame: .zero)
         b.height(20)
         b.width(20)
-        b.tintColor = .white
+
         b.setImage(UIImage(named: "github"), for: .normal)
         b.addTarget(self, action: #selector(openGithub), for: .touchUpInside)
 
@@ -76,7 +62,7 @@ class SpeakerView: UIView {
     private lazy var titleLabel: UILabel = {
         let l = UILabel()
         l.font = .systemFont(ofSize: 16, weight: .semibold)
-        l.textColor = .primaryText
+
         l.lineBreakMode = .byTruncatingTail
 
         return l
@@ -85,8 +71,20 @@ class SpeakerView: UIView {
     private lazy var subtitleLabel: UILabel = {
         let l = UILabel()
         l.font = .systemFont(ofSize: 12)
-        l.textColor = .secondaryText
         l.lineBreakMode = .byTruncatingTail
+
+        return l
+    }()
+
+    lazy var detailLabel: UILabel = {
+        let l = UILabel()
+        l.font = .systemFont(ofSize: 12, weight: .semibold)
+
+
+        l.lineBreakMode = NSLineBreakMode.byTruncatingTail
+        l.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        l.allowsDefaultTighteningForTruncation = true
+        l.numberOfLines = 20
 
         return l
     }()
@@ -126,7 +124,7 @@ class SpeakerView: UIView {
     }()
 
     private lazy var topStackView: UIStackView = {
-        let v = UIStackView(arrangedSubviews: [self.profilePicture, self.informationStackView])
+        let v = UIStackView(arrangedSubviews: [self.imageView, self.informationStackView])
 
         v.alignment = .top
         v.distribution = .fill
@@ -136,7 +134,7 @@ class SpeakerView: UIView {
     }()
 
     private lazy var stackView: UIStackView = {
-        let v = UIStackView(arrangedSubviews: [self.topStackView, self.aboutLabel])
+        let v = UIStackView(arrangedSubviews: [self.topStackView, self.detailLabel])
 
         self.topStackView.width(to: v)
 
@@ -150,68 +148,67 @@ class SpeakerView: UIView {
 
     private func configureView() {
         self.layer.cornerRadius = 10
-        self.backgroundColor = UIColor.elementBackground
 
         addSubview(stackView)
         stackView.edgesToSuperview(insets: .init(top: 15, left: 15, bottom: 15, right: 15))
-
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            stackView.width(200)
-        }
     }
 
-    func configureView(with model: SpeakerModel) {
-        self.speaker = model
-        titleLabel.text = "\(model.firstname) \(model.lastname)"
-        subtitleLabel.text = "@\(model.twitter ?? model.github ?? "")"
+    func configureView(with model: ListRepresentable) {
+        self.model = model
+        titleLabel.text = model.title
+        subtitleLabel.text = model.subtitle
 
         if subtitleLabel.text == "@" {
             subtitleLabel.text = ""
         }
 
-        twitterButton.isHidden = model.twitter != nil ? false : true
-        githubButton.isHidden = model.github != nil ? false : true
+        //twitterButton.isHidden = model.twitter != nil ? false : true
+        //githubButton.isHidden = model.github != nil ? false : true
 
-        aboutLabel.text = model.about ?? ""
-        aboutLabel.invalidateIntrinsicContentSize()
-        guard let imageUrl = URL(string: model.image) else { return }
+        detailLabel.text = model.detail
+        detailLabel.invalidateIntrinsicContentSize()
+        imageView.image = UIImage(named: "placeholder-square")
+
+        guard let imageUrl = URL(string: model.image ?? "") else { return }
 
         self.imageDownloadOperation?.cancel()
         self.imageDownloadOperation = ImageDownloadCenter.shared.downloadImage(from: imageUrl, thumbnailHeight: 100) { [weak self] url, _, thumb in
             guard url == imageUrl, thumb != nil else { return }
 
-            self?.profilePicture.image = thumb
+            self?.imageView.image = thumb
         }
-    }
-
-    @objc func showMoreByUser() {
-//        let searchTerm = titleLabel.text
-//
-//        if !searchTerm.isEmpty {
-//            var tag = TagModel(title: searchTerm, isActive: true)
-//            TagSyncService.shared.handleTag(&tag)
-//        }
     }
 
     @objc func openTwitter() {
-        guard let twitterHandle = self.speaker?.twitter else { return }
-
-        LoggingHelper.register(event: .openSpeakerTwitter, info: ["speakerId": String(self.speaker!.id)])
-
-        let twitterUrl = "https://twitter.com/\(twitterHandle)"
-        if let url = URL(string: twitterUrl) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+//        guard let twitterHandle = self.model?.twitter else { return }
+//
+//        LoggingHelper.register(event: .openSpeakerTwitter, info: ["speakerId": String(self.model!.id)])
+//
+//        let twitterUrl = "https://twitter.com/\(twitterHandle)"
+//        if let url = URL(string: twitterUrl) {
+//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//        }
     }
 
     @objc func openGithub() {
-        guard let githubHandle = self.speaker?.github else { return }
+//        guard let githubHandle = self.model?.github else { return }
+//
+//        LoggingHelper.register(event: .openSpeakerGithub, info: ["speakerId": String(self.model!.id)])
+//
+//        let githubUrl = "https://github.com/\(githubHandle)"
+//        if let url = URL(string: githubUrl) {
+//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//        }
+    }
+}
 
-        LoggingHelper.register(event: .openSpeakerGithub, info: ["speakerId": String(self.speaker!.id)])
-
-        let githubUrl = "https://github.com/\(githubHandle)"
-        if let url = URL(string: githubUrl) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+extension HighlightView: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        titleLabel.textColor = theme.textColor
+        detailLabel.textColor = theme.secondaryTextColor
+        subtitleLabel.textColor = theme.secondaryTextColor
+        twitterButton.tintColor = theme.textColor
+        githubButton.tintColor = theme.textColor
+        backgroundColor = theme.secondaryBackgroundColor
     }
 }

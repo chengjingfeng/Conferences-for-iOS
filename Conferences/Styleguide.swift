@@ -9,6 +9,20 @@
 import UIKit
 
 
+
+class StyleGuide {
+
+    func setup() {
+        setupNavigationBar()
+    }
+
+    private func setupNavigationBar() {
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().prefersLargeTitles = true
+    }
+}
+
 extension UIColor {
 
     static var primaryText: UIColor {
@@ -59,9 +73,6 @@ extension UIColor {
         return UIColor(red: 0.85, green: 0.18, blue: 0.18, alpha: 1.00)
     }
 
-//    static var inactiveColor: UIColor {
-//        return UIColor.init(hexString: "B3B3B3")
-//    }
 
     static var activeColor: UIColor {
         return .white
@@ -89,4 +100,84 @@ extension UIColor {
         )
     }
 
+}
+
+extension UIFont {
+    class var tiny: UIFont {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return UIFont.systemFont(ofSize: 12)
+        } else {
+            return UIFont.systemFont(ofSize: 10)
+        }
+    }
+
+    class var small: UIFont {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return UIFont.systemFont(ofSize: 15)
+        } else {
+            return UIFont.systemFont(ofSize: 13)
+        }
+    }
+
+    class var medium: UIFont {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return UIFont.systemFont(ofSize: 25, weight: .bold)
+        } else {
+            return UIFont.systemFont(ofSize: 18, weight: .bold)
+        }
+    }
+
+    class var large: UIFont {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return UIFont.systemFont(ofSize: 40)
+        } else {
+            return UIFont.systemFont(ofSize: 25)
+        }
+    }
+}
+
+public extension UIWindow {
+    func switchRootViewController(
+        to viewController: UIViewController,
+        animated: Bool = true,
+        duration: TimeInterval = 0.5,
+        options: UIView.AnimationOptions = .transitionCrossDissolve,
+        _ completion: (() -> Void)? = nil) {
+
+        guard animated else {
+            rootViewController = viewController
+            completion?()
+            return
+        }
+
+        UIView.transition(with: self, duration: duration, options: options, animations: {
+            let oldState = UIView.areAnimationsEnabled
+            UIView.setAnimationsEnabled(false)
+            self.rootViewController = viewController
+            UIView.setAnimationsEnabled(oldState)
+        }, completion: { _ in
+            completion?()
+        })
+    }
+}
+
+extension UIView {
+    func addShadowWithOffset(_ offset: CGSize, color: UIColor, opacity: Float, shadowRadius: CGFloat) {
+        layer.shadowColor = color.cgColor
+        layer.shadowOffset = offset
+        layer.shadowOpacity = opacity
+        layer.shadowRadius = shadowRadius
+        layer.masksToBounds = false
+
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
+    }
+
+    func applyDefaultShadow() {
+        addShadowWithOffset(CGSize(width: 1.0, height: 1.0), color: UIColor.gray, opacity: 0.1, shadowRadius: 1.0)
+    }
+
+    func removeShadow() {
+        addShadowWithOffset(CGSize(width: 0.0, height: 0.0), color: UIColor.clear, opacity: 0.0, shadowRadius: 0.0)
+    }
 }

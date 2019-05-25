@@ -9,9 +9,9 @@
 import UIKit
 
 class ConferenceDetailVC: UIViewController {
-    private var conference: ConferenceViewModel
+    private var conference: ConferenceModel
 
-    init(model: ConferenceViewModel) {
+    init(model: ConferenceModel) {
         self.conference = model
         super.init(nibName: nil, bundle: nil)
     }
@@ -23,6 +23,7 @@ class ConferenceDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setUpTheming()
         configureView()
         configureNavBar()
     }
@@ -38,12 +39,16 @@ class ConferenceDetailVC: UIViewController {
         navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
         navigationController?.navigationBar.tintColor = UIColor.white
         //navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         //navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
 
     @objc func dismissVC(){
         self.dismiss(animated: true)
+    }
+}
+
+extension ConferenceDetailVC: Themed {
+    func applyTheme(_ theme: AppTheme) {
     }
 }

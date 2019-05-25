@@ -1,0 +1,26 @@
+    [
+        {
+            "title": "Continue watching",
+            "target": "talk",
+            "filter": "realm_continue",
+            "size": "m"
+        },
+        {
+            "title": "dotSwift 2019",
+            "target": "talk",
+            "filter": "dotSwift2019",
+            "size": "m"
+        },
+        {
+            "title": "All Conferences",
+            "target": "conference",
+            "filter": "",
+            "size": "s"
+        },
+        {
+            "title": "New speakers",
+            "target": "speaker",
+            "filter": "dotSwift",
+            "size": "s"
+        }
+    ]

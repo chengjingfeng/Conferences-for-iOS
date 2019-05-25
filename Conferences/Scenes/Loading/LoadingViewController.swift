@@ -38,22 +38,41 @@ final class LoadingViewController: UIViewController {
     }
 
     @objc func setup() {
+        let group = DispatchGroup()
+
+        group.enter()
         APIClient.shared.fetchConferences { [weak self] (error) in
             if error != nil {
                 self?.showRetryConnectAlertView()
                 return
             }
 
-            DispatchQueue.main.async {
-                self?.delegate.didFinish()
-            }
+            group.leave()
+        }
+
+        group.enter()
+        Config.shared.fetchColudValues {
+            group.leave()
+        }
+
+        group.notify(queue: .main) {
+            self.delegate.didFinish()
         }
     }
 
     func configureLoadingView() {
         view.addSubview(loadingView)
+        addLoadingIndicator()
     }
 
+    func addLoadingIndicator() {
+        let loadingIndcator = UIActivityIndicatorView(style: .white)
+        loadingIndcator.startAnimating()
+        view.addSubview(loadingIndcator)
+
+        loadingIndcator.centerXToSuperview()
+        loadingIndcator.centerInSuperview(offset: .init(x: 0, y: 70), priority: .defaultLow, isActive: true, usingSafeArea: true)
+    }
 
     func showRetryConnectAlertView() {
 
@@ -90,6 +109,5 @@ internal class BlockingLoadingView: UIView {
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 

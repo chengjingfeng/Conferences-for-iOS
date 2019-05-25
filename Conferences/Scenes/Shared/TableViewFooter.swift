@@ -32,6 +32,7 @@ final class LoadingFooterView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        setUpTheming()
         configureView()
         configureConstraints()
     }
@@ -46,15 +47,13 @@ final class LoadingFooterView: UICollectionReusableView {
 
         messageLabel.textAlignment = NSTextAlignment.center
         messageLabel.numberOfLines = 0
-        messageLabel.font = UIFont.systemFont(ofSize: 10, weight: .semibold)
-        messageLabel.textColor = .darkGray
+        messageLabel.font = UIFont.small
         messageLabel.isHidden = true
         messageLabel.text = "Conferences"
 
         addSubview(messageLabel)
 
         imageView.image = UIImage(named: "play-frame")
-        imageView.tintColor = UIColor.darkGray
         imageView.isHidden = true
         imageView.contentMode = .scaleAspectFit
 
@@ -115,11 +114,9 @@ final class LoadingFooterView: UICollectionReusableView {
         showFooter()
 
         imageView.image = UIImage(named: "watchlist")
-        imageView.tintColor = .white
 
         messageLabel.text = "\n Talks that you add \n to your Watchlist will appear here."
         messageLabel.font = UIFont.systemFont(ofSize: 20)
-        messageLabel.textColor = .white
     }
 
     func showFooterWithVersion() {
@@ -139,7 +136,6 @@ final class LoadingFooterView: UICollectionReusableView {
     fileprivate func resetSubviews() {
         backgroundColor = UIColor.clear
         imageView.image = UIImage(named: "play-frame")
-        imageView.tintColor = .darkGray
 
         loadingView.isHidden = true
         messageLabel.font = UIFont.systemFont(ofSize: 10, weight: .semibold)
@@ -148,6 +144,12 @@ final class LoadingFooterView: UICollectionReusableView {
     }
 }
 
+extension LoadingFooterView: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        messageLabel.textColor = theme.secondaryTextColor
+        imageView.tintColor = theme.secondaryTextColor
+    }
+}
 fileprivate class LoadingView: UIView {
     let size: CGFloat
 
@@ -220,5 +222,4 @@ extension Bundle {
         let format = NSLocalizedString("Version %@ (%@)", comment: "")
         return String(format: format, arguments: [version, build])
     }
-
 }

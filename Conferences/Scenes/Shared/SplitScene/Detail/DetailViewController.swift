@@ -16,14 +16,12 @@ class DetailViewController: UIViewController {
     private let fullscreenButton = UIBarButtonItem(image: UIImage(named: "fullscreen"), style: .plain, target: nil, action: nil)
 
     private weak var imageDownloadOperation: Operation?
-    var talk: TalkViewModel?
+    var talk: TalkModel?
 
     var wachlistAction: (() -> Void)?
-    var watchedAction: (() -> Void)?
 
     lazy var blockingView: UIView = {
         let view = UIView()
-        view.backgroundColor = .panelBackground
 
         return view
     }()
@@ -39,7 +37,7 @@ class DetailViewController: UIViewController {
         v.addSubview(previewImage)
         v.addSubview(playButton)
         v.backgroundColor = .black
-        previewImage.edgesToSuperview()
+        previewImage.edgesToSuperview(excluding: [], insets: .bottom(20), usingSafeArea: true)
         playButton.centerInSuperview()
 
         previewImage.contentMode = .scaleAspectFit
@@ -50,7 +48,7 @@ class DetailViewController: UIViewController {
     private lazy var previewImage = UIImageView()
     private var player: YTSwiftyPlayer?
 
-    private lazy var detailSummaryViewController = DetailSummaryViewController()
+    lazy var detailSummaryViewController = DetailSummaryViewController()
 
     private lazy var playButton: UIButton = {
         let b = UIButton()
@@ -72,39 +70,22 @@ class DetailViewController: UIViewController {
         return v
     }()
 
-    private lazy var navigationBar: UINavigationBar = {
-        let bar = UINavigationBar()
-        bar.isTranslucent = false
-        bar.delegate = self
-        bar.barTintColor = .black
-        bar.tintColor = .white
-        view.addSubview(bar)
-        bar.translatesAutoresizingMaskIntoConstraints = false
-        bar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        bar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        bar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-
-        return bar
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setUpTheming()
         configureView()
-        navigationItem.largeTitleDisplayMode = .never
+        configureNavigationBar()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            navigationController?.navigationBar.barTintColor = .black
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain, target: self, action: #selector(pop))
-            navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-            navigationController?.interactivePopGestureRecognizer?.delegate = self
-        }
-
         scrollView.setContentOffset(.zero, animated: false)
+
+        navigationController?.navigationBar.barTintColor = .black
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 
         guard let talk = talk else {
             return
@@ -113,14 +94,14 @@ class DetailViewController: UIViewController {
         configureView(with: talk)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
 
-        self.navigationController?.navigationBar.barTintColor = .panelBackground
-    }
-
-    @objc func pop() {
-        navigationController?.popViewController(animated: true)
+        let currentTheme = AppThemeProvider.shared.currentTheme
+        navigationController?.navigationBar.barTintColor = currentTheme.backgroundColor
+        navigationController?.navigationBar.tintColor = currentTheme.textColor 
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: currentTheme.textColor]
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: currentTheme.textColor]
     }
 
     @objc func triggerFullscreen() {
@@ -129,41 +110,41 @@ class DetailViewController: UIViewController {
 
     @objc func markAsWatched() {
         guard var talk = self.talk else { return }
-        let state = Storage.shared.toggleWatched(talk)
-        self.talk?.watched = state
-        let icon = state ? UIImage(named: "watch_filled") : UIImage(named: "watch")
+        talk.watched.toggle()
+        let icon = talk.watched ? UIImage(named: "watch_filled") : UIImage(named: "watch")
         watchedButton.image = icon
-        watchedAction?()
     }
 
     @objc func addToWatchlist() {
-        guard var talk = self.talk else { return }
-        let state = Storage.shared.togggleWatchlist(talk)
-        self.talk?.onWatchlist = state
-        let icon = state ? UIImage(named: "watchlist_filled") : UIImage(named: "watchlist")
-        watchlistButtom.image = icon
-        wachlistAction?()
+        guard let talk = self.talk else { return }
+
+        Storage.shared.toggleWatchlist(talk, completion: { [weak self] (state) in
+            self?.wachlistAction?()
+
+            let icon = state ? UIImage(named: "watchlist_filled") : UIImage(named: "watchlist")
+            self?.watchlistButtom.image = icon
+        })
     }
 
-    func configureNavigationBar() -> UINavigationBar? {
+    func configureNavigationBar() {
         var items = [watchedButton, watchlistButtom]
 
-        guard UIDevice.current.userInterfaceIdiom == .pad else {
-            navigationItem.setRightBarButtonItems(items, animated: false)
-
-            return nil
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            fullscreenButton.isEnabled = false
+            items.insert(fullscreenButton, at: 0)
         }
 
-        fullscreenButton.isEnabled = false
-        items.insert(fullscreenButton, at: 0)
-        let navItem = UINavigationItem(title: "")
-        navItem.setRightBarButtonItems(items, animated: false)
-        navigationBar.items = [navItem]
-
-        return navigationBar
+        navigationItem.setRightBarButtonItems(items, animated: false)
+        navigationController?.navigationBar.barTintColor = .black
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
 
     private func configureView() {
+        extendedLayoutIncludesOpaqueBars = true
+        hidesBottomBarWhenPushed = true
         watchlistButtom.target = self
         watchlistButtom.action = #selector(addToWatchlist)
 
@@ -173,15 +154,9 @@ class DetailViewController: UIViewController {
         fullscreenButton.target = self
         fullscreenButton.action = #selector(triggerFullscreen)
 
-        view.backgroundColor = .panelBackground
         view.addSubview(scrollView)
 
-        if let navigationBar = configureNavigationBar() {
-            scrollView.edgesToSuperview(excluding: .top)
-            scrollView.topToBottom(of: navigationBar)
-        } else {
-            scrollView.edgesToSuperview()
-        }
+        scrollView.edgesToSuperview()
 
         scrollView.addSubview(stackView)
         stackView.edgesToSuperview()
@@ -189,11 +164,13 @@ class DetailViewController: UIViewController {
         addChild(detailSummaryViewController)
         playerContainer.height(to: view, offset: -view.frame.height * 0.4)
 
-        view.addSubview(blockingView)
-        blockingView.edgesToSuperview()
+        if navigationController != nil {
+            navigationController?.view.addSubview(blockingView)
+            blockingView.edgesToSuperview()
+        }
     }
 
-    func configureView(with talk: TalkViewModel) {
+    func configureView(with talk: TalkModel) {
         self.talk = talk
         let watchlistIcon = talk.onWatchlist ? UIImage(named: "watchlist_filled") : UIImage(named: "watchlist")
         watchlistButtom.image = watchlistIcon
@@ -202,19 +179,20 @@ class DetailViewController: UIViewController {
         watchedButton.image = watchedItem
 
         fullscreenButton.isEnabled = false
+
         if blockingView.alpha == 1.0 {
             UIView.animate(withDuration: 0.2) {
-                self.navigationController?.navigationBar.barTintColor = .black
                 self.blockingView.alpha = 0
             }
         }
-
 
         detailSummaryViewController.configureView(with: talk)
         player?.clearVideo()
         player?.removeFromSuperview()
         player = nil
-        guard let imageUrl = talk.image else { return }
+
+        previewImage.image = UIImage(named: "placeholder")
+        guard let imageUrl = URL(string: talk.previewImage) else { return }
 
         self.imageDownloadOperation?.cancel()
 
@@ -251,10 +229,9 @@ extension DetailViewController: YTSwiftyPlayerDelegate {
     }
 }
 
-extension DetailViewController: UIGestureRecognizerDelegate, UINavigationControllerDelegate {}
-
-extension DetailViewController: UINavigationBarDelegate {
-    public func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return .topAttached
+extension DetailViewController: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        blockingView.backgroundColor = theme.backgroundColor
+        view.backgroundColor = theme.backgroundColor
     }
 }

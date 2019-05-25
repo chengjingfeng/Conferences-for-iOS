@@ -11,7 +11,7 @@ import UIKit
 class SettingsViewController: UITableViewController {
     lazy var footerView = LoadingFooterView()
 
-    weak var viewModel: SettingsViewModel!
+    var viewModel: SettingsViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +30,21 @@ class SettingsViewController: UITableViewController {
         title = "Settings"
         footerView.frame.size = CGSize(width: footerView.frame.width, height: 200)
         footerView.showFooterWithVersion()
+        configureNavBar()
     }
     
     func configureTableView() {
         tableView.tableFooterView = footerView
         tableView.backgroundColor = .panelBackground
         tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.identifier)
+    }
+
+    func configureNavBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
+    }
+
+    @objc func dismissVC(){
+        self.dismiss(animated: true)
     }
 
     // MARK: - Table view data source
@@ -103,7 +112,7 @@ final class SettingsTableViewCell: UITableViewCell {
     
     func configureView(with entry: Settings.Entry) {
         titleLabel.textColor = .primaryText
-        titleLabel.font = UIFont.systemFont(ofSize: 14)
+        titleLabel.font = UIFont.small
         stackView.addArrangedSubview(titleLabel)
         titleLabel.text = entry.title
         

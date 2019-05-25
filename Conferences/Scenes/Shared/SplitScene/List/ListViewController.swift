@@ -7,78 +7,79 @@
 //
 
 import UIKit
-import DifferenceKit
 
-class ConferneceListController: UITableViewController {
+class ListViewController: UITableViewController {
     private let footerView = LoadingFooterView()
-    private var data: [ConferenceViewModel] = []
+    private let headerView = TableViewHeader()
 
-    var dataInput: [ConferenceViewModel] {
-        get { return data }
-        set {
-            footerView.showFooter()
+    var headerModel: ListRepresentable? {
+        didSet {
+            guard headerModel != nil else { return }
 
-            let changeset = StagedChangeset(source: data, target: newValue)
-            print(changeset)
-            print(changeset.count)
-            let selectedRows = self.tableView.indexPathsForSelectedRows ?? []
+            headerView.configureView(with: headerModel)
+            tableView.tableHeaderView = headerView
 
-            tableView.reload(using: changeset, with: .fade) { data in
-                self.data = data
-            }
-
-            tableView.selectRow(at: selectedRows.first, animated: false, scrollPosition: .none)
         }
     }
 
-    override weak var preferredFocusedView: UIView? {
-        return tableView
+    var data: [ListRepresentable] = [] {
+        didSet {
+            if let _ = headerModel as? ConferenceModel {
+                tableView.sectionHeaderHeight = 0
+            }
+            
+            tableView.reloadData()
+        }
     }
 
-    var selectionHandler: ((TalkViewModel, IndexPath) -> Void)?
+    var selectionHandler: ((TalkModel, IndexPath) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setUpTheming()
         configureTableView()
-        extendedLayoutIncludesOpaqueBars = true
+        
         definesPresentationContext = true
+        extendedLayoutIncludesOpaqueBars = true
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if headerModel != nil && UIDevice.current.userInterfaceIdiom == .pad {
+            navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+    }
+    
     private func configureTableView() {
         clearsSelectionOnViewWillAppear = false
         tableView.remembersLastFocusedIndexPath = true
         footerView.frame.size = CGSize(width: footerView.frame.width, height: 200)
-        footerView.startAnimating()
         tableView.tableFooterView = footerView
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.panelBackground
         tableView.sectionHeaderHeight = 100
         tableView.rowHeight = 70
         tableView.register(TalkViewCell.self, forCellReuseIdentifier: "TalkViewCell")
+        footerView.showFooter()
     }
     
-    // MARK: - Table View
     override func numberOfSections(in tableView: UITableView) -> Int {
         return data.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data[section].talks.count
+        return data[section].children?.count ?? data.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TalkViewCell", for: indexPath) as? TalkViewCell else {
             return UITableViewCell()
         }
-        
-        let talk = data[indexPath.section].talks[indexPath.row]
-        cell.configureView(with: talk)
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.elementBackground
-        cell.selectedBackgroundView = bgColorView
-        cell.backgroundColor = UIColor.elementBackground
-        
+
+        let talk = data[indexPath.section].children?[indexPath.row]
+        cell.configureView(with: talk!)
+
         return cell
     }
 
@@ -87,6 +88,8 @@ class ConferneceListController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard headerModel as? ConferenceModel == nil else { return nil }
+
         let conferenceView = ConferenceHeaderView()
         let conference = data[section]
         let tap = UITapGestureRecognizer(target: self, action:#selector(self.didSelectConference))
@@ -100,7 +103,7 @@ class ConferneceListController: UITableViewController {
 
     @objc func didSelectConference(sender: UITapGestureRecognizer) {
         guard let conferenceView = sender.view else { return }
-        guard let conference = data.indices.contains(conferenceView.tag) ? data[conferenceView.tag] : nil else { return }
+        guard let conference = data.indices.contains(conferenceView.tag) ? data[conferenceView.tag] as? ConferenceModel : nil else { return }
 
         let vc = ConferenceDetailVC(model: conference)
         let navVC = UINavigationController(rootViewController: vc)
@@ -111,7 +114,18 @@ class ConferneceListController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let talk = data[indexPath.section].talks[indexPath.row]
-        selectionHandler?(talk, indexPath)
+        if let talk = data[indexPath.section].children?[indexPath.row] as? TalkModel {
+            selectionHandler?(talk, indexPath)
+        }
+    }
+}
+
+extension ListViewController: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        tableView.backgroundColor = theme.backgroundColor
+        navigationController?.navigationBar.barTintColor = theme.backgroundColor
+        navigationController?.navigationBar.tintColor = theme.textColor
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: theme.textColor]
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: theme.textColor]
     }
 }

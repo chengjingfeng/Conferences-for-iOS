@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>68191712232-5bomt591kkf8v9dhr80jdonjo8u1i0vm.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.68191712232-5bomt591kkf8v9dhr80jdonjo8u1i0vm</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDtniL8wtkoZQPGUmSntPtiW7iy2esj5D0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>68191712232</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>digital.conferences.ios</string>
+	<key>PROJECT_ID</key>
+	<string>conferences-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>conferences-dev.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:68191712232:ios:12c04740e8c000ff</string>
+	<key>DATABASE_URL</key>
+	<string>https://conferences-dev.firebaseio.com</string>
+</dict>
+</plist>
