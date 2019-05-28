@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="Conferences.digital" src=".github/github_banner.png" width="80%">
+    <img alt="Conferences.digital" src=".github/github_banner.png" width="100%">
 </p>
 <p align="center">
 <a href="">
